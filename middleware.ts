@@ -5,8 +5,8 @@ import { createServerClient as createSSRClient } from '@supabase/ssr'
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const url = process.env.SUPABASE_URL
+  const anon = process.env.SUPABASE_ANON_KEY
 
   if (!url || !anon) {
     console.error('[middleware] Missing Supabase env vars')
