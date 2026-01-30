@@ -6,11 +6,12 @@ export function createBrowserSupabase() {
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!url || !anon) {
-    if (typeof window !== 'undefined') {
-        console.error('[supabase/client] Missing Supabase env vars')
+    return {
+      supabase: null as any,
+      error:
+        'Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Check Vercel env vars (Preview/Prod/Dev).',
     }
-    return null
   }
 
-  return createBrowserClient(url, anon)
+  return { supabase: createBrowserClient(url, anon), error: null as string | null }
 }
