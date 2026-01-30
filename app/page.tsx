@@ -21,12 +21,12 @@ const HeroSection = () => (
   }}>
     <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <h2 style={{ 
-            fontSize: '64px', 
+            fontSize: '52px', 
             fontWeight: '700', 
-            lineHeight: '1.1',
+            lineHeight: '1.2',
             marginBottom: '20px'
-        }}>The World's Leading 
-            <span style={{ color: '#10b981', display: 'block', fontFamily: 'Georgia, serif' }}>Marketing Automation Tool</span>
+        }}>A calmer way to show up online.
+            <span style={{ color: '#10b981', display: 'block', fontFamily: 'Georgia, serif', fontSize: '20px', fontWeight: '400' }}>Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post (even when life is full).</span>
         </h2>
         <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '40px' }}>
             Automate messages based on customer behavior—reach the right people at the right time.
