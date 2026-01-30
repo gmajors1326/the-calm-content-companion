@@ -28,6 +28,6 @@
     "jsonwebtoken": "8.5.1",
     "dotenv": "10.0.0",
     "openai": "^3.2.0",
-    "@supabase/ssr": "0.3.0"
+    "@supabase/ssr": "2.2.2"
   }
 }
