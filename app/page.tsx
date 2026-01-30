@@ -27,10 +27,14 @@ const ROTATION_TIMING = {
     fadeOutMs: 400,
     gapMs: 200
 };
+const ROTATION_TOTAL_MS =
+    ROTATION_TIMING.fadeInMs +
+    ROTATION_TIMING.holdMs +
+    ROTATION_TIMING.fadeOutMs +
+    ROTATION_TIMING.gapMs;
 
 export default function PromotoLandingPage() {
     const [wordIndex, setWordIndex] = useState(0);
-    const [isVisible, setIsVisible] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
     useEffect(() => {
@@ -50,19 +54,15 @@ export default function PromotoLandingPage() {
 
     useEffect(() => {
         if (prefersReducedMotion) {
-            setIsVisible(true);
             return;
         }
 
-        const timeouts: number[] = [];
-        timeouts.push(window.setTimeout(() => setIsVisible(true), 10));
-        timeouts.push(window.setTimeout(() => setIsVisible(false), ROTATION_TIMING.fadeInMs + ROTATION_TIMING.holdMs));
-        timeouts.push(window.setTimeout(() => {
+        const intervalId = window.setInterval(() => {
             setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-        }, ROTATION_TIMING.fadeInMs + ROTATION_TIMING.holdMs + ROTATION_TIMING.fadeOutMs + ROTATION_TIMING.gapMs));
+        }, ROTATION_TOTAL_MS);
 
-        return () => timeouts.forEach((id) => clearTimeout(id));
-    }, [wordIndex, prefersReducedMotion]);
+        return () => clearInterval(intervalId);
+    }, [prefersReducedMotion]);
     
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
@@ -83,12 +83,11 @@ export default function PromotoLandingPage() {
                 {prefersReducedMotion ? (
                     <span style={{ display: 'inline-block' }}>{FALLBACK_WORD}</span>
                 ) : (
-                    <span style={{
-                        display: 'inline-block',
-                        opacity: isVisible ? 1 : 0,
-                        transform: isVisible ? 'translateY(0px)' : 'translateY(2px)',
-                        transition: `opacity ${isVisible ? ROTATION_TIMING.fadeInMs : ROTATION_TIMING.fadeOutMs}ms ease-in-out, transform ${isVisible ? ROTATION_TIMING.fadeInMs : ROTATION_TIMING.fadeOutMs}ms ease-in-out`
-                    }}>
+                    <span
+                        key={wordIndex}
+                        className="rotating-word"
+                        style={{ animationDuration: `${ROTATION_TOTAL_MS}ms` }}
+                    >
                         {ROTATING_WORDS[wordIndex]}
                     </span>
                 )}{' '}
