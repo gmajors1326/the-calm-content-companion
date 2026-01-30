@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
         }}>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <span style={{ fontSize: '20px', fontWeight: '700', color: '#333' }}>Promoto&reg;</span>
+            <span style={{ fontSize: '20px', fontWeight: '700', color: '#333' }}>The Calm Content Companion&trade;</span>
           </div>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             {['Home', 'Features', 'About', 'Pricing', 'Blogs'].map((link) => (
