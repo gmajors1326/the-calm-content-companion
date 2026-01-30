@@ -15,6 +15,7 @@ export function isAdminEmail(email?: string): boolean {
 export async function getAuthedUser(): Promise<AuthedUser | null> {
   try {
     const supabase = createServerSupabase()
+    if (!supabase) return null;
     const { data, error } = await supabase.auth.getUser();
     if (error || !data?.user) return null;
     const u = data.user;

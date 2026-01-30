@@ -20,6 +20,9 @@ export async function GET(req: NextRequest) {
   }
 
   const supabase = createServerSupabase()
+  if (!supabase) {
+    return NextResponse.redirect(new URL('/login?error=config_error', req.nextUrl.origin))
+  }
 
   const { error } = await supabase.auth.exchangeCodeForSession(code)
   if (error) {

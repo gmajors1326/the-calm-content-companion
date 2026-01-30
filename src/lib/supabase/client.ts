@@ -6,9 +6,10 @@ export function createBrowserSupabase() {
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!url || !anon) {
-    // This will show in the browser console if env is missing
-    console.error('[supabase/client] Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
-    throw new Error('Missing Supabase env vars')
+    if (typeof window !== 'undefined') {
+        console.error('[supabase/client] Missing Supabase env vars')
+    }
+    return null
   }
 
   return createBrowserClient(url, anon)

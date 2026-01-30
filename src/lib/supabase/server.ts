@@ -9,8 +9,8 @@ export function createServerSupabase() {
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!url || !anon) {
-    console.error('[supabase/server] Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
-    throw new Error('Missing Supabase env vars')
+    console.error('[supabase/server] Missing Supabase env vars')
+    return null
   }
 
   return createServerClient(url, anon, {
