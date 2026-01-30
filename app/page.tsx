@@ -91,7 +91,7 @@ export default function PromotoLandingPage() {
                         {ROTATING_WORDS[wordIndex]}
                     </span>
                 )}{' '}
-                Way to Show Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online.</span></h2>
+                Way to Show Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online</span>.</h2>
             <p style={{
                 color: '#111827',
                 fontFamily: 'Georgia, serif',
