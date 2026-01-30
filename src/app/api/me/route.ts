@@ -1,8 +1,8 @@
 export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../lib/prisma";
-import { requireAuthedUser } from "../../../lib/authServer";
+import { prisma } from "@/lib/prisma";
+import { requireAuthedUser } from "@/lib/authServer";
 
 export async function GET(req: NextRequest) {
   try {
