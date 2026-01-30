@@ -5,7 +5,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>The Calm Content Companion</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body>
+      <body style={{ backgroundColor: '#1c3125', color: '#e5e7eb', margin: 0 }}>
         <nav style={{
           position: 'fixed',
           top: 0,
@@ -21,29 +21,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           zIndex: 1000,
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
         }}>
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-            <a href="/" style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontWeight: '600',
-              fontSize: '18px',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              transition: 'background-color 0.2s'
-            }}>Home</a>
+          <div style={{ flex: 1, textAlign: 'left' }}>
+            <span style={{ fontSize: '20px', fontWeight: '700', color: '#333' }}>Promoto&reg;</span>
           </div>
-          <a href="/admin" style={{
-            textDecoration: 'none',
-            color: '#6366f1',
-            fontWeight: '600',
-            fontSize: '14px',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            backgroundColor: '#f3f4f6',
-            transition: 'background-color 0.2s'
-          }}>Admin</a>
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            {['Home', 'Features', 'About', 'Pricing', 'Blogs'].map((link) => (
+              <a key={link} href={link === 'Home' ? '/' : `/${link.toLowerCase()}`} style={{
+                textDecoration: 'none',
+                color: '#333',
+                fontWeight: '600',
+                fontSize: '14px',
+                padding: '8px 12px',
+                transition: 'color 0.2s',
+                position: 'relative'
+              }}>
+                {link}
+                {link === 'Home' && <span style={{ position: 'absolute', bottom: '-2px', left: '50%', transform: 'translateX(-50%)', width: '100%', height: '2px', backgroundColor: '#333', borderRadius: '1px' }}></span>}
+              </a>
+            ))}
+          </div>
+          <div style={{ flex: 1, textAlign: 'right' }}>
+             <button style={{
+                backgroundColor: 'transparent',
+                color: '#333',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                border: '1px solid #e5e5e5',
+                cursor: 'pointer',
+                fontWeight: '600',
+                fontSize: '14px'
+            }}>Strat Trial</button>
+          </div>
         </nav>
-        <main style={{ paddingTop: '60px' }}>{children}</main>
+        <main style={{ paddingTop: '70px' }}>{children}</main>
       </body>
     </html>
   )
