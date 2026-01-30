@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import { useState } from 'react';
 
 // Define colors based on image analysis and layout.tsx background
 const COLORS = {
@@ -189,7 +191,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
 );
 
 const FAQSection = () => {
-    const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
     
     const faqs = [
         { q: "Is there a free plan available?", a: "No credit card is required to start with the Free plan. You can upgrade anytime as your needs grow." },
