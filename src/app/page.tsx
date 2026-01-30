@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useCallback, useTransition } from 'react'
+import React, { useState, useCallback, useTransition, useEffect } from 'react'
 import Link from 'next/link'
-import { cookies } from 'next/headers'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -18,10 +17,14 @@ export default function HomePage() {
   const [prompt, setPrompt] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, startTransition] = useTransition()
+  const [session, setSession] = useState<string | null>(null)
 
-  // Naive SSR cookie check remains for navigation/state indication
-  const cookieHeader = cookies().toString()
-  const session = (cookieHeader.match(/session=([^;]+)/) || [])[1]
+  // Client-side cookie check for session
+  useEffect(() => {
+    const cookieHeader = document.cookie
+    const sessionMatch = cookieHeader.match(/session=([^;]+)/)
+    setSession(sessionMatch ? sessionMatch[1] : null)
+  }, [])
   
   const sendMessage = useCallback(async () => {
     if (!prompt.trim() || isLoading) return
