@@ -20,14 +20,8 @@ const HeroSection = () => (
       color: COLORS.TEXT_DARK
   }}>
     <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <h2 style={{ 
-            fontSize: '52px', 
-            fontWeight: '700', 
-            lineHeight: '1.2',
-            marginBottom: '20px',
-            color: '#059669' // Darker green for H2 text
         }}>A Calmer Way to Show Up Online.
-            <span style={{ color: '#111827', display: 'block', fontFamily: 'Georgia, serif', fontSize: '18px', fontWeight: '400' }}>Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post (even when life is full).</span>
+            <span style={{ color: '#111827', display: 'block', fontFamily: 'Georgia, serif', fontSize: '18px', fontWeight: '400' }}>Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post (even when life is full).<br/></span>
         </h2>
         <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '40px' }}>
             Automate messages based on customer behavior—reach the right people at the right time.
