@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Define colors based on image analysis and layout.tsx background
 const COLORS = {
@@ -11,7 +11,58 @@ const COLORS = {
   TEXT_LIGHT: '#e5e7eb', // Light text color for dark backgrounds
 };
 
+const ROTATING_WORDS = [
+    'Unrushed',
+    'Sustainable',
+    'Steady',
+    'Intentional',
+    'Grounded',
+    'Simple',
+    'Consistent'
+];
+const FALLBACK_WORD = 'Sustainable';
+const ROTATION_TIMING = {
+    fadeInMs: 500,
+    holdMs: 1800,
+    fadeOutMs: 400,
+    gapMs: 200
+};
+
 export default function PromotoLandingPage() {
+    const [wordIndex, setWordIndex] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const updatePreference = () => setPrefersReducedMotion(media.matches);
+        updatePreference();
+
+        if (media.addEventListener) {
+            media.addEventListener('change', updatePreference);
+            return () => media.removeEventListener('change', updatePreference);
+        }
+
+        media.addListener(updatePreference);
+        return () => media.removeListener(updatePreference);
+    }, []);
+
+    useEffect(() => {
+        if (prefersReducedMotion) {
+            setIsVisible(true);
+            return;
+        }
+
+        const timeouts: number[] = [];
+        timeouts.push(window.setTimeout(() => setIsVisible(true), 10));
+        timeouts.push(window.setTimeout(() => setIsVisible(false), ROTATION_TIMING.fadeInMs + ROTATION_TIMING.holdMs));
+        timeouts.push(window.setTimeout(() => {
+            setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+        }, ROTATION_TIMING.fadeInMs + ROTATION_TIMING.holdMs + ROTATION_TIMING.fadeOutMs + ROTATION_TIMING.gapMs));
+
+        return () => timeouts.forEach((id) => clearTimeout(id));
+    }, [wordIndex, prefersReducedMotion]);
     
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
@@ -28,7 +79,20 @@ export default function PromotoLandingPage() {
                 lineHeight: '1.2',
                 marginBottom: '14px',
                 color: '#059669' // Darker green for H2 text
-            }}>A Calmer Way to Show Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online.</span></h2>
+            }}>A{' '}
+                {prefersReducedMotion ? (
+                    <span style={{ display: 'inline-block' }}>{FALLBACK_WORD}</span>
+                ) : (
+                    <span style={{
+                        display: 'inline-block',
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'translateY(0px)' : 'translateY(2px)',
+                        transition: `opacity ${isVisible ? ROTATION_TIMING.fadeInMs : ROTATION_TIMING.fadeOutMs}ms ease-in-out, transform ${isVisible ? ROTATION_TIMING.fadeInMs : ROTATION_TIMING.fadeOutMs}ms ease-in-out`
+                    }}>
+                        {ROTATING_WORDS[wordIndex]}
+                    </span>
+                )}{' '}
+                Way to Show Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online.</span></h2>
             <p style={{
                 color: '#111827',
                 fontFamily: 'Georgia, serif',
