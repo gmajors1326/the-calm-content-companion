@@ -5,7 +5,7 @@ import { useState } from 'react';
 // Define colors based on image analysis and layout.tsx background
 const COLORS = {
   DARK_GREEN: '#1c3125', // Matches body background in layout.tsx
-  LIGHT_CREAM: '#fdfdf8', // Background for content sections in image
+  LIGHT_CREAM: '#fffaf0', // Background for content sections in image (Warmer Cream)
   ACCENT_YELLOW: '#f5c300', // Highlight color from pricing tag and 'Growth'
   TEXT_DARK: '#111827', // Near-black for primary text on light backgrounds
   TEXT_LIGHT: '#e5e7eb', // Light text color for dark backgrounds
