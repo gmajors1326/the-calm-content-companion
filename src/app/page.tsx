@@ -52,7 +52,7 @@ export default function HomePage() {
           setMessages(prev => [...prev, assistantMessage])
         } else {
           const errorMessage = data.error || 'An unknown API error occurred.'
-          const assistantMessage: Message = { role: 'assistant', content: \`Error: \${errorMessage}\` }
+          const assistantMessage: Message = { role: 'assistant', content: `Error: ${errorMessage}` }
           setMessages(prev => [...prev, assistantMessage])
         }
       } catch (error) {
@@ -84,7 +84,7 @@ export default function HomePage() {
   const messageListStyle: React.CSSProperties = {
     height: '350px',
     overflowY: 'auto',
-    border: \`1px solid \${PRIMARY_COLOR}\`,
+    border: `1px solid ${PRIMARY_COLOR}`,
     padding: '15px',
     marginBottom: '15px',
     backgroundColor: '#fff',
@@ -112,7 +112,7 @@ export default function HomePage() {
     padding: '10px',
     boxSizing: 'border-box',
     marginBottom: '10px',
-    border: \`1px solid \${PRIMARY_COLOR}\`,
+    border: `1px solid ${PRIMARY_COLOR}`,
     borderRadius: '4px',
   }
 
