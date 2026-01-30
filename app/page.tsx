@@ -50,7 +50,7 @@ export default function PromotoLandingPage() {
                     cursor: 'pointer',
                     fontWeight: '600',
                     fontSize: '16px'
-                }}>Book a Demo</button>
+                }}>Start Your Free Trial</button>
                 <button style={{
                     backgroundColor: 'transparent',
                     color: COLORS.TEXT_DARK,
