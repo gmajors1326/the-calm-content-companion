@@ -94,10 +94,6 @@ export default function PromotoLandingPage() {
                 <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Placeholder Card</p>
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
             </div>
-            <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Placeholder Card</p>
-                <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
-            </div>
         </div>
       </section>
     );
