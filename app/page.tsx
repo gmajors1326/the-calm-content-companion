@@ -62,7 +62,7 @@ export default function PromotoLandingPage() {
         </div>
         
         {/* Placeholder for image/stats block below hero text, structured similarly to image */}
-        <div style={{ marginTop: '120px', display: 'flex', justifyContent: 'center', gap: '25px', maxWidth: '1000px', margin: '120px auto 0 auto', flexWrap: 'wrap' }}>
+        <div style={{ marginTop: '120px', display: 'flex', justifyContent: 'center', gap: '25px', maxWidth: '1300px', margin: '120px auto 0 auto', flexWrap: 'wrap' }}>
             <div style={{ flex: 1, backgroundColor: '#fff', padding: '30px 20px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', textAlign: 'left' }}>
                 <p style={{ fontSize: '56px', fontWeight: '700', color: '#111', margin: 0 }}>5M</p>
                 <p style={{ fontSize: '16px', color: '#6b7280', margin: '4px 0 0 0' }}>revenue last year</p>
@@ -84,6 +84,10 @@ export default function PromotoLandingPage() {
             </div>
             <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
                 <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Placeholder Card</p>
+                <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
+            </div>
+            <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
+                <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Tools Placeholder</p>
                 <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
             </div>
             <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
