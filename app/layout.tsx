@@ -21,22 +21,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           zIndex: 1000
         }}>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <span style={{ fontSize: '20px', fontWeight: '700', color: '#333' }}>The Calm Content Companion&trade;</span>
+            <span style={{ fontSize: '20px', fontWeight: '400', color: '#333', fontFamily: '"Poppins", sans-serif' }}>The Calm Content Companion&trade;</span>
           </div>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             {['Home', 'Admin'].map((link) => (
               <a key={link} href={link === 'Home' ? '/' : '/admin'} style={{
                 textDecoration: 'none',
                 color: '#333',
-                fontWeight: '600',
+                fontWeight: '400',
                 fontSize: '14px',
                 padding: '8px 12px',
-                transition: 'color 0.2s'
+                transition: 'color 0.2s',
+                fontFamily: '"Poppins", sans-serif'
               }}>
                 {link}
               </a>
             ))}
           </div>
+          <div style={{ flex: 1 }}></div>
         </nav>
         <main style={{ paddingTop: '70px' }}>{children}</main>
       </body>
