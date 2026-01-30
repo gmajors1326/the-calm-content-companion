@@ -3,7 +3,7 @@
 
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { createBrowserSupabase } from '@/src/lib/supabase/client'
+import { createBrowserSupabase } from '@/lib/supabase/client'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
