@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           right: 0,
           height: '60px',
           backgroundColor: '#fff',
-          borderBottom: '1px solid #e5e5e5',
+          borderBottom: '4px solid rgba(229, 229, 229, 0.2)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
