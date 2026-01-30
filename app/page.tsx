@@ -38,9 +38,7 @@ export default function PromotoLandingPage() {
                 maxWidth: '680px',
                 margin: '0 auto 24px auto'
             }}>
-                Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post
-                <br />
-                (even when life is full).
+                Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post (even when life is full).
             </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
                 <button style={{
