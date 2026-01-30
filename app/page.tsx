@@ -32,6 +32,33 @@ const ROTATION_TOTAL_MS =
     ROTATION_TIMING.holdMs +
     ROTATION_TIMING.fadeOutMs +
     ROTATION_TIMING.gapMs;
+const TOOL_CARDS = [
+    {
+        title: 'Hook Clarity Analyzer',
+        description: 'Know if your hook makes sense — before you post.',
+        bestFor: 'first lines, Reel openers, captions'
+    },
+    {
+        title: 'Message Positioning Builder',
+        description: 'Get clear on what you’re actually about.',
+        bestFor: 'niche clarity, bio direction, confidence'
+    },
+    {
+        title: 'Content Direction Planner',
+        description: 'Stop guessing what to post.',
+        bestFor: 'weekly planning, low-energy weeks'
+    },
+    {
+        title: 'Engagement Signal Interpreter',
+        description: 'Understand what your posts are telling you.',
+        bestFor: 'improving engagement calmly'
+    },
+    {
+        title: 'Weekly Content Reflection',
+        description: 'Grow without burning out.',
+        bestFor: 'consistency, confidence, momentum'
+    }
+];
 
 export default function PromotoLandingPage() {
     const [wordIndex, setWordIndex] = useState(0);
@@ -91,7 +118,7 @@ export default function PromotoLandingPage() {
                         {ROTATING_WORDS[wordIndex]}
                     </span>
                 )}{' '}
-                Way to Show Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online</span>.</h2>
+                Way to Show <span style={{ whiteSpace: 'nowrap' }}>Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online</span>.</span></h2>
             <p style={{
                 color: '#111827',
                 fontFamily: 'Georgia, serif',
@@ -126,41 +153,13 @@ export default function PromotoLandingPage() {
         
         {/* Placeholder for image/stats block below hero text, structured similarly to image */}
         <div style={{ marginTop: '120px', display: 'flex', justifyContent: 'center', gap: '25px', maxWidth: '1300px', margin: '120px auto 0 auto', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, backgroundColor: '#fff', padding: '30px 20px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '56px', fontWeight: '700', color: '#111', margin: 0 }}>5M</p>
-                <p style={{ fontSize: '16px', color: '#6b7280', margin: '4px 0 0 0' }}>revenue last year</p>
-                <div style={{ marginTop: '20px', fontSize: '24px', color: '#9ca3af' }}>Clover</div>
-            </div>
-
-            <div style={{ flex: 1, backgroundColor: '#fff', padding: '30px 20px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '16px', color: '#0f766e', margin: '0 0 5px 0' }}>Analytics + Conversion Goals</p>
-                <p style={{ fontSize: '56px', fontWeight: '700', color: '#059669', margin: 0 }}>2.5M <span style={{ fontSize: '22px', color: '#10b981' }}>+88.4%</span></p>
-                <div style={{ marginTop: '20px', fontSize: '14px', color: '#6b7280' }}>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, lineHeight: '2' }}>
-                        <li>• One-click integration</li>
-                        <li>• Personalized Automation</li>
-                        <li>• Complete data sync</li>
-                        <li>• 24/7 expert support</li>
-                        <li>• Easy migration</li>
-                    </ul>
+            {TOOL_CARDS.map((card) => (
+                <div key={card.title} style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
+                    <p style={{ fontSize: '18px', fontWeight: '700', color: '#111', margin: 0 }}>{card.title}</p>
+                    <p style={{ fontSize: '14px', color: '#374151', margin: '8px 0 0 0', lineHeight: '1.5' }}>{card.description}</p>
+                    <p style={{ fontSize: '13px', color: '#6b7280', margin: '10px 0 0 0' }}>Best for: {card.bestFor}</p>
                 </div>
-            </div>
-            <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Placeholder Card</p>
-                <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
-            </div>
-            <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Tools Placeholder</p>
-                <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
-            </div>
-            <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Placeholder Card</p>
-                <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
-            </div>
-            <div style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                <p style={{ fontSize: '18px', fontWeight: '600', color: '#111', margin: 0 }}>Placeholder Card</p>
-                <p style={{ fontSize: '14px', color: '#6b7280', margin: '8px 0 0 0' }}>Short supporting copy goes here.</p>
-            </div>
+            ))}
         </div>
       </section>
     );
