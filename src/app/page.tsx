@@ -21,9 +21,11 @@ export default function HomePage() {
 
   // Client-side cookie check for session
   useEffect(() => {
-    const cookieHeader = document.cookie
-    const sessionMatch = cookieHeader.match(/session=([^;]+)/)
-    setSession(sessionMatch ? sessionMatch[1] : null)
+    if (typeof window !== 'undefined') {
+        const cookieHeader = document.cookie
+        const sessionMatch = cookieHeader.match(/session=([^;]+)/)
+        setSession(sessionMatch ? sessionMatch[1] : null)
+    }
   }, [])
   
   const sendMessage = useCallback(async () => {
