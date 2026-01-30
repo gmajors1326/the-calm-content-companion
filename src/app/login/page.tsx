@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from 'react'
-import { createBrowserClient } from '../../lib/supabase/client'
+import { createBrowserSupabase } from '../../lib/supabase/client'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
-  const supabase = createBrowserClient()
+  const supabase = createBrowserSupabase()
 
   async function sendOtp(e: React.FormEvent) {
     e.preventDefault()
