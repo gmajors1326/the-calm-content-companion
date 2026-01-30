@@ -26,11 +26,22 @@ export default function PromotoLandingPage() {
                 fontSize: '52px', 
                 fontWeight: '700', 
                 lineHeight: '1.2',
-                marginBottom: '20px',
+                marginBottom: '14px',
                 color: '#059669' // Darker green for H2 text
-            }}>A Calmer Way to Show Up Online.
-                <span style={{ color: '#111827', display: 'block', fontFamily: 'Georgia, serif', fontSize: '18px', fontWeight: '400' }}>Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post (even when life is full).</span>
-            </h2>
+            }}>A Calmer Way to Show Up Online.</h2>
+            <p style={{
+                color: '#111827',
+                fontFamily: 'Georgia, serif',
+                fontSize: '18px',
+                fontWeight: '400',
+                lineHeight: '1.6',
+                maxWidth: '680px',
+                margin: '0 auto 24px auto'
+            }}>
+                Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post
+                <br />
+                (even when life is full).
+            </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
                 <button style={{
                     backgroundColor: COLORS.TEXT_DARK,
