@@ -1,14 +1,14 @@
-// Server-side OpenAI client singleton
-import { Configuration, OpenAIApi } from 'openai'
-
-let openai: OpenAIApi | null = null
+// src/lib/openai.ts
+// Dependency 'openai' was removed per user request. Functionality is stubbed.
 
 export function getOpenAI() {
-  if (!openai) {
-    const config = new Configuration({ apiKey: process.env.OPENAI_API_KEY })
-    openai = new OpenAIApi(config)
+  return {
+    // Placeholder for the original OpenAIApi instance methods
+    // NOTE: This is a stub. Replace with actual implementation or re-add 'openai' dependency.
+    createChatCompletion: async (options: any) => { 
+      throw new Error('OpenAI API access is disabled: "openai" package removed from dependencies.')
+    }
   }
-  return openai
 }
 
 export default getOpenAI

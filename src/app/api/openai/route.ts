@@ -102,9 +102,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Get OpenAI client and make request
-    const openai = getOpenAI()
+    const openai: any = getOpenAI()
 
-    const response = await openai.createChatCompletion({
+    const response: any = await openai.createChatCompletion({
       model,
       messages: body.messages,
       temperature,
