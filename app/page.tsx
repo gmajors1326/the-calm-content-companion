@@ -15,7 +15,7 @@ const COLORS = {
 const HeroSection = () => (
   <section style={{ 
       backgroundColor: COLORS.LIGHT_CREAM, 
-      padding: '120px 24px 80px 24px', 
+      padding: '70px 24px 80px 24px', 
       textAlign: 'center',
       color: COLORS.TEXT_DARK
   }}>
