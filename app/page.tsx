@@ -28,7 +28,7 @@ export default function PromotoLandingPage() {
                 lineHeight: '1.2',
                 marginBottom: '14px',
                 color: '#059669' // Darker green for H2 text
-            }}>A Calmer Way to Show Up Online.</h2>
+            }}>A Calmer Way to Show Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online.</span></h2>
             <p style={{
                 color: '#111827',
                 fontFamily: 'Georgia, serif',
