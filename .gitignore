@@ -5,5 +5,4 @@ node_modules
 .vercel
 *.log
 
-.vercel
-.env*.local
+.config.cmd --url httpsgithub.comgm.txt
