@@ -1,38 +1,50 @@
 // middleware.ts
 import { NextResponse, type NextRequest } from 'next/server'
-import { createServerClient as createSSRClient } from '@supabase/ssr'
+import { createServerClient } from '@supabase/ssr'
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({
+    request,
+  })
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
 
   if (!url || !anon) {
     console.error('[middleware] Missing Supabase env vars')
-    return res
+    return response
   }
 
-  const supabase = createSSRClient(url, anon, {
+  const supabase = createServerClient(url, anon, {
     cookies: {
-      get: (name) => req.cookies.get(name)?.value,
-      set: (name, value, options) => res.cookies.set({ name, value, ...options }),
-      remove: (name, options) => res.cookies.set({ name, value: '', ...options, maxAge: 0 }),
+      getAll() {
+        return request.cookies.getAll()
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          request.cookies.set(name, value)
+        })
+        response = NextResponse.next({
+          request,
+        })
+        cookiesToSet.forEach(({ name, value, options }) => {
+          response.cookies.set(name, value, options)
+        })
+      },
     },
   })
 
-  // 🔑 THIS is what refreshes the session cookie
-  const { data } = await supabase.auth.getUser()
-  const user = data?.user
+  // Refresh session if expired
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (req.nextUrl.pathname.startsWith('/admin') && !user) {
-    const loginUrl = req.nextUrl.clone()
+  if (request.nextUrl.pathname.startsWith('/admin') && !user) {
+    const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/login'
-    loginUrl.searchParams.set('next', req.nextUrl.pathname)
+    loginUrl.searchParams.set('next', request.nextUrl.pathname)
     return NextResponse.redirect(loginUrl)
   }
 
-  return res
+  return response
 }
 
 export const config = {

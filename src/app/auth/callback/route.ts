@@ -2,7 +2,7 @@
 export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerSupabase } from '@/src/lib/supabase/server'
+import { createServerSupabase } from '@/lib/supabase/server'
 
 function safeNext(nextParam: string | null): string {
   if (!nextParam) return '/'

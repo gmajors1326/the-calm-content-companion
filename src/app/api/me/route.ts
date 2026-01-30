@@ -6,7 +6,7 @@ import { requireAuthedUser } from "@/lib/authServer";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = await requireAuthedUser(req);
+    const user = await requireAuthedUser();
     const profile = await prisma.userProfile.findUnique({ where: { userId: user.userId } });
     const upserted = profile ?? await prisma.userProfile.create({ data: { userId: user.userId, email: user.email } });
     console.log("GET /api/me", { userId: user.userId, email: user.email });

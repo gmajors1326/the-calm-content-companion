@@ -18,6 +18,7 @@ export async function getAuthedUser(): Promise<AuthedUser | null> {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data?.user) return null;
     const u = data.user;
+    if (!u.email) return null;
     return { userId: u.id, email: u.email };
   } catch (err) {
     console.error("authServer:getAuthedUser", err);
