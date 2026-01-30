@@ -1,0 +1,20 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f7f1e3;
+  color: #2b2b2b;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
