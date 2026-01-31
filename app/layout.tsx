@@ -40,6 +40,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               Home
             </a>
+            <a href="/view-the-guide" style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontWeight: '400',
+              fontSize: '14px',
+              padding: '8px 12px',
+              transition: 'color 0.2s',
+              fontFamily: '"Poppins", sans-serif'
+            }}>
+              View the Guide
+            </a>
             <a href="/" style={{
               textDecoration: 'none',
               color: '#2b2b2b',
