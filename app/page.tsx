@@ -56,7 +56,10 @@ export default function PromotoLandingPage() {
                 </h2>
               </header>
 
-              <div className="mt-6 space-y-4 text-base leading-7 text-[#143226]/85">
+              <div className="mt-6 text-base leading-7 text-[#143226]/85">
+                <p className="font-semibold text-[#143226]">Welcome</p>
+              </div>
+              <div className="mt-4 space-y-4 text-base leading-7 text-[#143226]/85">
                 <p>
                   If you’re here, there’s a good chance content has started to
                   feel heavier than it should.
@@ -94,7 +97,7 @@ export default function PromotoLandingPage() {
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <div className="w-full max-w-[520px]">
+              <div className="w-full max-w-[650px]">
                 <img
                   src="/images/guide-laptop.png"
                   alt="The Calm Content Guide displayed on a laptop screen"
