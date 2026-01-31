@@ -57,7 +57,7 @@ export default function PromotoLandingPage() {
           <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
             <div className="text-left">
               <div className="text-base leading-7 text-[#143226]/85">
-                <p className="font-semibold text-[#143226]">Welcome</p>
+                <p className="text-[22px] font-bold text-[#143226]">Welcome</p>
               </div>
               <div className="mt-4 space-y-4 text-base leading-7 text-[#143226]/85">
                 <p>
