@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           zIndex: 1000
         }}>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <span style={{ fontSize: '20px', fontWeight: '400', color: '#333', fontFamily: '"Poppins", sans-serif' }}>The Calm Content Companion&trade;</span>
+            <span style={{ fontSize: '35px', fontWeight: '400', color: '#333', fontFamily: '"Poppins", sans-serif' }}>The Calm Content Companion&trade;</span>
           </div>
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             <a href="/" style={{

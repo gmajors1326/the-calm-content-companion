@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Define colors based on image analysis and layout.tsx background
 const COLORS = {
@@ -11,27 +11,6 @@ const COLORS = {
   TEXT_LIGHT: '#e5e7eb', // Light text color for dark backgrounds
 };
 
-const ROTATING_WORDS = [
-    'Unrushed',
-    'Sustainable',
-    'Steady',
-    'Intentional',
-    'Grounded',
-    'Simple',
-    'Consistent'
-];
-const FALLBACK_WORD = 'Sustainable';
-const ROTATION_TIMING = {
-    fadeInMs: 500,
-    holdMs: 1800,
-    fadeOutMs: 400,
-    gapMs: 200
-};
-const ROTATION_TOTAL_MS =
-    ROTATION_TIMING.fadeInMs +
-    ROTATION_TIMING.holdMs +
-    ROTATION_TIMING.fadeOutMs +
-    ROTATION_TIMING.gapMs;
 const TOOL_CARDS = [
     {
         title: 'Hook Clarity Analyzer',
@@ -61,35 +40,6 @@ const TOOL_CARDS = [
 ];
 
 export default function PromotoLandingPage() {
-    const [wordIndex, setWordIndex] = useState(0);
-    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-        const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const updatePreference = () => setPrefersReducedMotion(media.matches);
-        updatePreference();
-
-        if (media.addEventListener) {
-            media.addEventListener('change', updatePreference);
-            return () => media.removeEventListener('change', updatePreference);
-        }
-
-        media.addListener(updatePreference);
-        return () => media.removeListener(updatePreference);
-    }, []);
-
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            return;
-        }
-
-        const intervalId = window.setInterval(() => {
-            setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-        }, ROTATION_TOTAL_MS);
-
-        return () => clearInterval(intervalId);
-    }, [prefersReducedMotion]);
     
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
@@ -106,19 +56,7 @@ export default function PromotoLandingPage() {
                 lineHeight: '1.2',
                 marginBottom: '14px',
                 color: '#059669' // Darker green for H2 text
-            }}>A{' '}
-                {prefersReducedMotion ? (
-                    <span style={{ display: 'inline-block' }}>{FALLBACK_WORD}</span>
-                ) : (
-                    <span
-                        key={wordIndex}
-                        className="rotating-word"
-                        style={{ animationDuration: `${ROTATION_TOTAL_MS}ms` }}
-                    >
-                        {ROTATING_WORDS[wordIndex]}
-                    </span>
-                )}{' '}
-                Way to Show <span style={{ whiteSpace: 'nowrap' }}>Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online</span>.</span></h2>
+            }}>A Sustainable Way to Show <span style={{ whiteSpace: 'nowrap' }}>Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online</span>.</span></h2>
             <p style={{
                 color: '#111827',
                 fontFamily: 'Georgia, serif',

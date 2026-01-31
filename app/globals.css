@@ -18,35 +18,3 @@ a {
 button {
   font-family: inherit;
 }
-
-.rotating-word {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(2px);
-  animation-name: rotatingWordFade;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: both;
-}
-
-@keyframes rotatingWordFade {
-  0% {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  17% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  79% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  93% {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-}
