@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               Home
             </a>
-            <a href="/view-the-guide" style={{
+            <a href="https://the-calm-content-companion.vercel.app/view-the-guide" style={{
               textDecoration: 'none',
               color: '#333',
               fontWeight: '400',

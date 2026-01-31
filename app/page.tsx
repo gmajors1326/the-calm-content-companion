@@ -94,7 +94,7 @@ export default function PromotoLandingPage() {
 
               <div className="mt-8 flex justify-center md:justify-start">
                 <a
-                  href="/view-the-guide/next"
+                  href="https://the-calm-content-companion.vercel.app/view-the-guide"
                   className="inline-flex w-full max-w-md items-center justify-center rounded-md bg-[#143226] px-6 py-3 text-base font-medium text-white shadow-sm transition hover:opacity-95 hover:text-[#cfe6c6] focus:outline-none focus:ring-2 focus:ring-[#143226] focus:ring-offset-2 sm:w-auto sm:max-w-sm"
                 >
                   Continue reading
