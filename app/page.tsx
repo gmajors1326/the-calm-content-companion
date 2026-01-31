@@ -46,15 +46,6 @@ export default function PromotoLandingPage() {
       <section className="w-full bg-[#FAF9F6] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
-            <div className="flex justify-center md:justify-start">
-              <div className="w-full max-w-[520px]">
-                <img
-                  src="/images/guide-path.png"
-                  alt="The Calm Content Guide displayed on a laptop screen"
-                  className="h-auto w-full shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
-                />
-              </div>
-            </div>
             <div className="text-left">
               <header className="space-y-3">
                 <h1 className="text-3xl font-semibold tracking-tight text-[#143226] sm:text-4xl">
@@ -100,6 +91,15 @@ export default function PromotoLandingPage() {
                 >
                   Continue reading
                 </a>
+              </div>
+            </div>
+            <div className="flex justify-center md:justify-end">
+              <div className="w-full max-w-[520px]">
+                <img
+                  src="/images/guide-laptop.png"
+                  alt="The Calm Content Guide displayed on a laptop screen"
+                  className="h-auto w-full shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
+                />
               </div>
             </div>
           </div>
