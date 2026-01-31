@@ -46,7 +46,7 @@ export default function PromotoLandingPage() {
       <section className="w-full bg-[#FAF9F6] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <header className="text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-[#143226] sm:text-[60px]">
+            <h1 className="text-4xl font-bold tracking-tight text-[#143226] sm:text-[60px]">
               The Calm Content Guide
             </h1>
             <h2 className="mt-3 text-lg font-medium text-[#143226]/80">
