@@ -30,7 +30,7 @@ export default function ViewTheGuidePage() {
             <div className="flex justify-center md:justify-start">
               <div className="w-full max-w-[520px]">
                 <Image
-                  src="/images/guide-path.png"
+                  src="/images/guide-laptop.png"
                   alt="The Calm Content Guide displayed on a laptop screen"
                   width={1040}
                   height={780}
