@@ -23,10 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 24px',
-          zIndex: 1000
+          zIndex: 1000,
+          fontFamily: '"Poppins", sans-serif'
         }}>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <span style={{ fontSize: '35px', fontWeight: '400', color: '#333', fontFamily: '"Poppins", sans-serif' }}>The Calm Content Companion&trade;</span>
+            <span style={{ fontSize: '35px', fontWeight: '400', color: '#333' }}>The Calm Content Companion&trade;</span>
           </div>
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             <a href="/" style={{
@@ -35,8 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontWeight: '400',
               fontSize: '20px',
               padding: '8px 12px',
-              transition: 'color 0.2s',
-              fontFamily: '"Poppins", sans-serif'
+              transition: 'color 0.2s'
             }}>
               Home
             </a>
@@ -46,8 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontWeight: '400',
               fontSize: '20px',
               padding: '8px 12px',
-              transition: 'color 0.2s',
-              fontFamily: '"Poppins", sans-serif'
+              transition: 'color 0.2s'
             }}>
               View the Guide
             </a>
@@ -62,8 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               backgroundColor: '#fff1cf',
               boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
               letterSpacing: '0.2px',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              fontFamily: '"Poppins", sans-serif'
+              transition: 'transform 0.2s, box-shadow 0.2s'
             }}>
               Start Your 3 Day Free Trial
             </a>
@@ -75,8 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontWeight: '400',
               fontSize: '10px',
               padding: '8px 12px',
-              transition: 'color 0.2s',
-              fontFamily: '"Poppins", sans-serif'
+              transition: 'color 0.2s'
             }}>
               Admin
             </a>
