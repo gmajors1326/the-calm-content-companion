@@ -48,7 +48,13 @@ export default function PromotoLandingPage() {
     
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
-      <section className="w-full py-16 sm:py-20" style={{ background: 'linear-gradient(180deg, #A8A927 0%, #485D18 100%)' }}>
+      <section
+        className="w-full py-16 sm:py-20"
+        style={{
+          background: 'linear-gradient(180deg, #656517 0%, #2B380E 100%)',
+          fontFamily: '"Poster", "Poppins", sans-serif'
+        }}
+      >
         <div className="mx-auto max-w-6xl px-6">
           <header className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-[#fdfaf3] sm:text-[60px]">
@@ -92,14 +98,6 @@ export default function PromotoLandingPage() {
                 </p>
               </div>
 
-              <div className="mt-8 flex justify-center md:justify-start">
-                <a
-                  href="https://the-calm-content-companion.vercel.app/view-the-guide"
-                  className="inline-flex w-full max-w-md items-center justify-center rounded-md bg-[#143226] px-6 py-3 text-base font-medium text-white shadow-sm transition hover:opacity-95 hover:text-[#cfe6c6] focus:outline-none focus:ring-2 focus:ring-[#143226] focus:ring-offset-2 sm:w-auto sm:max-w-sm"
-                >
-                  Continue reading
-                </a>
-              </div>
             </div>
             <div className="flex justify-center md:justify-end">
               <div className="w-full max-w-[850px]">
