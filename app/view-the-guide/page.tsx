@@ -35,7 +35,7 @@ export default function ViewTheGuidePage() {
                   width={1040}
                   height={780}
                   priority
-                  className="h-auto w-full shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
+                  className="h-auto w-full"
                 />
               </div>
             </div>

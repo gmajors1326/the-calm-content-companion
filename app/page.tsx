@@ -106,7 +106,7 @@ export default function PromotoLandingPage() {
                 <img
                   src="/images/guide-laptop.png"
                   alt="The Calm Content Guide displayed on a laptop screen"
-                  className="h-auto w-full shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
+                  className="h-auto w-full"
                 />
               </div>
             </div>
