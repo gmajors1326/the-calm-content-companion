@@ -67,11 +67,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               Start Your 3 Day Free Trial
             </a>
+          </div>
+          <div style={{ flex: 1, textAlign: 'right' }}>
             <a href="/admin" style={{
               textDecoration: 'none',
               color: '#333',
               fontWeight: '400',
-              fontSize: '20px',
+              fontSize: '10px',
               padding: '8px 12px',
               transition: 'color 0.2s',
               fontFamily: '"Poppins", sans-serif'
@@ -79,7 +81,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Admin
             </a>
           </div>
-          <div style={{ flex: 1 }}></div>
         </nav>
         <main style={{ paddingTop: '70px' }}>{children}</main>
       </body>

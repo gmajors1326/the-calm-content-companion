@@ -120,33 +120,33 @@ export default function PromotoLandingPage() {
         <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
           {TOOL_CARDS.map((card) => (
             <div key={card.title} style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#f1f5f0', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
+              <div style={{ width: '72px', height: '72px', borderRadius: '16px', backgroundColor: '#f1f5f0', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
                 {card.icon === 'sparkles' && (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M9.813 15.904L9 18l-.813-2.096a4.5 4.5 0 00-2.832-2.832L3 12l2.355-.813a4.5 4.5 0 002.832-2.832L9 6l.813 2.355a4.5 4.5 0 002.832 2.832L15 12l-2.355.813a4.5 4.5 0 00-2.832 2.832z" />
                     <path d="M18 7l.375 1.08A2.25 2.25 0 0019.92 9.625L21 10l-1.08.375a2.25 2.25 0 00-1.545 1.545L18 13l-.375-1.08a2.25 2.25 0 00-1.545-1.545L15 10l1.08-.375a2.25 2.25 0 001.545-1.545L18 7z" />
                   </svg>
                 )}
                 {card.icon === 'message' && (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 6h14a2 2 0 012 2v6a2 2 0 01-2 2H9l-4 4v-4H5a2 2 0 01-2-2V8a2 2 0 012-2z" />
                   </svg>
                 )}
                 {card.icon === 'compass' && (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="8" />
                     <path d="M12 8l3 4-4 3 1-7z" />
                   </svg>
                 )}
                 {card.icon === 'signal' && (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12v6" />
                     <path d="M12 9v9" />
                     <path d="M19 6v12" />
                   </svg>
                 )}
                 {card.icon === 'leaf' && (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 18c6 0 10-4 10-10 0 0-4 0-7 3-2 2-3 5-3 7z" />
                     <path d="M10 14c1-2 3-3 6-4" />
                   </svg>
