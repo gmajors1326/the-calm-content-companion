@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               textDecoration: 'none',
               color: '#333',
               fontWeight: '400',
-              fontSize: '14px',
+              fontSize: '20px',
               padding: '8px 12px',
               transition: 'color 0.2s',
               fontFamily: '"Poppins", sans-serif'
@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               textDecoration: 'none',
               color: '#333',
               fontWeight: '400',
-              fontSize: '14px',
+              fontSize: '20px',
               padding: '8px 12px',
               transition: 'color 0.2s',
               fontFamily: '"Poppins", sans-serif'
@@ -55,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               textDecoration: 'none',
               color: '#2b2b2b',
               fontWeight: '400',
-              fontSize: '13px',
+              fontSize: '20px',
               padding: '8px 16px',
               borderRadius: '999px',
               border: '1px solid #e5dcc6',
@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               textDecoration: 'none',
               color: '#333',
               fontWeight: '400',
-              fontSize: '14px',
+              fontSize: '20px',
               padding: '8px 12px',
               transition: 'color 0.2s',
               fontFamily: '"Poppins", sans-serif'
