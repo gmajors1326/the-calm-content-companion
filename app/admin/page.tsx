@@ -1,37 +1,55 @@
+import Link from "next/link";
+import { requireAdminSession } from "../../lib/access";
+
 export default function AdminPage() {
+  requireAdminSession("/admin");
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f9fafb',
-      padding: '40px 24px'
-    }}>
-      <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        <h1 style={{
-          fontSize: '32px',
-          fontWeight: '700',
-          color: '#111827',
-          marginBottom: '24px'
-        }}>Admin Dashboard</h1>
-        
-        <div style={{
-          backgroundColor: '#fff',
-          borderRadius: '12px',
-          padding: '32px',
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-          border: '1px solid #e5e7eb'
-        }}>
-          <p style={{
-            fontSize: '16px',
-            color: '#6b7280',
-            lineHeight: '1.6'
-          }}>
-            Admin controls and settings will appear here. This is a placeholder for future admin functionality.
+    <main className="min-h-screen bg-[#FAF9F6]">
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-5xl">
+          <h1 className="text-3xl font-semibold text-[#143226]">Admin</h1>
+          <p className="mt-2 text-sm text-[#475569]">
+            High-level metrics and status snapshots.
           </p>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <div className="rounded-xl bg-white p-6 shadow-[0_10px_28px_rgba(0,0,0,0.08)]">
+              <p className="text-xs uppercase tracking-wide text-[#94a3b8]">Users</p>
+              <p className="mt-3 text-2xl font-semibold text-[#143226]">0</p>
+            </div>
+            <div className="rounded-xl bg-white p-6 shadow-[0_10px_28px_rgba(0,0,0,0.08)]">
+              <p className="text-xs uppercase tracking-wide text-[#94a3b8]">Purchases</p>
+              <p className="mt-3 text-2xl font-semibold text-[#143226]">0</p>
+            </div>
+            <div className="rounded-xl bg-white p-6 shadow-[0_10px_28px_rgba(0,0,0,0.08)]">
+              <p className="text-xs uppercase tracking-wide text-[#94a3b8]">Tool runs</p>
+              <p className="mt-3 text-2xl font-semibold text-[#143226]">0</p>
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              href="/admin/users"
+              className="rounded-md bg-[#143226] px-4 py-3 text-sm font-semibold text-white"
+            >
+              Users
+            </Link>
+            <Link
+              href="/admin/purchases"
+              className="rounded-md border border-[#d8e1d5] px-4 py-3 text-sm font-semibold text-[#143226]"
+            >
+              Purchases
+            </Link>
+            <Link
+              href="/admin/tools"
+              className="rounded-md border border-[#d8e1d5] px-4 py-3 text-sm font-semibold text-[#143226]"
+            >
+              Tool metrics
+            </Link>
+          </div>
         </div>
-      </div>
-    </div>
-  )
+      </section>
+    </main>
+  );
 }
