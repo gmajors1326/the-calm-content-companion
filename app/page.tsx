@@ -43,77 +43,65 @@ export default function PromotoLandingPage() {
     
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
-      <section style={{ 
-          backgroundColor: COLORS.LIGHT_CREAM, 
-          padding: '70px 24px 80px 24px', 
-          textAlign: 'center',
-          color: COLORS.TEXT_DARK
-      }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-            <h2 style={{ 
-                fontSize: '52px', 
-                fontWeight: '700', 
-                lineHeight: '1.2',
-                marginBottom: '14px',
-                color: '#059669' // Darker green for H2 text
-            }}>A Sustainable Way to Show <span style={{ whiteSpace: 'nowrap' }}>Up <span style={{ fontFamily: '"Bigtime", "Poppins", sans-serif' }}>Online</span>.</span></h2>
-            <p style={{
-                color: '#111827',
-                fontFamily: 'Georgia, serif',
-                fontSize: '18px',
-                fontWeight: '400',
-                lineHeight: '1.6',
-                maxWidth: '680px',
-                margin: '0 auto 24px auto'
-            }}>
-                Start with the Calm Content Companion — a simple, gentle guide that helps you know what to post (even when life is full).
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
-                <button style={{
-                    backgroundColor: COLORS.DARK_GREEN,
-                    color: '#fdfaf3',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontWeight: '600',
-                    fontSize: '16px',
-                    transition: 'background-color 0.2s ease'
-                }}
-                onMouseEnter={(event) => {
-                    event.currentTarget.style.backgroundColor = '#2f4a3a';
-                }}
-                onMouseLeave={(event) => {
-                    event.currentTarget.style.backgroundColor = COLORS.DARK_GREEN;
-                }}>Start Your Free Trial</button>
+      <section className="w-full bg-[#FAF9F6] py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
+            <div className="flex justify-center md:justify-start">
+              <div className="w-full max-w-[520px]">
+                <img
+                  src="/images/guide-path.png"
+                  alt="The Calm Content Guide displayed on a laptop screen"
+                  className="h-auto w-full shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
+                />
+              </div>
             </div>
-        </div>
-      </section>
-    );
+            <div className="text-left">
+              <header className="space-y-3">
+                <h1 className="text-3xl font-semibold tracking-tight text-[#143226] sm:text-4xl">
+                  The Calm Content Guide
+                </h1>
+                <h2 className="text-lg font-medium text-[#143226]/80">
+                  A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
+                </h2>
+              </header>
 
-    const GuideSection = () => (
-      <section id="guide" className="guide-section">
-        <div className="guide-inner">
-          <div className="guide-image-wrap">
-            <img
-              src="/images/guide-laptop.png"
-              alt="The Calm Content Companion Guide preview"
-              className="guide-image"
-            />
-          </div>
-          <div className="guide-copy">
-            <h2 className="guide-title">A Calm Starting Point</h2>
-            <p className="guide-description">
-              The Calm Content Companion Guide is a gentle, simple walkthrough to help you stop
-              overthinking what to post and start showing up in a way that actually fits your life.
-            </p>
-            <ul className="guide-list">
-              <li>• No daily posting rules</li>
-              <li>• No pressure</li>
-              <li>• No performative marketing</li>
-            </ul>
-            <p className="guide-note">Just clarity, structure, and a calmer way to grow.</p>
-            <a className="guide-cta" href="/guide">View the Guide</a>
+              <div className="mt-6 space-y-4 text-base leading-7 text-[#143226]/85">
+                <p>
+                  If you’re here, there’s a good chance content has started to
+                  feel heavier than it should.
+                </p>
+
+                <p>
+                  Maybe you know you want to show up — but every time you open
+                  your phone, you feel overwhelmed by advice, trends, and
+                  pressure to do more.
+                </p>
+
+                <p>
+                  I created <em>The Calm Content Guide</em> because I’ve been
+                  there too.
+                </p>
+
+                <p>
+                  I didn’t struggle because I wasn’t capable. I struggled
+                  because content had become noisy, complicated, and exhausting.
+                </p>
+
+                <p>
+                  What changed everything wasn’t learning more.{" "}
+                  <strong>It was learning how to simplify.</strong>
+                </p>
+              </div>
+
+              <div className="mt-8 flex justify-center md:justify-start">
+                <a
+                  href="/view-the-guide/next"
+                  className="inline-flex w-full max-w-md items-center justify-center rounded-md bg-[#143226] px-6 py-3 text-base font-medium text-white shadow-sm transition hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-[#143226] focus:ring-offset-2 sm:w-auto sm:max-w-sm"
+                >
+                  Continue reading
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -347,7 +335,6 @@ export default function PromotoLandingPage() {
     return (
       <div style={{ fontFamily: 'Arial, sans-serif' }}> {/* Default font as a fallback */}
         <HeroSection />
-        <GuideSection />
         <ToolsSection />
         <GrowthSection /> 
         <PricingSection />
