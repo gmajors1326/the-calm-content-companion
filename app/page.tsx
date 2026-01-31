@@ -102,7 +102,7 @@ export default function PromotoLandingPage() {
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <div className="w-full max-w-[650px]">
+              <div className="w-full max-w-[850px]">
                 <img
                   src="/images/guide-laptop.png"
                   alt="The Calm Content Guide displayed on a laptop screen"
