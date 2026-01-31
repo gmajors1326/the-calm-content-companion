@@ -45,18 +45,18 @@ export default function PromotoLandingPage() {
     const HeroSection = () => (
       <section className="w-full bg-[#FAF9F6] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
-            <div className="text-left">
-              <header className="space-y-3">
-                <h1 className="text-3xl font-semibold tracking-tight text-[#143226] sm:text-4xl">
-                  The Calm Content Guide
-                </h1>
-                <h2 className="text-lg font-medium text-[#143226]/80">
-                  A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
-                </h2>
-              </header>
+          <header className="text-center">
+            <h1 className="text-3xl font-semibold tracking-tight text-[#143226] sm:text-4xl">
+              The Calm Content Guide
+            </h1>
+            <h2 className="mt-3 text-lg font-medium text-[#143226]/80">
+              A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
+            </h2>
+          </header>
 
-              <div className="mt-6 text-base leading-7 text-[#143226]/85">
+          <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
+            <div className="text-left">
+              <div className="text-base leading-7 text-[#143226]/85">
                 <p className="font-semibold text-[#143226]">Welcome</p>
               </div>
               <div className="mt-4 space-y-4 text-base leading-7 text-[#143226]/85">
