@@ -88,16 +88,47 @@ export default function PromotoLandingPage() {
                 }}>Start Your Free Trial</button>
             </div>
         </div>
-        
-        {/* Placeholder for image/stats block below hero text, structured similarly to image */}
-        <div style={{ marginTop: '120px', display: 'flex', justifyContent: 'center', gap: '25px', maxWidth: '1300px', margin: '120px auto 0 auto', flexWrap: 'wrap' }}>
-            {TOOL_CARDS.map((card) => (
-                <div key={card.title} style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
-                    <p style={{ fontSize: '18px', fontWeight: '700', color: '#111', margin: 0 }}>{card.title}</p>
-                    <p style={{ fontSize: '14px', color: '#374151', margin: '8px 0 0 0', lineHeight: '1.5' }}>{card.description}</p>
-                    <p style={{ fontSize: '13px', color: '#6b7280', margin: '10px 0 0 0' }}>Best for: {card.bestFor}</p>
-                </div>
-            ))}
+      </section>
+    );
+
+    const GuideSection = () => (
+      <section id="guide" className="guide-section">
+        <div className="guide-inner">
+          <div className="guide-image-wrap">
+            <img
+              src="/images/guide-laptop.png"
+              alt="The Calm Content Companion Guide preview"
+              className="guide-image"
+            />
+          </div>
+          <div className="guide-copy">
+            <h2 className="guide-title">A Calm Starting Point</h2>
+            <p className="guide-description">
+              The Calm Content Companion Guide is a gentle, simple walkthrough to help you stop
+              overthinking what to post and start showing up in a way that actually fits your life.
+            </p>
+            <ul className="guide-list">
+              <li>• No daily posting rules</li>
+              <li>• No pressure</li>
+              <li>• No performative marketing</li>
+            </ul>
+            <p className="guide-note">Just clarity, structure, and a calmer way to grow.</p>
+            <a className="guide-cta" href="/guide">View the Guide</a>
+          </div>
+        </div>
+      </section>
+    );
+
+    const ToolsSection = () => (
+      <section style={{ backgroundColor: COLORS.LIGHT_CREAM, padding: '0 24px 100px 24px' }}>
+        <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
+          {TOOL_CARDS.map((card) => (
+            <div key={card.title} style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
+              <p style={{ fontSize: '18px', fontWeight: '700', color: '#111', margin: 0 }}>{card.title}</p>
+              <p style={{ fontSize: '14px', color: '#374151', margin: '8px 0 0 0', lineHeight: '1.5' }}>{card.description}</p>
+              <p style={{ fontSize: '13px', color: '#6b7280', margin: '10px 0 0 0' }}>Best for: {card.bestFor}</p>
+            </div>
+          ))}
         </div>
       </section>
     );
@@ -316,6 +347,8 @@ export default function PromotoLandingPage() {
     return (
       <div style={{ fontFamily: 'Arial, sans-serif' }}> {/* Default font as a fallback */}
         <HeroSection />
+        <GuideSection />
+        <ToolsSection />
         <GrowthSection /> 
         <PricingSection />
         <TrustSection />
