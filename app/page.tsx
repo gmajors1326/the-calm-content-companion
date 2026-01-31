@@ -48,7 +48,7 @@ export default function PromotoLandingPage() {
     
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
-      <section className="w-full bg-[#8aa37a] py-16 sm:py-20">
+      <section className="w-full bg-[#4f6b4a] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <header className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-[#fdfaf3] sm:text-[60px]">
