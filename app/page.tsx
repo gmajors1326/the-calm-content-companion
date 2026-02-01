@@ -52,6 +52,10 @@ export default function PromotoLandingPage() {
         className="relative w-full py-16 sm:py-20"
         style={{
           backgroundColor: '#b35c3d',
+          backgroundImage: "url('/images/bg1.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           minHeight: '60vh',
           fontFamily: '"Poster", "Poppins", sans-serif'
         }}
