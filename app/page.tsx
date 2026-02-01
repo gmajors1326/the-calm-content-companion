@@ -455,9 +455,10 @@ export default function PromotoLandingPage() {
         <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{isOpen ? '−' : '+'}</span>
       </button>
       {isOpen && (
-        <p style={{ color: '#6b7280', paddingTop: '10px', fontSize: '14px', whiteSpace: 'pre-line' }}>
-          {answer}
-        </p>
+        <p
+          style={{ color: '#6b7280', paddingTop: '10px', fontSize: '14px' }}
+          dangerouslySetInnerHTML={{ __html: answer.replace(/\n/g, '<br />') }}
+        />
       )}
     </div>
   );
@@ -467,8 +468,8 @@ export default function PromotoLandingPage() {
 
     const faqs = [
       {
-        q: "What do I get if I only buy the Guide?",
-        a: "You get full access to The Calm Content Guide plus 5 runs per tool to help you apply what you've learned.\n\nIf you want ongoing support, you can upgrade later."
+        q: "What comes with The Calm Content Guide?",
+        a: "The full Guide plus 5 runs per tool per day unlimited! It's to help you apply the system. No subscription required. <br>What is a run? Our FAQ's explain it."
       },
       {
         q: "Do I need to start with Pro or Elite?",
