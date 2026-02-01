@@ -251,6 +251,32 @@ export default function PromotoLandingPage() {
     </section>
   );
 
+  const SecondaryIntroSection = () => (
+    <section style={{ padding: '90px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: '280px' }}>
+          <Image
+            src="/images/guide-laptop.png"
+            alt="Placeholder guide preview"
+            width={620}
+            height={420}
+            className="h-auto w-full"
+            style={{ borderRadius: '16px', boxShadow: '0 14px 30px rgba(0,0,0,0.12)' }}
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: '280px', textAlign: 'left' }}>
+          <h2 style={{ fontSize: '34px', fontWeight: '700', marginBottom: '16px', color: COLORS.TEXT_DARK }}>
+            A Calm, Clear Path Forward
+          </h2>
+          <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a nibh sit amet nisl interdum convallis. Vivamus non lacus vel nibh euismod dictum.</p>
+            <p>Donec posuere, nibh non vulputate finibus, velit risus tristique eros, at sodales nisl erat nec augue. Sed ut ligula in lorem dignissim facilisis.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
   // --- Component for Pricing Section ---
   const PricingSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK, textAlign: 'center' }}>
@@ -442,6 +468,7 @@ export default function PromotoLandingPage() {
     <div style={{ fontFamily: 'Arial, sans-serif' }}> {/* Default font as a fallback */}
       <HeroSection />
       <IntroSection />
+      <SecondaryIntroSection />
       <ToolsSection />
       <GrowthSection />
       <PricingSection />
