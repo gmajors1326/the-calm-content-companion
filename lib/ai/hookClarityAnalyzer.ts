@@ -39,12 +39,37 @@ export async function runHookClarityAnalyzer(
     "If you cannot provide enough items, use empty strings to fill required fields. " +
     "Always include all required keys with string values.";
 
+  const contractExample = JSON.stringify(
+    {
+      score: 0,
+      verdict: "",
+      issues: ["", "", ""],
+      best_pick: {
+        rewritten_hook: "",
+        approach: "",
+        why: "",
+        variations: ["", ""]
+      },
+      rewrites: [
+        { rewritten_hook: "", approach: "", why: "" },
+        { rewritten_hook: "", approach: "", why: "" },
+        { rewritten_hook: "", approach: "", why: "" },
+        { rewritten_hook: "", approach: "", why: "" },
+        { rewritten_hook: "", approach: "", why: "" }
+      ]
+    },
+    null,
+    2
+  );
+
   const userPrompt = [
     `Hook: ${input.hook_text}`,
     `Platform: ${input.platform}`,
     `Tone: ${input.tone}`,
     input.niche ? `Niche: ${input.niche}` : "",
-    input.audience ? `Audience: ${input.audience}` : ""
+    input.audience ? `Audience: ${input.audience}` : "",
+    "Return JSON exactly in this shape:",
+    contractExample
   ]
     .filter(Boolean)
     .join("\n");
