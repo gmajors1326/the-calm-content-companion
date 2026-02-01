@@ -294,6 +294,46 @@ export default function PromotoLandingPage() {
     </section>
   );
 
+  const OutcomeSection = () => (
+    <section style={{ padding: '90px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: '280px' }}>
+          <Image
+            src="/images/guide-laptop.png"
+            alt="Guide preview"
+            width={620}
+            height={420}
+            className="h-auto w-full"
+            style={{ borderRadius: '16px', boxShadow: '0 14px 30px rgba(0,0,0,0.12)' }}
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: '280px', textAlign: 'left' }}>
+          <h2 style={{ fontSize: '34px', fontWeight: '700', marginBottom: '16px', color: COLORS.TEXT_DARK }}>
+            By the time you finish this guide, you'll walk away with:
+          </h2>
+          <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px', color: '#374151', fontSize: '16px', lineHeight: '1.8' }}>
+            <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+              <span>A clear message you know how to repeat</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+              <span>A posting rhythm you can actually sustain</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+              <span>A simple engagement routine that supports growth</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+              <span>And the confidence to create content without overthinking</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+
   // --- Component for Pricing Section ---
   const PricingSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK, textAlign: 'center' }}>
@@ -486,6 +526,7 @@ export default function PromotoLandingPage() {
       <HeroSection />
       <IntroSection />
       <SecondaryIntroSection />
+      <OutcomeSection />
       <ToolsSection />
       <GrowthSection />
       <PricingSection />
