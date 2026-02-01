@@ -19,13 +19,16 @@ const TOOL_CARDS = [
     title: 'Hook Clarity Analyzer',
     description: 'Know if your hook makes sense — before you post.',
     bestFor: 'first lines, Reel openers, captions',
-    href: '/tools/hook-clarity-analyzer'
+    href: '/tools/hook-clarity-analyzer',
+    cta: 'Try Hook Clarity Analyzer'
   },
   {
     icon: 'message',
     title: 'Message Positioning Builder',
     description: 'Get clear on what you’re actually about.',
-    bestFor: 'niche clarity, bio direction, confidence'
+    bestFor: 'niche clarity, bio direction, confidence',
+    href: '/tools/message-positioning-builder',
+    cta: 'Try Message Positioning Builder'
   },
   {
     icon: 'compass',
@@ -187,7 +190,7 @@ export default function PromotoLandingPage() {
                   boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
                 }}
               >
-                Try Hook Clarity Analyzer
+                {card.cta || 'Open tool'}
               </Link>
             ) : null}
           </div>
