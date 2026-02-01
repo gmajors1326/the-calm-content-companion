@@ -72,7 +72,7 @@ export default function PromotoLandingPage() {
             <h1 className="text-4xl font-bold tracking-tight text-[#ffffff] sm:text-[60px]">
               𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
             </h1>
-            <h2 className="mt-2 text-[22px] font-medium text-[#ffffff]">
+            <h2 className="mt-2 text-[22px] font-medium leading-[26px] text-[#ffffff]">
               A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
             </h2>
           </header>
