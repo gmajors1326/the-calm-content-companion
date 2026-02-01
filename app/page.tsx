@@ -72,17 +72,17 @@ export default function PromotoLandingPage() {
             <h1 className="text-4xl font-bold tracking-tight text-[#ffffff] sm:text-[60px]">
               𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
             </h1>
-            <h2 className="mt-3 text-[22px] font-medium text-[#ffffff]">
+            <h2 className="mt-2 text-[22px] font-medium text-[#ffffff]">
               A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
             </h2>
           </header>
 
-          <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
+          <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
             <div className="text-left">
               <div className="text-base leading-7 text-[#ffffff]">
                 <p className="text-[22px] font-bold text-[#ffffff]">Welcome</p>
               </div>
-              <div className="mt-4 space-y-4 text-base leading-7 text-[#ffffff]">
+              <div className="mt-3 space-y-4 text-base leading-7 text-[#ffffff]">
                 <p>
                   If you’re here, there’s a good chance content has started to
                   feel heavier than it should.
