@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import LoginForm from "./LoginForm";
 
+export const dynamic = "force-dynamic";
+
 export default function LoginPage() {
   return (
     <main className="min-h-screen bg-[#FAF9F6]">
