@@ -82,7 +82,7 @@ export default function PromotoLandingPage() {
       <div className="relative mx-auto max-w-6xl px-6">
         <header className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-[#ffffff] sm:text-[60px]">
-            𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
+            𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐌𝐞𝐭𝐡𝐨𝐝 𝐆𝐮𝐢𝐝𝐞
           </h1>
           <h2 className="text-[22px] font-medium leading-[26px] text-[#ffffff]" style={{ marginTop: '18px' }}>
             A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without&nbsp;burnout.
@@ -107,7 +107,7 @@ export default function PromotoLandingPage() {
               </p>
 
               <p>
-                I created <em>The Calm Content Guide</em> because I’ve been
+                I created <em>The Calm Content Method Guide</em> because I’ve been
                 there too.
               </p>
 
@@ -149,7 +149,7 @@ export default function PromotoLandingPage() {
             margin: '20px 0 8px 0'
           }}
         >
-          𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐓𝐨𝐨𝐥𝐛𝐨𝐱
+          𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐂𝐨𝐦𝐩𝐚𝐧𝐢𝐨𝐧
         </h2>
         <p style={{ fontSize: '18px', fontWeight: '600', color: COLORS.TEXT_DARK, margin: '0 0 10px 0' }}>
           Small tools that support the system — helping you apply The Calm Content Guide with clarity and confidence.
@@ -247,9 +247,6 @@ export default function PromotoLandingPage() {
   // --- Component for Proven Growth Results Section ---
   const GrowthSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT, textAlign: 'center' }}>
-      <p style={{ fontSize: '18px', fontWeight: '500', marginBottom: '18px', lineHeight: '1.5', fontFamily: '"Poppins", sans-serif' }}>
-        Welcome to the Calm Content Guide. It is the perfect toolbox to guide you through the Content Creation Process.
-      </p>
       <h2 style={{ fontSize: '44px', fontWeight: '500', margin: 0, lineHeight: '1.2', fontFamily: '"Palmyra", serif', fontStyle: 'italic' }}>
         Take a breath.
         <br />
