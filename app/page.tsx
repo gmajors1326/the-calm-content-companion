@@ -475,6 +475,10 @@ export default function PromotoLandingPage() {
         a: "Yes.\nGuests can run each tool once to see how it works.\n\nNo email required. No pressure."
       },
       {
+        q: "What's a \"run\"?",
+        a: "A run is one completed result from a tool.\n\nYou can tweak your inputs and run again when you're ready."
+      },
+      {
         q: "How many runs do I get before upgrading?",
         a: "Guests: 1 run per tool\n\nGuide owners: 5 runs per tool\n\nPro & Elite: Unlimited runs\n\nYou're never rushed. Use them when it feels helpful."
       },
