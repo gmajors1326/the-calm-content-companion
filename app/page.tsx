@@ -424,14 +424,14 @@ export default function PromotoLandingPage() {
   }) => (
     <div
       className={`flex h-full flex-col rounded-2xl border bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.06)] ${
-        highlight ? 'border-[#e5dcc6] shadow-[0_16px_32px_rgba(0,0,0,0.08)]' : 'border-[#e5e7eb]'
+        highlight ? 'border-[#a3e635] shadow-[0_16px_32px_rgba(0,0,0,0.08)]' : 'border-[#e5e7eb]'
       }`}
       style={{
         fontFamily: '"Poppins", sans-serif',
         ...(highlight
           ? {
               transform: 'translateY(-8px) scale(1.03)',
-              boxShadow: '0 24px 44px rgba(15,42,30,0.22), 0 0 36px rgba(34,197,94,0.32)'
+              boxShadow: '0 24px 44px rgba(15,42,30,0.22), 0 0 42px rgba(163,230,53,0.45)'
             }
           : {})
       }}
@@ -490,7 +490,7 @@ export default function PromotoLandingPage() {
       <div className="mx-auto max-w-6xl">
         <div className="text-center" style={{ fontFamily: '"Poppins", sans-serif' }}>
           <h2 className="font-semibold text-white" style={{ fontSize: '61px' }}>𝐏𝐫𝐢𝐜𝐢𝐧𝐠</h2>
-          <p className="mt-3 text-[#e5e7eb]" style={{ fontSize: '22px', lineHeight: '26px' }}>
+          <p className="mt-3 text-[#e5e7eb]" style={{ fontSize: '20px', lineHeight: '26px' }}>
             Choose the level of support you want — start with the Guide, and upgrade only if it feels helpful.
           </p>
         </div>
