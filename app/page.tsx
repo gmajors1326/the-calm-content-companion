@@ -513,8 +513,8 @@ export default function PromotoLandingPage() {
       <IntroSection />
       <SecondaryIntroSection />
       <OutcomeSection />
-      <ToolsSection />
       <GrowthSection />
+      <ToolsSection />
       <PricingSection />
       <TrustSection />
       <FAQSection />
