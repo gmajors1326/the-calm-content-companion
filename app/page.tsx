@@ -200,8 +200,8 @@ export default function PromotoLandingPage() {
 
   const ChecklistIcon = () => (
     <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
-      <circle cx="12" cy="12" r="11" fill={COLORS.ACCENT_YELLOW} stroke="#d6a400" strokeWidth="1" />
-      <path d="M7 12.5l3 3 7-7" stroke={COLORS.DARK_GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="12" r="11" fill={COLORS.DARK_GREEN} stroke={COLORS.DARK_GREEN} strokeWidth="1" />
+      <path d="M7 12.5l3 3 7-7" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 
