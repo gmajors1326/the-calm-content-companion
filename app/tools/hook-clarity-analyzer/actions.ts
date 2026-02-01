@@ -1,27 +1,39 @@
 "use server";
 
-import {
-  type HookClarityInput,
-  type HookClarityResult,
-  runHookClarityAnalyzer
-} from "../../../lib/ai/hookClarityAnalyzer";
+import { runHookClarityAnalyzer } from "@/lib/ai/hookClarityAnalyzer";
 
-export async function analyzeHookClarity(input: HookClarityInput): Promise<HookClarityResult> {
-  if (!input.hook_text || input.hook_text.trim().length === 0) {
-    throw new Error("Hook text is required.");
-  }
-  if (!input.platform) {
-    throw new Error("Platform is required.");
-  }
-  if (!input.tone) {
-    throw new Error("Tone is required.");
-  }
+type Ok = { ok: true; data: any };
+type Fail = { ok: false; message: string; debugId?: string };
+export type HookClarityResult = Ok | Fail;
 
-  return runHookClarityAnalyzer({
-    hook_text: input.hook_text.trim(),
-    niche: input.niche?.trim() || undefined,
-    audience: input.audience?.trim() || undefined,
-    platform: input.platform,
-    tone: input.tone
-  });
+export async function analyzeHookClarity(input: {
+  hook_text: string;
+  niche?: string;
+  audience?: string;
+  platform: "IG Reels" | "TikTok" | "YT Shorts";
+  tone: "calm" | "direct" | "playful" | "premium";
+}): Promise<HookClarityResult> {
+  const debugId = `HCA-${Date.now().toString(36)}`;
+  try {
+    const data = await runHookClarityAnalyzer(input);
+    return { ok: true, data };
+  } catch (err: any) {
+    const msg = typeof err?.message === "string" ? err.message : "Unknown error";
+
+    console.error(`[HookClarityAnalyzer][${debugId}]`, msg, err?.stack || err);
+
+    if (msg.toLowerCase().includes("openai_api_key") || msg.toLowerCase().includes("missing openai")) {
+      return {
+        ok: false,
+        message: "Tool isn’t connected yet. OPENAI_API_KEY is missing.",
+        debugId,
+      };
+    }
+
+    return {
+      ok: false,
+      message: "Something went wrong. Please try again.",
+      debugId,
+    };
+  }
 }

@@ -95,7 +95,7 @@ export default function HookClarityAnalyzerClient() {
   const [platform, setPlatform] = useState<(typeof PLATFORM_OPTIONS)[number] | "">("");
   const [tone, setTone] = useState<(typeof TONE_OPTIONS)[number] | "">("");
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<{ message: string; debugId?: string } | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const canAnalyze = hookText.trim().length > 0 && platform && tone && !isPending;
@@ -122,24 +122,31 @@ export default function HookClarityAnalyzerClient() {
     platform: (typeof PLATFORM_OPTIONS)[number];
     tone: (typeof TONE_OPTIONS)[number];
   }) => {
-    setError("");
+    setError(null);
     setAnalysis(null);
 
     startTransition(async () => {
       try {
         const result = await analyzeHookClarity(payload);
 
-        setAnalysis(result as Analysis);
+        if (result.ok === false) {
+          setError({ message: result.message, debugId: result.debugId });
+          setAnalysis(null);
+          return;
+        }
+
+        setAnalysis(result.data as Analysis);
+        setError(null);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unable to analyze the hook right now.";
-        setError(message);
+        setError({ message });
       }
     });
   };
 
   const handleAnalyze = () => {
     if (!platform || !tone) {
-      setError("Platform and tone are required.");
+      setError({ message: "Platform and tone are required." });
       return;
     }
 
@@ -165,7 +172,7 @@ export default function HookClarityAnalyzerClient() {
     setPlatform(example.platform);
     setTone(example.tone);
     setAnalysis(null);
-    setError("");
+    setError(null);
     runAnalysis({
       hook_text: example.hook_text,
       niche: example.niche,
@@ -185,7 +192,7 @@ export default function HookClarityAnalyzerClient() {
           onSubmit={(event) => {
             event.preventDefault();
             if (!canAnalyze) {
-              setError("Please complete the required fields.");
+              setError({ message: "Please complete the required fields." });
               return;
             }
             handleAnalyze();
@@ -304,7 +311,7 @@ export default function HookClarityAnalyzerClient() {
                 setPlatform("");
                 setTone("");
                 setAnalysis(null);
-                setError("");
+                setError(null);
               }}
               disabled={isPending}
             >
@@ -314,7 +321,13 @@ export default function HookClarityAnalyzerClient() {
         </form>
       </ToolResultCard>
 
-      {error && <ToolError message={error} onRetry={() => setError("")} />}
+      {error && (
+        <ToolError
+          message={error.message}
+          debugId={error.debugId}
+          onRetry={() => setError(null)}
+        />
+      )}
 
       {isPending && (
         <div className="grid gap-6">
