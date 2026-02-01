@@ -39,16 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               Home
             </a>
-            <a href="/pricing" style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontWeight: '400',
-              fontSize: '20px',
-              padding: '8px 12px',
-              transition: 'color 0.2s'
-            }}>
-              Pricing
-            </a>
             <a href="https://the-calm-content-companion.vercel.app/view-the-guide" style={{
               textDecoration: 'none',
               color: '#333',
@@ -73,6 +63,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               transition: 'transform 0.2s, box-shadow 0.2s'
             }}>
               Start Your 3 Day Free Trial
+            </a>
+            <a href="/pricing" style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontWeight: '400',
+              fontSize: '20px',
+              padding: '8px 12px',
+              transition: 'color 0.2s'
+            }}>
+              Pricing
             </a>
           </div>
           <div style={{ flex: 1, textAlign: 'right' }}>
