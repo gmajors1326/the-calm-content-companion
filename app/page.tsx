@@ -49,18 +49,25 @@ export default function PromotoLandingPage() {
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
       <section
-        className="w-full py-16 sm:py-20"
+        className="relative w-full py-16 sm:py-20"
         style={{
           backgroundColor: '#b35c3d',
-          backgroundImage: "linear-gradient(rgba(179, 92, 61, 0.1), rgba(179, 92, 61, 0.1)), url('/images/bg1.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
           minHeight: '60vh',
           fontFamily: '"Poster", "Poppins", sans-serif'
         }}
       >
-        <div className="mx-auto max-w-6xl px-6">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/bg1.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.9
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-6">
           <header className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-[#fdfaf3] sm:text-[60px]">
               𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
