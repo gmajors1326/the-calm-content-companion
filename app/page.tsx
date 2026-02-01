@@ -467,6 +467,10 @@ export default function PromotoLandingPage() {
 
     const faqs = [
       {
+        q: "What do I get if I only buy the Guide?",
+        a: "You get full access to The Calm Content Guide plus 5 runs per tool to help you apply what you've learned.\n\nIf you want ongoing support, you can upgrade later."
+      },
+      {
         q: "Do I need to start with Pro or Elite?",
         a: "Not at all.\n\nMany people start with the Guide, try the tools, and upgrade only if it feels helpful.\n\nYou're not meant to rush."
       },
@@ -493,10 +497,6 @@ export default function PromotoLandingPage() {
       {
         q: "What happens when I use all my runs?",
         a: "Nothing dramatic.\n\nYou'll simply see an option to upgrade if you want continued access.\nYou can also keep using the Guide without the tools."
-      },
-      {
-        q: "What do I get if I only buy the Guide?",
-        a: "You get full access to The Calm Content Guide plus 5 runs per tool to help you apply what you've learned.\n\nIf you want ongoing support, you can upgrade later."
       },
       {
         q: "Are the tools limited in Pro?",
