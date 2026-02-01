@@ -467,6 +467,10 @@ export default function PromotoLandingPage() {
 
     const faqs = [
       {
+        q: "Do I need to start with Pro or Elite?",
+        a: "Not at all.\n\nMany people start with the Guide, try the tools, and upgrade only if it feels helpful.\n\nYou're not meant to rush."
+      },
+      {
         q: "What's the difference between the Guide, Pro, and Elite?",
         a: "The Guide teaches the system.\nPro gives you unlimited access to the tools.\nElite adds guidance, interpretation, and direction so you don't have to figure everything out yourself."
       },
@@ -518,10 +522,6 @@ export default function PromotoLandingPage() {
         q: "Can I cancel anytime?",
         a: "Yes.\n\nPro and Elite are monthly.\nYou can cancel, upgrade, or downgrade whenever you want.\n\nNo penalties. No awkward emails."
       },
-      {
-        q: "Do I need to start with Pro or Elite?",
-        a: "Not at all.\n\nMany people start with the Guide, try the tools, and upgrade only if it feels helpful.\n\nYou're not meant to rush."
-      }
     ];
 
     return (
