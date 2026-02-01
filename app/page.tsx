@@ -56,17 +56,6 @@ export default function PromotoLandingPage() {
           fontFamily: '"Poster", "Poppins", sans-serif'
         }}
       >
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('/images/bg1.png')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            opacity: 0.9
-          }}
-        />
         <div className="relative mx-auto max-w-6xl px-6">
           <header className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-[#fdfaf3] sm:text-[60px]">
