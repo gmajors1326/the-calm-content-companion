@@ -266,7 +266,6 @@ export default function PromotoLandingPage() {
         Once you understand the Calm Content Method, something important begins to shift.
 
         You stop questioning what to do — and start noticing where you still hesitate.
-        <br />
         The uncertainty becomes quieter, but it doesn’t disappear entirely.
         <br />
         You may still catch yourself thinking:
