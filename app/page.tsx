@@ -77,8 +77,8 @@ export default function PromotoLandingPage() {
             </h2>
           </header>
 
-          <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
-            <div className="text-left">
+          <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
+            <div className="text-left md:pl-6">
               <div className="text-base leading-7 text-[#ffffff]">
                 <p className="text-[22px] font-bold text-[#ffffff]">Welcome</p>
               </div>
