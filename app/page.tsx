@@ -52,7 +52,7 @@ export default function PromotoLandingPage() {
         className="w-full py-16 sm:py-20"
         style={{
           backgroundColor: '#b35c3d',
-          backgroundImage: "linear-gradient(rgba(179, 92, 61, 0.3), rgba(179, 92, 61, 0.3)), url('/images/bg1.png')",
+          backgroundImage: "linear-gradient(rgba(179, 92, 61, 0.1), rgba(179, 92, 61, 0.1)), url('/images/bg1.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
