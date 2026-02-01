@@ -198,6 +198,13 @@ export default function PromotoLandingPage() {
     </section>
   );
 
+  const ChecklistIcon = () => (
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
+      <circle cx="12" cy="12" r="11" fill={COLORS.ACCENT_YELLOW} stroke="#d6a400" strokeWidth="1" />
+      <path d="M7 12.5l3 3 7-7" stroke={COLORS.DARK_GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+
   // --- Component for Intro Section (Image Left, Text Right) ---
   const IntroSection = () => (
     <section style={{ padding: '90px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
@@ -219,11 +226,23 @@ export default function PromotoLandingPage() {
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <p>For $27, you will have this comprehensive guide about how to create content without burnout.</p>
             <p>This guide is for you if:</p>
-            <ul style={{ paddingLeft: '18px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <li>Posting feels overwhelming or draining</li>
-              <li>You want to grow online without burnout</li>
-              <li>You don't want to chase trends or perform for the algorithm</li>
-              <li>You want a calm, repeatable way to show up consistently</li>
+            <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>Posting feels overwhelming or draining</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>You want to grow online without burnout</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>You don't want to chase trends or perform for the algorithm</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>You want a calm, repeatable way to show up consistently</span>
+              </li>
             </ul>
             <p>Inside this guide, you won't find hype, hustle, or pressure.</p>
           </div>
