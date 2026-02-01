@@ -177,24 +177,11 @@ export default function PromotoLandingPage() {
   // --- Component for Proven Growth Results Section ---
   const GrowthSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT, textAlign: 'center' }}>
-      <h2 style={{ fontSize: '48px', fontWeight: '700', marginBottom: '15px' }}>Proven <span style={{ color: COLORS.ACCENT_YELLOW, fontFamily: 'Georgia, serif' }}>Growth</span> Results</h2>
-      <p style={{ fontSize: '16px', color: '#9ca3af', maxWidth: '600px', margin: '0 auto 60px auto' }}>
-        How Promoto helps businesses grow faster, boost engagement, and achieve measurable results.
-      </p>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '50px', flexWrap: 'wrap' }}>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '24px', color: COLORS.ACCENT_YELLOW, margin: 0 }}>&#128187;</p> {/* Data & Integration Icon */}
-          <p style={{ fontSize: '16px', fontWeight: '600', marginTop: '10px' }}>Data & integration</p>
-        </div>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '24px', color: COLORS.ACCENT_YELLOW, margin: 0 }}>&#128075;</p> {/* Journeys Icon */}
-          <p style={{ fontSize: '16px', fontWeight: '600', marginTop: '10px' }}>Journeys</p>
-        </div>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '24px', color: COLORS.ACCENT_YELLOW, margin: 0 }}>&#128200;</p> {/* Insights & Analytics Icon */}
-          <p style={{ fontSize: '16px', fontWeight: '600', marginTop: '10px' }}>Insights & analytics</p>
-        </div>
-      </div>
+      <h2 style={{ fontSize: '44px', fontWeight: '500', margin: 0, lineHeight: '1.2', fontFamily: '"Palmyra", serif' }}>
+        Take a breath.
+        <br />
+        You’re exactly where you need to be.
+      </h2>
     </section>
   );
 

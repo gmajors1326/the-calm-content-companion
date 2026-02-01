@@ -8,7 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Bigtime&family=Poppins:wght@400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Bigtime&family=Palmyra&family=Poppins:wght@400&display=swap" rel="stylesheet" />
       </head>
       <body style={{ backgroundColor: '#f7f1e3', color: '#2b2b2b', margin: 0, fontFamily: '"Poppins", sans-serif' }}>
         <nav style={{
