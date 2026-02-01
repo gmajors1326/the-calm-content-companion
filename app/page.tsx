@@ -266,37 +266,14 @@ export default function PromotoLandingPage() {
         Once you understand the Calm Content Method, something important begins to shift.
 
         You stop questioning what to do — and start noticing where you still hesitate.
-
-        The uncertainty becomes quieter, but it doesn’t disappear entirely. You may still catch yourself thinking:
+        <br />
+        The uncertainty becomes quieter, but it doesn’t disappear entirely.
+        <br />
+        You may still catch yourself thinking:
         Does this hook actually make sense?
         I know my message — but how do I express it today?
         Why does this still feel harder than it should after every post?
-
-        This isn’t a lack of clarity.
-        It’s the mental friction that shows up when you’re applying a system in real life.
-
-        And that’s exactly why the next piece exists.
-      </p>
-      <p
-        style={{
-          margin: '24px auto 0',
-          maxWidth: '860px',
-          fontSize: '18px',
-          lineHeight: '1.7',
-          fontFamily: '"Poppins", sans-serif',
-          color: COLORS.TEXT_LIGHT,
-          whiteSpace: 'pre-line'
-        }}
-      >
-        Once you understand the Calm Content Method, something important begins to shift.
-
-        You stop questioning what to do — and start noticing where you still hesitate.
-
-        The uncertainty becomes quieter, but it doesn’t disappear entirely. You may still catch yourself thinking:
-        Does this hook actually make sense?
-        I know my message — but how do I express it today?
-        Why does this still feel harder than it should after every post?
-
+        <br />
         This isn’t a lack of clarity.
         It’s the mental friction that shows up when you’re applying a system in real life.
 
