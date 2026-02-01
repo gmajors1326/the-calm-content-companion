@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const TOOLS = [
-  { slug: "hook-clarity", name: "Hook Clarity Analyzer", locked: true },
+  { slug: "hook-clarity-analyzer", name: "Hook Clarity Analyzer", locked: true },
   { slug: "message-positioning", name: "Message Positioning Builder", locked: true },
   { slug: "content-direction", name: "Content Direction Planner", locked: true },
   { slug: "engagement-signal", name: "Engagement Signal Interpreter", locked: true },

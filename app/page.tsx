@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Define colors based on image analysis and layout.tsx background
 const COLORS = {
@@ -17,7 +18,8 @@ const TOOL_CARDS = [
     icon: 'sparkles',
     title: 'Hook Clarity Analyzer',
     description: 'Know if your hook makes sense — before you post.',
-    bestFor: 'first lines, Reel openers, captions'
+    bestFor: 'first lines, Reel openers, captions',
+    href: '/tools/hook-clarity-analyzer'
   },
   {
     icon: 'message',
@@ -168,6 +170,26 @@ export default function PromotoLandingPage() {
             <p style={{ fontSize: '18px', fontWeight: '700', color: '#111', margin: 0 }}>{card.title}</p>
             <p style={{ fontSize: '14px', color: '#374151', margin: '8px 0 0 0', lineHeight: '1.5' }}>{card.description}</p>
             <p style={{ fontSize: '13px', color: '#6b7280', margin: '10px 0 0 0' }}>Best for: {card.bestFor}</p>
+            {card.href ? (
+              <Link
+                href={card.href}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  marginTop: '14px',
+                  padding: '8px 14px',
+                  borderRadius: '999px',
+                  backgroundColor: '#143226',
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                  boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
+                }}
+              >
+                Try Hook Clarity Analyzer
+              </Link>
+            ) : null}
           </div>
         ))}
       </div>
