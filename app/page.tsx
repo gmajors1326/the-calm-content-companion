@@ -520,6 +520,14 @@ export default function PromotoLandingPage() {
         a: "No.\n\nThis is a calm, sustainable approach to content that prioritizes clarity, consistency, and mental space.\n\nIf you're looking for viral tricks or daily posting pressure, this probably isn't a fit."
       },
       {
+        q: "Will there be more tools available in the future?",
+        a: "Possibly - but only if they genuinely support clarity and calm.\n\nNew tools aren't added to increase volume or chase trends.\nThey're added carefully, when they make the system simpler or more supportive.\n\nPro and Elite members automatically get access to new tools when they're released."
+      },
+      {
+        q: "Will The Calm Content Guide be updated?",
+        a: "Yes.\n\nThe Guide evolves as the system improves.\nWhen you purchase the Guide, you receive updates at no extra cost.\n\nThe core philosophy stays the same - clarity just gets sharper over time."
+      },
+      {
         q: "Can I cancel anytime?",
         a: "Yes.\n\nPro and Elite are monthly.\nYou can cancel, upgrade, or downgrade whenever you want.\n\nNo penalties. No awkward emails."
       },
