@@ -5,7 +5,7 @@ const TOOLS = [
   { slug: "message-positioning-builder", name: "Message Positioning Builder", locked: false },
   { slug: "content-direction-planner", name: "Content Direction Planner", locked: false },
   { slug: "engagement-signal-interpreter", name: "Engagement Signal Interpreter", locked: false },
-  { slug: "weekly-reflection", name: "Weekly Content Reflection", locked: true },
+  { slug: "weekly-content-reflection", name: "Weekly Content Reflection", locked: false },
 ];
 
 export default function ToolsPage() {

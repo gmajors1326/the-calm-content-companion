@@ -51,7 +51,8 @@ const TOOL_CARDS = [
     title: 'Weekly Content Reflection',
     description: 'Grow without burning out.',
     bestFor: 'consistency, confidence, momentum',
-    cta: '👉 Try This Tool'
+    cta: '👉 Try This Tool',
+    href: '/tools/weekly-content-reflection'
   }
 ];
 
