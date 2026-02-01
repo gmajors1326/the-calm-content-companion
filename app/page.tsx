@@ -20,7 +20,7 @@ const TOOL_CARDS = [
     description: 'Know if your hook makes sense — before you post.',
     bestFor: 'first lines, Reel openers, captions',
     href: '/tools/hook-clarity-analyzer',
-    cta: 'Try Hook Clarity Analyzer'
+    cta: '👉 Try This Tool'
   },
   {
     icon: 'message',
@@ -28,25 +28,28 @@ const TOOL_CARDS = [
     description: 'Get clear on what you’re actually about.',
     bestFor: 'niche clarity, bio direction, confidence',
     href: '/tools/message-positioning-builder',
-    cta: 'Try Message Positioning Builder'
+    cta: '👉 Try This Tool'
   },
   {
     icon: 'compass',
     title: 'Content Direction Planner',
     description: 'Stop guessing what to post.',
-    bestFor: 'weekly planning, low-energy weeks'
+    bestFor: 'weekly planning, low-energy weeks',
+    cta: '👉 Try This Tool'
   },
   {
     icon: 'signal',
     title: 'Engagement Signal Interpreter',
     description: 'Understand what your posts are telling you.',
-    bestFor: 'improving engagement calmly'
+    bestFor: 'improving engagement calmly',
+    cta: '👉 Try This Tool'
   },
   {
     icon: 'leaf',
     title: 'Weekly Content Reflection',
     description: 'Grow without burning out.',
-    bestFor: 'consistency, confidence, momentum'
+    bestFor: 'consistency, confidence, momentum',
+    cta: '👉 Try This Tool'
   }
 ];
 
@@ -190,9 +193,31 @@ export default function PromotoLandingPage() {
                   boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
                 }}
               >
-                {card.cta || 'Open tool'}
+                {card.cta || '👉 Try This Tool'}
               </Link>
-            ) : null}
+            ) : (
+              <button
+                type="button"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  marginTop: '14px',
+                  padding: '8px 14px',
+                  borderRadius: '999px',
+                  backgroundColor: '#143226',
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  border: 'none',
+                  cursor: 'not-allowed',
+                  opacity: 0.6,
+                  boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
+                }}
+                disabled
+              >
+                {card.cta || '👉 Try This Tool'}
+              </button>
+            )}
           </div>
         ))}
       </div>
