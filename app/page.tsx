@@ -73,7 +73,7 @@ export default function PromotoLandingPage() {
           <h1 className="text-4xl font-bold tracking-tight text-[#ffffff] sm:text-[60px]">
             𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
           </h1>
-          <h2 className="mt-2 text-[22px] font-medium leading-[26px] text-[#ffffff]">
+          <h2 className="text-[22px] font-medium leading-[26px] text-[#ffffff]" style={{ marginTop: '18px' }}>
             A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
           </h2>
         </header>
@@ -213,9 +213,6 @@ export default function PromotoLandingPage() {
           />
         </div>
         <div style={{ flex: 1, minWidth: '280px', textAlign: 'left' }}>
-          <p style={{ fontSize: '14px', letterSpacing: '1.2px', textTransform: 'uppercase', color: '#6b7280', marginBottom: '12px' }}>
-            Placeholder Section
-          </p>
           <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '16px', color: COLORS.TEXT_DARK }}>
             Start Here
           </h2>

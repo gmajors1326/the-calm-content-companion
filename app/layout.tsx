@@ -12,8 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body style={{ backgroundColor: '#f7f1e3', color: '#2b2b2b', margin: 0, fontFamily: '"Poppins", sans-serif' }}>
         <nav style={{
-          position: 'fixed',
-          top: '10px',
+          position: 'static',
           left: 0,
           right: 0,
           height: '60px',
@@ -23,7 +22,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 24px',
-          zIndex: 1000,
           fontFamily: '"Poppins", sans-serif'
         }}>
           <div style={{ flex: 1, textAlign: 'left' }}>
