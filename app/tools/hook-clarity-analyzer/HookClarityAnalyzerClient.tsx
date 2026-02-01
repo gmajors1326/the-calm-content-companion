@@ -29,6 +29,65 @@ type Analysis = {
 const PLATFORM_OPTIONS = ["IG Reels", "TikTok", "YT Shorts"] as const;
 const TONE_OPTIONS = ["calm", "direct", "playful", "premium"] as const;
 
+const EXAMPLES = [
+  {
+    hook_text: "Your Instagram posts don't need to sell harder — they need this 3-step clarity fix",
+    niche: "digital marketing",
+    audience: "small business owners",
+    platform: "IG Reels",
+    tone: "direct"
+  },
+  {
+    hook_text: "A calm Instagram content rhythm that grows reach without daily posting",
+    niche: "digital marketing",
+    audience: "busy founders",
+    platform: "IG Reels",
+    tone: "calm"
+  },
+  {
+    hook_text: "The fun way to write Instagram hooks that get saves (no trends needed)",
+    niche: "digital marketing",
+    audience: "new creators",
+    platform: "IG Reels",
+    tone: "playful"
+  },
+  {
+    hook_text: "Premium Instagram positioning: the opener that makes your offer feel inevitable",
+    niche: "digital marketing",
+    audience: "high-ticket founders",
+    platform: "IG Reels",
+    tone: "premium"
+  },
+  {
+    hook_text: "3 Instagram hook structures that turn scrollers into qualified leads",
+    niche: "digital marketing",
+    audience: "service providers",
+    platform: "IG Reels",
+    tone: "direct"
+  },
+  {
+    hook_text: "If Instagram feels noisy, use this calm clarity script instead",
+    niche: "digital marketing",
+    audience: "overwhelmed marketers",
+    platform: "IG Reels",
+    tone: "calm"
+  },
+  {
+    hook_text: "Playful Instagram hooks that still feel credible (here's the formula)",
+    niche: "digital marketing",
+    audience: "content strategists",
+    platform: "IG Reels",
+    tone: "playful"
+  },
+  {
+    hook_text: "The premium Instagram opener that signals trust in 8 seconds",
+    niche: "digital marketing",
+    audience: "brand consultants",
+    platform: "IG Reels",
+    tone: "premium"
+  }
+] as const;
+
 export default function HookClarityAnalyzerClient() {
   const [hookText, setHookText] = useState("");
   const [niche, setNiche] = useState("");
@@ -56,30 +115,63 @@ export default function HookClarityAnalyzerClient() {
     }
   };
 
-  const handleAnalyze = () => {
+  const runAnalysis = (payload: {
+    hook_text: string;
+    niche?: string;
+    audience?: string;
+    platform: (typeof PLATFORM_OPTIONS)[number];
+    tone: (typeof TONE_OPTIONS)[number];
+  }) => {
     setError("");
     setAnalysis(null);
 
     startTransition(async () => {
       try {
-        if (!platform || !tone) {
-          setError("Platform and tone are required.");
-          return;
-        }
-
-        const result = await analyzeHookClarity({
-          hook_text: hookText,
-          niche: niche || undefined,
-          audience: audience || undefined,
-          platform,
-          tone
-        });
+        const result = await analyzeHookClarity(payload);
 
         setAnalysis(result as Analysis);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unable to analyze the hook right now.";
         setError(message);
       }
+    });
+  };
+
+  const handleAnalyze = () => {
+    if (!platform || !tone) {
+      setError("Platform and tone are required.");
+      return;
+    }
+
+    runAnalysis({
+      hook_text: hookText,
+      niche: niche || undefined,
+      audience: audience || undefined,
+      platform,
+      tone
+    });
+  };
+
+  const handleFillExample = () => {
+    const tonePool = tone
+      ? EXAMPLES.filter((example) => example.tone === tone)
+      : EXAMPLES;
+    const pool = tonePool.length ? tonePool : EXAMPLES;
+    const example = pool[Math.floor(Math.random() * pool.length)];
+
+    setHookText(example.hook_text);
+    setNiche(example.niche ?? "");
+    setAudience(example.audience ?? "");
+    setPlatform(example.platform);
+    setTone(example.tone);
+    setAnalysis(null);
+    setError("");
+    runAnalysis({
+      hook_text: example.hook_text,
+      niche: example.niche,
+      audience: example.audience,
+      platform: example.platform,
+      tone: example.tone
     });
   };
 
@@ -99,6 +191,19 @@ export default function HookClarityAnalyzerClient() {
             handleAnalyze();
           }}
         >
+          <div>
+            <button
+              type="button"
+              onClick={handleFillExample}
+              className="inline-flex items-center gap-2 rounded-full border border-[#cbd5f5] px-4 py-1.5 text-xs font-semibold text-[#143226] transition hover:border-[#143226]"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9.813 15.904L9 18l-.813-2.096a4.5 4.5 0 00-2.832-2.832L3 12l2.355-.813a4.5 4.5 0 002.832-2.832L9 6l.813 2.355a4.5 4.5 0 002.832 2.832L15 12l-2.355.813a4.5 4.5 0 00-2.832 2.832z" />
+                <path d="M18 7l.375 1.08A2.25 2.25 0 0019.92 9.625L21 10l-1.08.375a2.25 2.25 0 00-1.545 1.545L18 13l-.375-1.08a2.25 2.25 0 00-1.545-1.545L15 10l1.08-.375a2.25 2.25 0 001.545-1.545L18 7z" />
+              </svg>
+              Try an example
+            </button>
+          </div>
           <div>
             <label className="text-sm font-semibold text-[#143226]" htmlFor="hook-input">
               Hook text (required)
