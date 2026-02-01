@@ -454,7 +454,11 @@ export default function PromotoLandingPage() {
         <span>{question}</span>
         <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{isOpen ? '−' : '+'}</span>
       </button>
-      {isOpen && <p style={{ color: '#6b7280', paddingTop: '10px', fontSize: '14px' }}>{answer}</p>}
+      {isOpen && (
+        <p style={{ color: '#6b7280', paddingTop: '10px', fontSize: '14px', whiteSpace: 'pre-line' }}>
+          {answer}
+        </p>
+      )}
     </div>
   );
 
@@ -462,12 +466,38 @@ export default function PromotoLandingPage() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     const faqs = [
-      { q: "Is there a free plan available?", a: "No credit card is required to start with the Free plan. You can upgrade anytime as your needs grow." },
-      { q: "Do I need a credit card to sign up?", a: "No credit card is required to start with the Free plan. You can upgrade anytime as your needs grow." },
-      { q: "Can I change or cancel my plan anytime?", a: "Yes, plans can be changed or canceled through your account settings at any time." },
-      { q: "What types of businesses use Promoto?", a: "Promoto is used by startups, mid-sized businesses, and large enterprises across various industries." },
-      { q: "Do you integrate with other tools I already use?", a: "Yes, we integrate with popular marketing, sales, and CRM tools. Check our integrations page for details." },
-      { q: "What kind of support do you provide?", a: "We offer priority support for paid plans and community support for free users." }
+      {
+        q: "What's the difference between the Guide, Pro, and Elite?",
+        a: "The Guide teaches the system.\nPro gives you unlimited access to the tools.\nElite adds guidance, interpretation, and direction so you don't have to figure everything out yourself."
+      },
+      {
+        q: "Can I try the tools before paying?",
+        a: "Yes.\nGuests can run each tool once to see how it works.\n\nNo email required. No pressure."
+      },
+      {
+        q: "What do I get if I only buy the Guide?",
+        a: "You get full access to The Calm Content Guide plus 5 runs per tool to help you apply what you've learned.\n\nIf you want ongoing support, you can upgrade later."
+      },
+      {
+        q: "Are the tools limited in Pro?",
+        a: "No.\nPro includes unlimited access to all tools.\n\nNo run limits. No timers. No stress."
+      },
+      {
+        q: "If Pro is unlimited, what makes Elite different?",
+        a: "Pro gives you tools.\nElite helps you decide what matters.\n\nElite includes direction, interpretation, and monthly resets so you don't have to second-guess yourself."
+      },
+      {
+        q: "Is Elite coaching or a mastermind?",
+        a: "No.\nThere are no calls, groups, or pressure.\n\nElite is calm, private, and designed to reduce mental load - not add to it."
+      },
+      {
+        q: "Do I need Elite to grow?",
+        a: "No.\nMany people are perfectly supported with the Guide or Pro.\n\nElite is for people who want clarity and direction without doing all the thinking alone."
+      },
+      {
+        q: "Can I upgrade or downgrade later?",
+        a: "Yes.\nYou can move between tiers at any time.\n\nNothing is locked. Nothing is forced."
+      }
     ];
 
     return (

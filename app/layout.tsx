@@ -46,21 +46,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               View the Guide
             </a>
-            <a href="/" style={{
-              textDecoration: 'none',
-              color: '#2b2b2b',
-              fontWeight: '400',
-              fontSize: '20px',
-              padding: '8px 16px',
-              borderRadius: '999px',
-              border: '1px solid #e5dcc6',
-              backgroundColor: '#fff1cf',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
-              letterSpacing: '0.2px',
-              transition: 'transform 0.2s, box-shadow 0.2s'
-            }}>
-              Start Your 3 Day Free Trial
-            </a>
             <a href="/pricing" style={{
               textDecoration: 'none',
               color: '#333',
