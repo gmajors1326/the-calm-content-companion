@@ -141,23 +141,20 @@ export default function PromotoLandingPage() {
 
   const ToolsSection = () => (
     <section style={{ backgroundColor: COLORS.LIGHT_CREAM, padding: '0 24px 100px 24px' }}>
-      <div style={{ maxWidth: '1300px', margin: '0 auto 32px auto', textAlign: 'left', fontFamily: '"Poster", "Poppins", sans-serif' }}>
+      <div style={{ maxWidth: '1300px', margin: '0 auto 32px auto', textAlign: 'center', fontFamily: '"Poster", "Poppins", sans-serif' }}>
         <h2
+          className="text-4xl font-bold tracking-tight sm:text-[60px]"
           style={{
-            fontSize: '36px',
-            fontWeight: '700',
-            letterSpacing: '-0.02em',
             color: COLORS.TEXT_DARK,
             margin: '20px 0 8px 0'
           }}
-          className="sm:text-[60px]"
         >
-          The Calm Content Toolbox
+          𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐓𝐨𝐨𝐥𝐛𝐨𝐱
         </h2>
         <p style={{ fontSize: '18px', fontWeight: '600', color: COLORS.TEXT_DARK, margin: '0 0 10px 0' }}>
           Small tools that support the system — helping you apply The Calm Content Guide with clarity and confidence.
         </p>
-        <p style={{ fontSize: '16px', color: '#4b5563', margin: 0, maxWidth: '820px', lineHeight: '1.7' }}>
+        <p style={{ fontSize: '16px', color: '#4b5563', margin: '0 auto', maxWidth: '820px', lineHeight: '1.7' }}>
           Clean. Confident. Calm. This pairs beautifully with the Guide-first philosophy.
         </p>
       </div>
