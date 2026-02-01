@@ -51,10 +51,7 @@ export default function PromotoLandingPage() {
       <section
         className="w-full"
         style={{
-          backgroundImage: "url('/images/bg1.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#b35c3d',
           minHeight: '60vh'
         }}
       />
