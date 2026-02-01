@@ -141,13 +141,22 @@ export default function PromotoLandingPage() {
 
   const ToolsSection = () => (
     <section style={{ backgroundColor: COLORS.LIGHT_CREAM, padding: '0 24px 100px 24px' }}>
-      <div style={{ maxWidth: '1300px', margin: '20px auto 32px auto', textAlign: 'left', fontFamily: '"Poster", "Poppins", sans-serif' }}>
-        <p style={{ fontSize: '14px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6b7280', margin: 0 }}>
+      <div style={{ maxWidth: '1300px', margin: '0 auto 32px auto', textAlign: 'left', fontFamily: '"Poster", "Poppins", sans-serif' }}>
+        <h2
+          style={{
+            fontSize: '36px',
+            fontWeight: '700',
+            letterSpacing: '-0.02em',
+            color: COLORS.TEXT_DARK,
+            margin: '20px 0 8px 0'
+          }}
+          className="sm:text-[60px]"
+        >
           The Calm Content Toolbox
-        </p>
-        <h2 style={{ fontSize: '36px', fontWeight: '700', color: COLORS.TEXT_DARK, margin: '12px 0 10px 0' }}>
-          A small set of tools designed to support clarity, reduce overwhelm, and guide steady content decisions.
         </h2>
+        <p style={{ fontSize: '18px', fontWeight: '600', color: COLORS.TEXT_DARK, margin: '0 0 10px 0' }}>
+          Small tools that support the system — helping you apply The Calm Content Guide with clarity and confidence.
+        </p>
         <p style={{ fontSize: '16px', color: '#4b5563', margin: 0, maxWidth: '820px', lineHeight: '1.7' }}>
           Clean. Confident. Calm. This pairs beautifully with the Guide-first philosophy.
         </p>
