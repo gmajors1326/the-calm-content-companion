@@ -18,15 +18,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           height: '60px',
           backgroundColor: '#f7f1e3',
           borderBottom: 'none',
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
           alignItems: 'center',
-          justifyContent: 'space-between',
           padding: '0 24px',
           fontFamily: '"Poppins", sans-serif'
         }}>
-          <div style={{ flex: 1, textAlign: 'left' }}>
+          <div style={{ justifySelf: 'start', textAlign: 'left' }}>
           </div>
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', justifySelf: 'center', marginTop: '8px' }}>
             <a href="/" style={{
               textDecoration: 'none',
               color: '#333',
@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Pricing
             </a>
           </div>
-          <div style={{ flex: 1, textAlign: 'right' }}>
+          <div style={{ justifySelf: 'end', textAlign: 'right', marginTop: '8px' }}>
             <a href="/admin" style={{
               textDecoration: 'none',
               color: '#333',
