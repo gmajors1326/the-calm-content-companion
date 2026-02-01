@@ -247,9 +247,9 @@ export default function PromotoLandingPage() {
   // --- Component for Proven Growth Results Section ---
   const GrowthSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT, textAlign: 'center' }}>
-      <h2 style={{ fontSize: '28px', fontWeight: '600', marginBottom: '18px', lineHeight: '1.3', fontFamily: '"Palmyra", serif', fontStyle: 'italic' }}>
+      <p style={{ fontSize: '18px', fontWeight: '500', marginBottom: '18px', lineHeight: '1.5', fontFamily: '"Poppins", sans-serif' }}>
         Welcome to the Calm Content Guide. It is the perfect toolbox to guide you through the Content Creation Process.
-      </h2>
+      </p>
       <h2 style={{ fontSize: '44px', fontWeight: '500', margin: 0, lineHeight: '1.2', fontFamily: '"Palmyra", serif', fontStyle: 'italic' }}>
         Take a breath.
         <br />
