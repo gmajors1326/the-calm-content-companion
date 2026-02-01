@@ -393,56 +393,194 @@ export default function PromotoLandingPage() {
     </section>
   );
 
+  const TOOLBOX_TOOLS = [
+    'Hook Clarity Analyzer',
+    'Message Positioning Builder',
+    'Content Direction Planner',
+    'Engagement Signal Interpreter',
+    'Weekly Content Reflection'
+  ];
+
+  const PricingCard = ({
+    badge,
+    title,
+    price,
+    description,
+    includes,
+    toolboxLabel,
+    cta,
+    finePrint,
+    highlight
+  }: {
+    badge: string;
+    title: string;
+    price: string;
+    description: string;
+    includes: string[];
+    toolboxLabel: string;
+    cta: string;
+    finePrint: string;
+    highlight?: boolean;
+  }) => (
+    <div
+      className={`flex h-full flex-col rounded-2xl border bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.06)] ${
+        highlight ? 'border-[#e5dcc6] shadow-[0_16px_32px_rgba(0,0,0,0.08)]' : 'border-[#e5e7eb]'
+      }`}
+    >
+      <div className="flex items-center justify-between">
+        <span className="rounded-full bg-[#f1f5f0] px-3 py-1 text-xs font-semibold text-[#2f5d46]">
+          {badge}
+        </span>
+      </div>
+      <h3 className="mt-4 text-xl font-semibold text-[#143226]">{title}</h3>
+      <p className="mt-2 text-3xl font-semibold text-[#111827]">{price}</p>
+      <p className="mt-3 text-sm text-[#475569]">{description}</p>
+
+      <div className="mt-5">
+        <p className="text-xs font-semibold uppercase tracking-wide text-[#6b7280]">Includes</p>
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-[#475569]">
+          {includes.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-5 border-t border-dashed border-[#e5e7eb] pt-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-[#6b7280]">{toolboxLabel}</p>
+        <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {TOOLBOX_TOOLS.map((tool) => (
+            <span
+              key={tool}
+              className="inline-flex items-center justify-center rounded-full border border-[#e5e7eb] bg-[#f8fafc] px-3 py-1 text-xs font-medium text-[#475569]"
+            >
+              {tool}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-auto pt-6">
+        <button
+          type="button"
+          className={`w-full rounded-full px-4 py-2 text-sm font-semibold transition ${
+            highlight
+              ? 'bg-[#143226] text-white hover:bg-[#0f251c]'
+              : 'border border-[#d1d5db] bg-white text-[#143226] hover:border-[#143226]'
+          }`}
+        >
+          {cta}
+        </button>
+        <p className="mt-2 text-xs text-[#6b7280]">{finePrint}</p>
+      </div>
+    </div>
+  );
+
   // --- Component for Pricing Section ---
   const PricingSection = () => (
-    <section style={{ padding: '100px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK, textAlign: 'center' }}>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', marginBottom: '10px', fontFamily: 'Georgia, serif' }}>Rated 4.9 <span style={{ color: '#10b981' }}>from 700 reviews</span></h2>
-      <p style={{ fontSize: '16px', color: '#6b7280', marginBottom: '60px' }}>Affordable plans tailored for startups, teams, and enterprises.</p>
-
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-        {/* Plan Card: Free */}
-        <div style={{ flex: 1, minWidth: '300px', maxWidth: '350px', backgroundColor: '#fff', borderRadius: '12px', padding: '30px', borderTop: '4px solid transparent', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '5px' }}>Free</p>
-          <p style={{ fontSize: '40px', fontWeight: '700', marginBottom: '15px' }}>$0.<sub style={{ fontSize: '16px', fontWeight: '400' }}>00<span style={{ fontSize: '12px', color: '#6b7280' }}>/month</span></sub></p>
-          <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '30px' }}>Best for individuals or small teams exploring automation for the first time.</p>
-          <button style={{ width: '100%', backgroundColor: '#fff', color: COLORS.TEXT_DARK, padding: '12px', borderRadius: '8px', border: '1px solid #e5e7eb', cursor: 'pointer', fontWeight: '600' }}>Start with free</button>
-
-          <ul style={{ listStyle: 'none', padding: 0, textAlign: 'left', marginTop: '30px', lineHeight: '2' }}>
-            {['Email & SMS automation', 'Basic segmentation', 'Up to 1,000 contacts', 'Integrations with popular tools', 'Community support'].map((item, i) => (
-              <li key={i} style={{ color: '#4b5563', fontSize: '14px' }}>• {item}</li>
-            ))}
-          </ul>
+    <section style={{ padding: '100px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
+      <div className="mx-auto max-w-6xl">
+        <div className="text-center">
+          <h2 className="text-3xl font-semibold text-[#143226]">Pricing</h2>
+          <p className="mt-3 text-sm text-[#475569]">
+            Choose the level of support you want — start with the Guide, and upgrade only if it feels helpful.
+          </p>
         </div>
 
-        {/* Plan Card: Professional (Most popular) */}
-        <div style={{ flex: 1, minWidth: '300px', maxWidth: '350px', backgroundColor: '#fff', borderRadius: '12px', padding: '30px', borderTop: `4px solid ${COLORS.ACCENT_YELLOW}`, boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
-            <p style={{ fontSize: '18px', color: '#6b7280', margin: 0 }}>Professional</p>
-            <span style={{ backgroundColor: COLORS.ACCENT_YELLOW, color: COLORS.TEXT_DARK, fontSize: '12px', padding: '2px 8px', borderRadius: '9999px', fontWeight: '700' }}>Most popular</span>
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <PricingCard
+            badge="One-time"
+            title="The Calm Content Guide"
+            price="$27"
+            description="A clear, grounded system to simplify your content and show up consistently without overwhelm."
+            includes={[
+              'Full access to The Calm Content Guide',
+              'Personal account',
+              '5 runs per tool to help you apply what you learn'
+            ]}
+            toolboxLabel="Toolbox access included (limited runs):"
+            cta="Get the Guide"
+            finePrint="No subscription required."
+          />
+
+          <PricingCard
+            badge="Most Popular"
+            title="Pro"
+            price="$37 / month"
+            description="The Guide plus unlimited access to the toolbox for steady, ongoing support — without pressure or noise."
+            includes={[
+              'Full access to The Calm Content Guide',
+              'Unlimited runs on all tools',
+              'Saved results history',
+              'Built for consistent weekly use'
+            ]}
+            toolboxLabel="Includes the full Calm Content Toolbox:"
+            cta="Start Pro"
+            finePrint="Cancel anytime."
+            highlight
+          />
+
+          <PricingCard
+            badge="Guided"
+            title="Elite"
+            price="$147 / month"
+            description="The Guide, unlimited tools, plus direction and interpretation so you don’t have to figure it all out alone."
+            includes={[
+              'Full access to The Calm Content Guide',
+              'Everything in Pro',
+              'Direction-first Elite home experience (not just a tool grid)',
+              'Interpretation layer after tool results (“what it means”, “what to ignore”, “what to focus on”)',
+              'Pattern insights across time (gentle, calm)'
+            ]}
+            toolboxLabel="Everything in the toolbox, plus guidance:"
+            cta="Go Elite"
+            finePrint="Cancel anytime."
+          />
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-[#e5e7eb] bg-white p-6">
+          <p className="text-xs font-semibold uppercase tracking-wide text-[#6b7280]">FAQ</p>
+          <div className="mt-4 grid gap-4">
+            <div>
+              <h3 className="text-sm font-semibold text-[#143226]">
+                What do I get when I buy The Calm Content Guide?
+              </h3>
+              <p className="mt-1 text-sm text-[#475569]">
+                You get full access to The Calm Content Guide plus 5 runs per tool to help you apply the system. No subscription required.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#143226]">What’s a “run”?</h3>
+              <p className="mt-1 text-sm text-[#475569]">
+                A run is one complete use of a tool — you enter your input and receive the insight.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#143226]">Can I try the tools before paying?</h3>
+              <p className="mt-1 text-sm text-[#475569]">Yes. Guests can run each tool once.</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#143226]">What do I get with Pro?</h3>
+              <p className="mt-1 text-sm text-[#475569]">
+                Pro includes The Calm Content Guide plus unlimited access to all five tools. It’s built for steady, ongoing support.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#143226]">
+                If Pro is unlimited, what makes Elite different?
+              </h3>
+              <p className="mt-1 text-sm text-[#475569]">
+                Pro gives you tools. Elite adds direction, interpretation, and pattern insights so you don’t have to second-guess what matters.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#143226]">
+                Will there be more tools in the future, and will the Guide be updated?
+              </h3>
+              <p className="mt-1 text-sm text-[#475569]">
+                Possibly. Tools are added carefully only when they support clarity. The Guide evolves over time, and updates are included with your purchase.
+              </p>
+            </div>
           </div>
-          <p style={{ fontSize: '40px', fontWeight: '700', marginBottom: '15px' }}>$99.<sub style={{ fontSize: '16px', fontWeight: '400' }}>00<span style={{ fontSize: '12px', color: '#6b7280' }}>/month</span></sub></p>
-          <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '30px' }}>Ideal for growing businesses ready to scale campaigns and boost performance.</p>
-          <button style={{ width: '100%', backgroundColor: COLORS.ACCENT_YELLOW, color: COLORS.TEXT_DARK, padding: '12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: '600' }}>Upgrade to professional</button>
-
-          <ul style={{ listStyle: 'none', padding: 0, textAlign: 'left', marginTop: '30px', lineHeight: '2' }}>
-            {['Everything in Free', 'Advanced workflows & triggers', 'A/B testing & analytics', 'Up to 10,000 contacts', 'Priority support'].map((item, i) => (
-              <li key={i} style={{ color: '#4b5563', fontSize: '14px' }}>• {item}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Plan Card: Enterprise */}
-        <div style={{ flex: 1, minWidth: '300px', maxWidth: '350px', backgroundColor: '#fff', borderRadius: '12px', padding: '30px', borderTop: '4px solid transparent', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '5px' }}>Enterprise</p>
-          <p style={{ fontSize: '30px', fontWeight: '700', marginBottom: '15px' }}>Custom Pricing</p>
-          <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '30px' }}>Designed for large organizations with complex marketing needs.</p>
-          <button style={{ width: '100%', backgroundColor: COLORS.TEXT_DARK, color: 'white', padding: '12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: '600' }}>Contact us</button>
-
-          <ul style={{ listStyle: 'none', padding: 0, textAlign: 'left', marginTop: '30px', lineHeight: '2' }}>
-            {['Everything in Professional', 'Unlimited contacts', 'Dedicated account manager', 'Custom integrations', 'Advanced security & compliance'].map((item, i) => (
-              <li key={i} style={{ color: '#4b5563', fontSize: '14px' }}>• {item}</li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>
