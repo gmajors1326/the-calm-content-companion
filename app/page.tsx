@@ -43,7 +43,8 @@ const TOOL_CARDS = [
     title: 'Engagement Signal Interpreter',
     description: 'Understand what your posts are telling you.',
     bestFor: 'improving engagement calmly',
-    cta: '👉 Try This Tool'
+    cta: '👉 Try This Tool',
+    href: '/tools/engagement-signal-interpreter'
   },
   {
     icon: 'leaf',
