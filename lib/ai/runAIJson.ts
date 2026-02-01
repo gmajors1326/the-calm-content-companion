@@ -1,9 +1,5 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
 type RunAIJsonArgs = {
   system: string;
   user: string;
@@ -18,6 +14,10 @@ export async function runAIJson({
   if (!process.env.OPENAI_API_KEY) {
     throw new Error("OPENAI_API_KEY is missing");
   }
+
+  const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  });
 
   const response = await client.chat.completions.create({
     model: "gpt-5.2",
