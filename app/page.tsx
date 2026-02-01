@@ -269,7 +269,6 @@ export default function PromotoLandingPage() {
             A Calm, Clear Path Forward
           </h2>
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <p>Instead, you'll learn how to:</p>
             <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
