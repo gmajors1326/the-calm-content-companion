@@ -52,30 +52,37 @@ export default function PromotoLandingPage() {
         className="relative w-full py-16 sm:py-20"
         style={{
           backgroundColor: '#b35c3d',
-          backgroundImage: "url('/images/bg1.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
           minHeight: '60vh',
           fontFamily: '"Poster", "Poppins", sans-serif'
         }}
       >
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/bg1.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.95
+          }}
+        />
         <div className="relative mx-auto max-w-6xl px-6">
           <header className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-[#143226] sm:text-[60px]">
+            <h1 className="text-4xl font-bold tracking-tight text-[#ffffff] sm:text-[60px]">
               𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
             </h1>
-            <h2 className="mt-3 text-[22px] font-medium text-[#143226]">
+            <h2 className="mt-3 text-[22px] font-medium text-[#ffffff]">
               A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
             </h2>
           </header>
 
           <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
             <div className="text-left">
-              <div className="text-base leading-7 text-[#143226]">
-                <p className="text-[22px] font-bold text-[#143226]">Welcome</p>
+              <div className="text-base leading-7 text-[#ffffff]">
+                <p className="text-[22px] font-bold text-[#ffffff]">Welcome</p>
               </div>
-              <div className="mt-4 space-y-4 text-base leading-7 text-[#143226]">
+              <div className="mt-4 space-y-4 text-base leading-7 text-[#ffffff]">
                 <p>
                   If you’re here, there’s a good chance content has started to
                   feel heavier than it should.
