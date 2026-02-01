@@ -430,8 +430,8 @@ export default function PromotoLandingPage() {
         fontFamily: '"Poppins", sans-serif',
         ...(highlight
           ? {
-              transform: 'translateY(-6px) scale(1.02)',
-              boxShadow: '0 20px 40px rgba(15,42,30,0.18), 0 0 24px rgba(34,197,94,0.25)'
+              transform: 'translateY(-8px) scale(1.03)',
+              boxShadow: '0 24px 44px rgba(15,42,30,0.22), 0 0 36px rgba(34,197,94,0.32)'
             }
           : {})
       }}
