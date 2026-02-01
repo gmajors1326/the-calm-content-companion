@@ -481,7 +481,7 @@ export default function PromotoLandingPage() {
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT }}>
       <div className="mx-auto max-w-6xl">
         <div className="text-center" style={{ fontFamily: '"Poppins", sans-serif' }}>
-          <h2 className="text-3xl font-semibold text-white">𝐏𝐫𝐢𝐜𝐢𝐧𝐠</h2>
+          <h2 className="font-semibold text-white" style={{ fontSize: '61px' }}>𝐏𝐫𝐢𝐜𝐢𝐧𝐠</h2>
           <p className="mt-3 text-sm text-[#e5e7eb]">
             Choose the level of support you want — start with the Guide, and upgrade only if it feels helpful.
           </p>
