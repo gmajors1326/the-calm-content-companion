@@ -64,7 +64,7 @@ export default function PromotoLandingPage() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            opacity: 0.9
+            opacity: 0.7
           }}
         />
         <div className="relative mx-auto max-w-6xl px-6">
