@@ -217,15 +217,7 @@ export default function PromotoLandingPage() {
             Start Here
           </h2>
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <p>
-              This is dummy text for a new section under the hero. It is here to show how a supportive, simple narrative can live next to a visual preview.
-            </p>
-            <p>
-              Use this space to explain how your method reduces overwhelm, clarifies what to post, and keeps your content aligned with your energy.
-            </p>
-            <p>
-              Replace this text when you are ready with real copy that matches your voice and offering.
-            </p>
+            <p>For $27 you will have this comprehensive guide about how to create content without burnout.</p>
           </div>
         </div>
       </div>
