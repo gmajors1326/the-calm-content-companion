@@ -29,6 +29,22 @@ type Analysis = {
 const PLATFORM_OPTIONS = ["IG Reels", "TikTok", "YT Shorts"] as const;
 const TONE_OPTIONS = ["calm", "direct", "playful", "premium"] as const;
 
+const SpinnerIcon = ({ className = "h-4 w-4 animate-spin" }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+    <path d="M21 3v6h-6" />
+  </svg>
+);
+
 const EXAMPLES = [
   {
     hook_text: "Your Instagram posts don't need to sell harder — they need this 3-step clarity fix",
@@ -299,7 +315,14 @@ export default function HookClarityAnalyzerClient() {
               className="rounded-full bg-[#143226] px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0f251c] disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!canAnalyze}
             >
-              {isPending ? "Analyzing..." : "Analyze clarity"}
+              {isPending ? (
+                <span className="inline-flex items-center gap-2">
+                  <SpinnerIcon />
+                  Analyzing...
+                </span>
+              ) : (
+                "Analyze clarity"
+              )}
             </button>
             <button
               type="button"
@@ -330,22 +353,12 @@ export default function HookClarityAnalyzerClient() {
       )}
 
       {isPending && (
-        <div className="grid gap-6">
-          <ToolResultCard title="Loading">
-            <div className="space-y-3">
-              <div className="h-4 w-40 animate-pulse rounded bg-slate-200" />
-              <div className="h-4 w-72 animate-pulse rounded bg-slate-200" />
-              <div className="h-4 w-56 animate-pulse rounded bg-slate-200" />
-            </div>
-          </ToolResultCard>
-          <ToolResultCard title="Loading">
-            <div className="space-y-3">
-              <div className="h-4 w-64 animate-pulse rounded bg-slate-200" />
-              <div className="h-4 w-80 animate-pulse rounded bg-slate-200" />
-              <div className="h-4 w-48 animate-pulse rounded bg-slate-200" />
-            </div>
-          </ToolResultCard>
-        </div>
+        <ToolResultCard title="Analyzing">
+          <div className="flex items-center gap-3 text-sm text-[#475569]">
+            <SpinnerIcon className="h-5 w-5 animate-spin" />
+            Generating your results...
+          </div>
+        </ToolResultCard>
       )}
 
       {analysis && !isPending && (
