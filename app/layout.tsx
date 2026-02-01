@@ -46,6 +46,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               View the Guide
             </a>
+            <a href="/contact" style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontWeight: '400',
+              fontSize: '20px',
+              padding: '8px 12px',
+              transition: 'color 0.2s'
+            }}>
+              Contact
+            </a>
             <a href="/pricing" style={{
               textDecoration: 'none',
               color: '#333',

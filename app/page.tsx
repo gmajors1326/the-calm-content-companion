@@ -475,6 +475,18 @@ export default function PromotoLandingPage() {
         a: "Yes.\nGuests can run each tool once to see how it works.\n\nNo email required. No pressure."
       },
       {
+        q: "How many runs do I get before upgrading?",
+        a: "Guests: 1 run per tool\n\nGuide owners: 5 runs per tool\n\nPro & Elite: Unlimited runs\n\nYou're never rushed. Use them when it feels helpful."
+      },
+      {
+        q: "Do my runs reset each month?",
+        a: "No.\n\nGuide runs are one-time and don't reset.\nIf you want ongoing access, Pro removes limits entirely."
+      },
+      {
+        q: "What happens when I use all my runs?",
+        a: "Nothing dramatic.\n\nYou'll simply see an option to upgrade if you want continued access.\nYou can also keep using the Guide without the tools."
+      },
+      {
         q: "What do I get if I only buy the Guide?",
         a: "You get full access to The Calm Content Guide plus 5 runs per tool to help you apply what you've learned.\n\nIf you want ongoing support, you can upgrade later."
       },
@@ -483,20 +495,28 @@ export default function PromotoLandingPage() {
         a: "No.\nPro includes unlimited access to all tools.\n\nNo run limits. No timers. No stress."
       },
       {
-        q: "If Pro is unlimited, what makes Elite different?",
-        a: "Pro gives you tools.\nElite helps you decide what matters.\n\nElite includes direction, interpretation, and monthly resets so you don't have to second-guess yourself."
+        q: "What's the difference between Pro and Elite in practice?",
+        a: "Pro gives you full access to the tools.\nElite helps you decide what to focus on and what to ignore.\n\nElite adds interpretation, pattern recognition, and direction so you're not left wondering what the results mean."
       },
       {
         q: "Is Elite coaching or a mastermind?",
         a: "No.\nThere are no calls, groups, or pressure.\n\nElite is calm, private, and designed to reduce mental load - not add to it."
       },
       {
-        q: "Do I need Elite to grow?",
-        a: "No.\nMany people are perfectly supported with the Guide or Pro.\n\nElite is for people who want clarity and direction without doing all the thinking alone."
+        q: "Is Elite for advanced creators only?",
+        a: "No.\nElite is for people who are tired of second-guessing - not people chasing advanced tactics.\n\nYou don't need a big audience to benefit."
       },
       {
-        q: "Can I upgrade or downgrade later?",
-        a: "Yes.\nYou can move between tiers at any time.\n\nNothing is locked. Nothing is forced."
+        q: "Is this another growth-hack system?",
+        a: "No.\n\nThis is a calm, sustainable approach to content that prioritizes clarity, consistency, and mental space.\n\nIf you're looking for viral tricks or daily posting pressure, this probably isn't a fit."
+      },
+      {
+        q: "Can I cancel anytime?",
+        a: "Yes.\n\nPro and Elite are monthly.\nYou can cancel, upgrade, or downgrade whenever you want.\n\nNo penalties. No awkward emails."
+      },
+      {
+        q: "Do I need to start with Pro or Elite?",
+        a: "Not at all.\n\nMany people start with the Guide, try the tools, and upgrade only if it feels helpful.\n\nYou're not meant to rush."
       }
     ];
 
@@ -514,36 +534,29 @@ export default function PromotoLandingPage() {
             />
           ))}
         </div>
+        <div style={{ marginTop: '24px' }}>
+          <Link
+            href="/contact"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '10px 18px',
+              borderRadius: '999px',
+              backgroundColor: '#143226',
+              color: '#ffffff',
+              textDecoration: 'none',
+              fontSize: '14px',
+              fontWeight: '600',
+              boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
+            }}
+          >
+            Need more help?
+          </Link>
+        </div>
       </section>
     );
   };
-
-  // --- Component for CTA Block ---
-  const CTASection = () => (
-    <section style={{ padding: '100px 24px', backgroundColor: COLORS.LIGHT_CREAM, textAlign: 'center' }}>
-      <div style={{
-        backgroundColor: '#1f2937', // Dark gray block for CTA card
-        padding: '60px',
-        borderRadius: '20px',
-        display: 'inline-block',
-        maxWidth: '800px',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
-      }}>
-        <h3 style={{ fontSize: '36px', fontWeight: '700', color: 'white', marginBottom: '10px' }}>One-Click Automation</h3>
-        <p style={{ fontSize: '18px', color: '#d1d5db', marginBottom: '30px' }}>Engage them smarter with automation powered by data.</p>
-        <button style={{
-          backgroundColor: COLORS.ACCENT_YELLOW,
-          color: COLORS.TEXT_DARK,
-          padding: '14px 30px',
-          borderRadius: '8px',
-          border: 'none',
-          cursor: 'pointer',
-          fontWeight: '700',
-          fontSize: '16px'
-        }}>Book a Demo</button>
-      </div>
-    </section>
-  );
 
   // --- Component for Footer ---
   const Footer = () => (
@@ -601,7 +614,6 @@ export default function PromotoLandingPage() {
       <PricingSection />
       <TrustSection />
       <FAQSection />
-      <CTASection />
       <Footer />
     </div>
   );
