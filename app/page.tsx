@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 // Define colors based on image analysis and layout.tsx background
@@ -46,6 +46,33 @@ const TOOL_CARDS = [
 ];
 
 export default function PromotoLandingPage() {
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll('[data-animate="slide-in-right"]'));
+    if (elements.length === 0) {
+      return;
+    }
+
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      elements.forEach((element) => element.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, []);
 
   // --- Component for the main Hero Section ---
   const HeroSection = () => (
@@ -209,7 +236,7 @@ export default function PromotoLandingPage() {
   const IntroSection = () => (
     <section style={{ padding: '90px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, minWidth: '280px' }}>
+        <div className="scroll-slide-in-right" data-animate="slide-in-right" style={{ flex: 1, minWidth: '280px' }}>
           <Image
             src="/images/guide-laptop.png"
             alt="Placeholder guide preview"
@@ -254,7 +281,7 @@ export default function PromotoLandingPage() {
   const SecondaryIntroSection = () => (
     <section style={{ padding: '90px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, minWidth: '280px' }}>
+        <div className="scroll-slide-in-right" data-animate="slide-in-right" style={{ flex: 1, minWidth: '280px' }}>
           <Image
             src="/images/guide-laptop.png"
             alt="Placeholder guide preview"
