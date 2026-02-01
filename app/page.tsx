@@ -49,12 +49,68 @@ export default function PromotoLandingPage() {
     // --- Component for the main Hero Section ---
     const HeroSection = () => (
       <section
-        className="w-full"
+        className="w-full py-16 sm:py-20"
         style={{
           backgroundColor: '#b35c3d',
-          minHeight: '60vh'
+          minHeight: '60vh',
+          fontFamily: '"Poster", "Poppins", sans-serif'
         }}
-      />
+      >
+        <div className="mx-auto max-w-6xl px-6">
+          <header className="text-center">
+            <h1 className="text-4xl font-bold tracking-tight text-[#fdfaf3] sm:text-[60px]">
+              The Calm Content Guide
+            </h1>
+            <h2 className="mt-3 text-[22px] font-medium text-[#f3efe3]">
+              A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
+            </h2>
+          </header>
+
+          <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
+            <div className="text-left">
+              <div className="text-base leading-7 text-[#f3efe3]">
+                <p className="text-[22px] font-bold text-[#fdfaf3]">Welcome</p>
+              </div>
+              <div className="mt-4 space-y-4 text-base leading-7 text-[#f3efe3]">
+                <p>
+                  If you’re here, there’s a good chance content has started to
+                  feel heavier than it should.
+                </p>
+
+                <p>
+                  Maybe you know you want to show up — but every time you open
+                  your phone, you feel overwhelmed by advice, trends, and
+                  pressure to do more.
+                </p>
+
+                <p>
+                  I created <em>The Calm Content Guide</em> because I’ve been
+                  there too.
+                </p>
+
+                <p>
+                  I didn’t struggle because I wasn’t capable. I struggled
+                  because content had become noisy, complicated, and exhausting.
+                </p>
+
+                <p>
+                  What changed everything wasn’t learning more.{" "}
+                  <strong>It was learning how to simplify.</strong>
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-center md:justify-end">
+              <div className="w-full max-w-[850px]">
+                <img
+                  src="/images/guide-laptop.png"
+                  alt="The Calm Content Guide displayed on a laptop screen"
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     );
 
     const ToolsSection = () => (
