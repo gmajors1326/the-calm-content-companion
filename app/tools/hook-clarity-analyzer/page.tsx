@@ -1,10 +1,7 @@
 import Link from "next/link";
-import { requireSupabaseSession } from "../../../lib/access";
 import HookClarityAnalyzerClient from "./HookClarityAnalyzerClient";
 
 export default function HookClarityAnalyzerPage() {
-  requireSupabaseSession("/tools/hook-clarity-analyzer");
-
   return (
     <main className="min-h-screen bg-[#FAF9F6]">
       <section className="px-6 py-20">
