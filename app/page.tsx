@@ -269,8 +269,25 @@ export default function PromotoLandingPage() {
             A Calm, Clear Path Forward
           </h2>
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a nibh sit amet nisl interdum convallis. Vivamus non lacus vel nibh euismod dictum.</p>
-            <p>Donec posuere, nibh non vulputate finibus, velit risus tristique eros, at sodales nisl erat nec augue. Sed ut ligula in lorem dignissim facilisis.</p>
+            <p>Instead, you'll learn how to:</p>
+            <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>Communicate clearly without sounding salesy</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>Choose a posting rhythm that fits your energy and life</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>Reuse simple messages without feeling repetitive</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
+                <span>Grow through calm consistency, not constant effort</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
