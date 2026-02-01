@@ -22,22 +22,3 @@ a {
 button {
   font-family: inherit;
 }
-
-.scroll-slide-in-right {
-  opacity: 0;
-  transform: translateX(48px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.scroll-slide-in-right.is-visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-slide-in-right {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
