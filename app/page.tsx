@@ -177,7 +177,7 @@ export default function PromotoLandingPage() {
   // --- Component for Proven Growth Results Section ---
   const GrowthSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT, textAlign: 'center' }}>
-      <h2 style={{ fontSize: '44px', fontWeight: '500', margin: 0, lineHeight: '1.2', fontFamily: '"Palmyra", serif' }}>
+      <h2 style={{ fontSize: '44px', fontWeight: '500', margin: 0, lineHeight: '1.2', fontFamily: '"Palmyra", serif', fontStyle: 'italic' }}>
         Take a breath.
         <br />
         You’re exactly where you need to be.
