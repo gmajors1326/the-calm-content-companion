@@ -35,7 +35,9 @@ export async function runHookClarityAnalyzer(
     "Score must be an integer from 0 to 100. " +
     "issues array length must be 0 to 3. " +
     "rewrites array length must be exactly 5. " +
-    "best_pick.variations length must be exactly 2.";
+    "best_pick.variations length must be exactly 2. " +
+    "If you cannot provide enough items, use empty strings to fill required fields. " +
+    "Always include all required keys with string values.";
 
   const userPrompt = [
     `Hook: ${input.hook_text}`,
@@ -52,40 +54,88 @@ export async function runHookClarityAnalyzer(
     user: userPrompt,
     temperature: 0.4
   });
-  const parsed = result as HookClarityResult;
-  const invalid =
-    !parsed ||
-    typeof parsed !== "object" ||
-    typeof parsed.score !== "number" ||
-    !Number.isInteger(parsed.score) ||
-    parsed.score < 0 ||
-    parsed.score > 100 ||
-    typeof parsed.verdict !== "string" ||
-    !Array.isArray(parsed.issues) ||
-    parsed.issues.length > 3 ||
-    parsed.issues.some((issue) => typeof issue !== "string") ||
-    !Array.isArray(parsed.rewrites) ||
-    parsed.rewrites.length !== 5 ||
-    parsed.rewrites.some(
-      (rewrite) =>
-        !rewrite ||
-        typeof rewrite !== "object" ||
-        typeof rewrite.rewritten_hook !== "string" ||
-        typeof rewrite.approach !== "string" ||
-        typeof rewrite.why !== "string"
-    ) ||
-    !parsed.best_pick ||
-    typeof parsed.best_pick !== "object" ||
-    typeof parsed.best_pick.rewritten_hook !== "string" ||
-    typeof parsed.best_pick.approach !== "string" ||
-    typeof parsed.best_pick.why !== "string" ||
-    !Array.isArray(parsed.best_pick.variations) ||
-    parsed.best_pick.variations.length !== 2 ||
-    parsed.best_pick.variations.some((variation) => typeof variation !== "string");
-
-  if (invalid) {
+  if (!result || typeof result !== "object") {
     throw new Error("AI returned an unexpected format. Please try again.");
   }
 
-  return parsed;
+  const raw = result as Record<string, unknown>;
+  const verdict = raw.verdict;
+  const rawScore = raw.score;
+
+  const scoreValue = typeof rawScore === "string" ? Number(rawScore) : rawScore;
+  if (typeof scoreValue !== "number" || Number.isNaN(scoreValue)) {
+    throw new Error("AI returned an unexpected format. Please try again.");
+  }
+  const score = Math.min(100, Math.max(0, Math.round(scoreValue)));
+
+  if (typeof verdict !== "string") {
+    throw new Error("AI returned an unexpected format. Please try again.");
+  }
+
+  const issuesRaw = raw.issues;
+  const issues = Array.isArray(issuesRaw)
+    ? issuesRaw.filter((issue) => typeof issue === "string").slice(0, 3)
+    : [];
+
+  const rewritesRaw = raw.rewrites;
+  if (!Array.isArray(rewritesRaw)) {
+    throw new Error("AI returned an unexpected format. Please try again.");
+  }
+
+  const trimmedRewrites = rewritesRaw.slice(0, 5);
+  if (trimmedRewrites.length < 5) {
+    throw new Error("AI returned an unexpected format. Please try again.");
+  }
+
+  const rewrites = trimmedRewrites.map((rewrite) => {
+    if (!rewrite || typeof rewrite !== "object") {
+      throw new Error("AI returned an unexpected format. Please try again.");
+    }
+    const value = rewrite as Record<string, unknown>;
+    if (
+      typeof value.rewritten_hook !== "string" ||
+      typeof value.approach !== "string" ||
+      typeof value.why !== "string"
+    ) {
+      throw new Error("AI returned an unexpected format. Please try again.");
+    }
+
+    return {
+      rewritten_hook: value.rewritten_hook,
+      approach: value.approach,
+      why: value.why
+    };
+  });
+
+  const bestPickRaw = raw.best_pick;
+  if (!bestPickRaw || typeof bestPickRaw !== "object") {
+    throw new Error("AI returned an unexpected format. Please try again.");
+  }
+
+  const bestPickValue = bestPickRaw as Record<string, unknown>;
+  const variationsRaw = bestPickValue.variations;
+
+  if (
+    typeof bestPickValue.rewritten_hook !== "string" ||
+    typeof bestPickValue.approach !== "string" ||
+    typeof bestPickValue.why !== "string" ||
+    !Array.isArray(variationsRaw) ||
+    variationsRaw.length !== 2 ||
+    variationsRaw.some((variation) => typeof variation !== "string")
+  ) {
+    throw new Error("AI returned an unexpected format. Please try again.");
+  }
+
+  return {
+    score,
+    verdict,
+    issues,
+    best_pick: {
+      rewritten_hook: bestPickValue.rewritten_hook,
+      approach: bestPickValue.approach,
+      why: bestPickValue.why,
+      variations: variationsRaw as string[]
+    },
+    rewrites
+  };
 }
