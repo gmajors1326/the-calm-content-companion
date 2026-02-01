@@ -141,6 +141,17 @@ export default function PromotoLandingPage() {
 
   const ToolsSection = () => (
     <section style={{ backgroundColor: COLORS.LIGHT_CREAM, padding: '0 24px 100px 24px' }}>
+      <div style={{ maxWidth: '1300px', margin: '0 auto 32px auto', textAlign: 'left' }}>
+        <p style={{ fontSize: '14px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6b7280', margin: 0 }}>
+          The Calm Content Toolbox
+        </p>
+        <h2 style={{ fontSize: '36px', fontWeight: '700', color: COLORS.TEXT_DARK, margin: '12px 0 10px 0' }}>
+          A small set of tools designed to support clarity, reduce overwhelm, and guide steady content decisions.
+        </h2>
+        <p style={{ fontSize: '16px', color: '#4b5563', margin: 0, maxWidth: '820px', lineHeight: '1.7' }}>
+          Clean. Confident. Calm. This pairs beautifully with the Guide-first philosophy.
+        </p>
+      </div>
       <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
         {TOOL_CARDS.map((card) => (
           <div key={card.title} style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
