@@ -426,6 +426,7 @@ export default function PromotoLandingPage() {
       className={`flex h-full flex-col rounded-2xl border bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.06)] ${
         highlight ? 'border-[#e5dcc6] shadow-[0_16px_32px_rgba(0,0,0,0.08)]' : 'border-[#e5e7eb]'
       }`}
+      style={{ fontFamily: '"Poppins", sans-serif' }}
     >
       <div className="flex items-center justify-between">
         <span className="rounded-full bg-[#f1f5f0] px-3 py-1 text-xs font-semibold text-[#2f5d46]">
@@ -477,11 +478,11 @@ export default function PromotoLandingPage() {
 
   // --- Component for Pricing Section ---
   const PricingSection = () => (
-    <section style={{ padding: '100px 24px', backgroundColor: COLORS.LIGHT_CREAM, color: COLORS.TEXT_DARK }}>
+    <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT }}>
       <div className="mx-auto max-w-6xl">
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold text-[#143226]">Pricing</h2>
-          <p className="mt-3 text-sm text-[#475569]">
+        <div className="text-center" style={{ fontFamily: '"Poppins", sans-serif' }}>
+          <h2 className="text-3xl font-semibold text-white">𝐏𝐫𝐢𝐜𝐢𝐧𝐠</h2>
+          <p className="mt-3 text-sm text-[#e5e7eb]">
             Choose the level of support you want — start with the Guide, and upgrade only if it feels helpful.
           </p>
         </div>
