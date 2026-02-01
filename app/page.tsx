@@ -74,7 +74,7 @@ export default function PromotoLandingPage() {
             𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐆𝐮𝐢𝐝𝐞
           </h1>
           <h2 className="text-[22px] font-medium leading-[26px] text-[#ffffff]" style={{ marginTop: '18px' }}>
-            A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without burnout.
+            A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without&nbsp;burnout.
           </h2>
         </header>
 
@@ -217,7 +217,15 @@ export default function PromotoLandingPage() {
             Start Here
           </h2>
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <p>For $27 you will have this comprehensive guide about how to create content without burnout.</p>
+            <p>For $27, you will have this comprehensive guide about how to create content without burnout.</p>
+            <p>This guide is for you if:</p>
+            <ul style={{ paddingLeft: '18px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <li>Posting feels overwhelming or draining</li>
+              <li>You want to grow online without burnout</li>
+              <li>You don't want to chase trends or perform for the algorithm</li>
+              <li>You want a calm, repeatable way to show up consistently</li>
+            </ul>
+            <p>Inside this guide, you won't find hype, hustle, or pressure.</p>
           </div>
         </div>
       </div>
