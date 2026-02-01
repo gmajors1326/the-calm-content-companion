@@ -225,23 +225,23 @@ export default function PromotoLandingPage() {
           </h2>
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <p>For $27, you will have this comprehensive guide about how to create content without burnout.</p>
-            <p>This guide is for you if:</p>
+            <p>Instead, you’ll learn how to:</p>
             <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
-                <span>Posting feels overwhelming or draining</span>
+                <span>Communicate clearly without sounding salesy</span>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
-                <span>You want to grow online without burnout</span>
+                <span>Choose a posting rhythm that fits your energy and life</span>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
-                <span>You don't want to chase trends or perform for the algorithm</span>
+                <span>Reuse simple messages without feeling repetitive</span>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <span style={{ marginTop: '4px', display: 'inline-flex' }}><ChecklistIcon /></span>
-                <span>You want a calm, repeatable way to show up consistently</span>
+                <span>Grow through calm consistency, not constant effort</span>
               </li>
             </ul>
             <p>Inside this guide, you won't find hype, hustle, or pressure.</p>
