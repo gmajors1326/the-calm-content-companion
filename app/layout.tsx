@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body style={{ backgroundColor: '#f7f1e3', color: '#2b2b2b', margin: 0, fontFamily: '"Poppins", sans-serif' }}>
         <nav style={{
           position: 'fixed',
-          top: 0,
+          top: '10px',
           left: 0,
           right: 0,
           height: '60px',
@@ -38,6 +38,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               transition: 'color 0.2s'
             }}>
               Home
+            </a>
+            <a href="/pricing" style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontWeight: '400',
+              fontSize: '20px',
+              padding: '8px 12px',
+              transition: 'color 0.2s'
+            }}>
+              Pricing
             </a>
             <a href="https://the-calm-content-companion.vercel.app/view-the-guide" style={{
               textDecoration: 'none',
