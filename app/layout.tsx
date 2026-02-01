@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }}>
           <div style={{ justifySelf: 'start', textAlign: 'left' }}>
           </div>
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', justifySelf: 'center', paddingTop: '35px' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', justifySelf: 'center', paddingTop: '50px' }}>
             <a href="/" style={{
               textDecoration: 'none',
               color: '#333',
@@ -72,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Pricing
             </a>
           </div>
-          <div style={{ justifySelf: 'end', textAlign: 'right', paddingTop: '35px' }}>
+          <div style={{ justifySelf: 'end', textAlign: 'right', paddingTop: '50px' }}>
             <a href="/admin" style={{
               textDecoration: 'none',
               color: '#333',
