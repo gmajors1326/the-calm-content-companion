@@ -216,9 +216,9 @@ export default function PromotoLandingPage() {
           <p style={{ fontSize: '14px', letterSpacing: '1.2px', textTransform: 'uppercase', color: '#6b7280', marginBottom: '12px' }}>
             Placeholder Section
           </p>
-          <h3 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '16px', color: COLORS.TEXT_DARK }}>
-            A Calm Framework for Consistent Content
-          </h3>
+          <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '16px', color: COLORS.TEXT_DARK }}>
+            Start Here
+          </h2>
           <div style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <p>
               This is dummy text for a new section under the hero. It is here to show how a supportive, simple narrative can live next to a visual preview.
