@@ -35,7 +35,8 @@ const TOOL_CARDS = [
     title: 'Content Direction Planner',
     description: 'Stop guessing what to post.',
     bestFor: 'weekly planning, low-energy weeks',
-    cta: '👉 Try This Tool'
+    cta: '👉 Try This Tool',
+    href: '/tools/content-direction-planner'
   },
   {
     icon: 'signal',
