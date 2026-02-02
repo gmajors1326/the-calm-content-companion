@@ -150,6 +150,7 @@ export default function PromotoLandingPage() {
           }}
         >
           𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐂𝐨𝐦𝐩𝐚𝐧𝐢𝐨𝐧
+          <span style={{ fontSize: '18px', marginLeft: '6px' }}>(TM)</span>
           <br />
           <br />
         </h2>
@@ -286,6 +287,106 @@ export default function PromotoLandingPage() {
         </span>{' '}
         that shows up when you’re applying a system in real life. And that’s exactly why the next piece exists.
       </p>
+    </section>
+  );
+
+  const FreebieSection = () => (
+    <section
+      style={{
+        padding: '90px 24px',
+        backgroundColor: COLORS.LIGHT_CREAM,
+        backgroundImage: "url('/images/bg1.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        color: COLORS.TEXT_DARK
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          alignItems: 'center',
+          gap: '40px'
+        }}
+      >
+        <div style={{ textAlign: 'left' }}>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              padding: '6px 12px',
+              borderRadius: '999px',
+              backgroundColor: '#f1f5f0',
+              color: '#2f5d46',
+              fontSize: '12px',
+              fontWeight: '700',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase'
+            }}
+          >
+            Freebie Guide
+          </span>
+          <h2 style={{ fontSize: '36px', fontWeight: '700', margin: '14px 0 12px 0' }}>
+            The Calm Content Starter
+          </h2>
+          <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', margin: 0 }}>
+            A gentle way to begin posting on Instagram without pressure. Start small, build clarity, and let your message
+            grow at a pace that feels sustainable.
+          </p>
+          <ul style={{ margin: '18px 0 0 18px', padding: 0, color: '#374151', lineHeight: '1.8' }}>
+            <li>Slow growth</li>
+            <li>Clear messaging</li>
+            <li>No pressure</li>
+          </ul>
+          <div style={{ marginTop: '22px' }}>
+            <button
+              type="button"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '10px 18px',
+                borderRadius: '999px',
+                border: '1px solid #143226',
+                backgroundColor: '#143226',
+                color: '#ffffff',
+                fontSize: '14px',
+                fontWeight: '600',
+                boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
+              }}
+            >
+              Get the Freebie
+            </button>
+            <p style={{ marginTop: '8px', fontSize: '12px', color: '#6b7280' }}>Instant access.</p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100%', maxWidth: '520px', textAlign: 'left', color: '#374151', lineHeight: '1.8' }}>
+            <Image
+              src="/images/TCCS_FREEBIE.png"
+              alt="The Calm Content Starter cover"
+              width={260}
+              height={360}
+              style={{ float: 'right', margin: '0 0 16px 16px', borderRadius: '16px', boxShadow: '0 12px 28px rgba(0,0,0,0.12)' }}
+            />
+            <p style={{ marginTop: 0 }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae elit ut sem vulputate porta sed quis
+              justo. Cras varius, urna in placerat viverra, elit felis tincidunt urna, at facilisis massa tortor non
+              neque.
+            </p>
+            <p>
+              Sed at tortor non nibh tincidunt tincidunt. Mauris eget arcu quis risus egestas viverra. Integer
+              sollicitudin sem et lectus posuere, eget vulputate nisl posuere.
+            </p>
+            <p>
+              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam sed dui sit
+              amet metus porta egestas nec vel justo.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 
@@ -838,6 +939,7 @@ export default function PromotoLandingPage() {
       <SecondaryIntroSection />
       <OutcomeSection />
       <GrowthSection />
+      <FreebieSection />
       <ToolsSection />
       <PricingSection />
       <TrustSection />
