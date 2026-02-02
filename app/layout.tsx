@@ -4,7 +4,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <title>The Calm Content Companion</title>
+        <title>The Calm Content Guide™ | Grow on Instagram Without Burnout</title>
+        <meta
+          name="description"
+          content="A calm way to grow on Instagram without pressure, trends, or burnout. The Calm Content Method plus tools and guidance for repeatable, sustainable growth."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

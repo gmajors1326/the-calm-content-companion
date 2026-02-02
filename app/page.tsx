@@ -145,7 +145,7 @@ export default function PromotoLandingPage() {
         <h2
           className="text-4xl font-bold tracking-tight sm:text-[60px]"
           style={{
-            color: '#00ff00',
+            color: '#355e3b',
             margin: '20px 0 8px 0'
           }}
         >
