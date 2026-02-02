@@ -145,17 +145,20 @@ export default function PromotoLandingPage() {
         <h2
           className="text-4xl font-bold tracking-tight sm:text-[60px]"
           style={{
-            color: COLORS.TEXT_DARK,
+            color: '#00ff00',
             margin: '20px 0 8px 0'
           }}
         >
           𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐂𝐨𝐦𝐩𝐚𝐧𝐢𝐨𝐧
+          <br />
+          <br />
         </h2>
         <p style={{ fontSize: '18px', fontWeight: '600', color: COLORS.TEXT_DARK, margin: '0 0 10px 0' }}>
-          Small tools that support the system — helping you apply The Calm Content Guide with clarity and confidence.
-        </p>
-        <p style={{ fontSize: '16px', color: '#4b5563', margin: '0 auto', maxWidth: '820px', lineHeight: '1.7' }}>
-          Clean. Confident. Calm. This pairs beautifully with the Guide-first philosophy.
+          Small tools that support the system helping you apply{' '}
+          <span style={{ fontFamily: '"Glyph", "Poppins", sans-serif' }}>
+            The Calm Content Guide
+          </span>{' '}
+          with clarity and confidence.
         </p>
       </div>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '28px', alignItems: 'stretch', justifyItems: 'center' }}>
