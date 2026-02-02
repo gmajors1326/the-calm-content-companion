@@ -140,8 +140,8 @@ export default function PromotoLandingPage() {
   );
 
   const ToolsSection = () => (
-    <section style={{ backgroundColor: COLORS.LIGHT_CREAM, padding: '0 24px 100px 24px' }}>
-      <div style={{ maxWidth: '1300px', margin: '0 auto 32px auto', textAlign: 'center', fontFamily: '"Poster", "Poppins", sans-serif' }}>
+    <section style={{ backgroundColor: COLORS.LIGHT_CREAM, padding: '90px 24px 120px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto 42px auto', textAlign: 'center', fontFamily: '"Poster", "Poppins", sans-serif' }}>
         <h2
           className="text-4xl font-bold tracking-tight sm:text-[60px]"
           style={{
@@ -158,9 +158,9 @@ export default function PromotoLandingPage() {
           Clean. Confident. Calm. This pairs beautifully with the Guide-first philosophy.
         </p>
       </div>
-      <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '28px', alignItems: 'stretch', justifyItems: 'center' }}>
         {TOOL_CARDS.map((card) => (
-          <div key={card.title} style={{ flex: 1, minWidth: '240px', backgroundColor: '#fff', padding: '24px 20px', borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', textAlign: 'left' }}>
+          <div key={card.title} style={{ width: '100%', maxWidth: '270px', backgroundColor: '#fff', padding: '26px 22px', borderRadius: '18px', boxShadow: '0 12px 28px rgba(0,0,0,0.08)', textAlign: 'left', display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div style={{ width: '72px', height: '72px', borderRadius: '16px', backgroundColor: '#f1f5f0', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
               {card.icon === 'sparkles' && (
                 <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2f5d46" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
