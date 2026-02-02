@@ -294,12 +294,8 @@ export default function PromotoLandingPage() {
     <section
       style={{
         padding: '90px 24px',
-        backgroundColor: COLORS.LIGHT_CREAM,
-        backgroundImage: "url('/images/bg1.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        color: COLORS.TEXT_DARK
+        backgroundColor: '#b35c3d',
+        color: COLORS.TEXT_LIGHT
       }}
     >
       <div
@@ -319,8 +315,8 @@ export default function PromotoLandingPage() {
               alignItems: 'center',
               padding: '6px 12px',
               borderRadius: '999px',
-              backgroundColor: '#f1f5f0',
-              color: '#2f5d46',
+              backgroundColor: 'rgba(255,255,255,0.16)',
+              color: COLORS.TEXT_LIGHT,
               fontSize: '12px',
               fontWeight: '700',
               letterSpacing: '0.04em',
@@ -332,11 +328,11 @@ export default function PromotoLandingPage() {
           <h2 style={{ fontSize: '36px', fontWeight: '700', margin: '14px 0 12px 0' }}>
             The Calm Content Starter
           </h2>
-          <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#374151', margin: 0 }}>
+          <p style={{ fontSize: '16px', lineHeight: '1.8', color: COLORS.TEXT_LIGHT, margin: 0 }}>
             A gentle way to begin posting on Instagram without pressure. Start small, build clarity, and let your message
             grow at a pace that feels sustainable.
           </p>
-          <ul style={{ margin: '18px 0 0 18px', padding: 0, color: '#374151', lineHeight: '1.8' }}>
+          <ul style={{ margin: '18px 0 0 18px', padding: 0, color: COLORS.TEXT_LIGHT, lineHeight: '1.8' }}>
             <li>Slow growth</li>
             <li>Clear messaging</li>
             <li>No pressure</li>
@@ -359,11 +355,11 @@ export default function PromotoLandingPage() {
             >
               Get the Freebie
             </button>
-            <p style={{ marginTop: '8px', fontSize: '12px', color: '#6b7280' }}>Instant access.</p>
+            <p style={{ marginTop: '8px', fontSize: '12px', color: COLORS.TEXT_LIGHT }}>Instant access.</p>
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '520px', textAlign: 'left', color: '#374151', lineHeight: '1.8' }}>
+          <div style={{ width: '100%', maxWidth: '520px', textAlign: 'left', color: COLORS.TEXT_LIGHT, lineHeight: '1.8' }}>
             <Image
               src="/images/TCCS_FREEBIE.png"
               alt="The Calm Content Starter cover"
