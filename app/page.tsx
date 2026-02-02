@@ -260,23 +260,15 @@ export default function PromotoLandingPage() {
           lineHeight: '1.7',
           fontFamily: '"Poppins", sans-serif',
           color: COLORS.TEXT_LIGHT,
-          whiteSpace: 'pre-line'
+          whiteSpace: 'pre-line',
+          textAlign: 'left'
         }}
       >
-        Once you understand the Calm Content Method, something important begins to shift.
+        Once you understand the Calm Content Method, something important begins to shift. You stop questioning what to do — and start noticing where you still hesitate. The uncertainty becomes quieter, but it doesn’t disappear entirely.
 
-        You stop questioning what to do — and start noticing where you still hesitate.
-        The uncertainty becomes quieter, but it doesn’t disappear entirely.
-        <br />
-        You may still catch yourself thinking:
-        Does this hook actually make sense?
-        I know my message — but how do I express it today?
-        Why does this still feel harder than it should after every post?
-        <br />
-        This isn’t a lack of clarity.
-        It’s the mental friction that shows up when you’re applying a system in real life.
+        You may still catch yourself thinking: Does this hook actually make sense? I know my message — but how do I express it today? Why does this still feel harder than it should after every post?
 
-        And that’s exactly why the next piece exists.
+        This isn’t a lack of clarity. It’s the mental friction that shows up when you’re applying a system in real life. And that’s exactly why the next piece exists.
       </p>
     </section>
   );
