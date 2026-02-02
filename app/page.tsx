@@ -264,10 +264,12 @@ export default function PromotoLandingPage() {
           textAlign: 'left'
         }}
       >
-        Once you understand the Calm Content Method, something important begins to shift. You stop questioning what to do — and start noticing where you still hesitate. The uncertainty becomes quieter, but it doesn’t disappear entirely.
-
-        You may still catch yourself thinking: Does this hook actually make sense? I know my message — but how do I express it today? Why does this still feel harder than it should after every post?
-
+        Once you understand the Calm Content Method, something important begins to shift. You stop questioning what to do and start noticing where you still hesitate. The uncertainty becomes quieter, but it doesn’t disappear entirely.
+        <br />
+        <br />
+        You may still catch yourself thinking: Does this hook actually make sense? I know my message... but how do I express it today? Why does this still feel harder than it should after every post?
+        <br />
+        <br />
         This isn’t a lack of clarity. It’s the mental friction that shows up when you’re applying a system in real life. And that’s exactly why the next piece exists.
       </p>
     </section>
