@@ -271,7 +271,10 @@ export default function PromotoLandingPage() {
         , something important begins to shift. You stop questioning what to do and start noticing where you still hesitate. The uncertainty becomes quieter, but it doesn’t disappear entirely.
         <br />
         <br />
-        You may still catch yourself thinking: Does this hook actually make sense? I know my message... but how do I express it today? Why does this still feel harder than it should after every post?
+        <span style={{ fontFamily: '"Glyph", "Poppins", sans-serif', color: '#00ff00' }}>
+          You may still catch yourself thinking:
+        </span>{' '}
+        Does this hook actually make sense? I know my message... but how do I express it today? Why does this still feel harder than it should after every post?
         <br />
         <br />
         This isn’t a lack of clarity. It’s the{' '}
