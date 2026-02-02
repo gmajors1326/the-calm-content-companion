@@ -454,7 +454,7 @@ export default function PromotoLandingPage() {
     highlight?: boolean;
   }) => (
     <div
-      className={`flex h-full flex-col rounded-2xl border bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.06)] ${
+      className={`flex h-full flex-col rounded-2xl border bg-white p-5 shadow-[0_10px_25px_rgba(0,0,0,0.06)] ${
         highlight ? 'border-[#a3e635] shadow-[0_16px_32px_rgba(0,0,0,0.08)]' : 'border-[#e5e7eb]'
       }`}
       style={{
@@ -521,7 +521,7 @@ export default function PromotoLandingPage() {
   // --- Component for Pricing Section ---
   const PricingSection = () => (
     <section style={{ padding: '100px 24px', backgroundColor: COLORS.DARK_GREEN, color: COLORS.TEXT_LIGHT }}>
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <div className="text-center" style={{ fontFamily: '"Poppins", sans-serif' }}>
           <h2 className="font-semibold text-white" style={{ fontSize: '61px' }}>𝐏𝐫𝐢𝐜𝐢𝐧𝐠</h2>
           <p className="mt-3 text-[#e5e7eb]" style={{ fontSize: '20px', lineHeight: '26px' }}>
@@ -529,7 +529,7 @@ export default function PromotoLandingPage() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <PricingCard
             badge="Freebie"
             title="The Calm Content Starter"
