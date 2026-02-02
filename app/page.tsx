@@ -531,6 +531,20 @@ export default function PromotoLandingPage() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <PricingCard
+            badge="Freebie"
+            title="The Calm Content Starter"
+            price="Free"
+            description="A gentle way to begin posting on Instagram."
+            includes={[
+              'Slow growth',
+              'Clear messaging',
+              'No pressure'
+            ]}
+            toolboxLabel="Included in your starter kit:"
+            cta="Get the Freebie"
+            finePrint="Instant access."
+          />
+          <PricingCard
             badge="One-time"
             title="The Calm Content Guide"
             price="$27"
