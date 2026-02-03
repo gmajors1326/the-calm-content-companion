@@ -5,22 +5,11 @@ import { analyzeMessagePositioning } from "./actions";
 import ToolError from "../../../components/tool/ToolError";
 import ToolResultCard from "../../../components/tool/ToolResultCard";
 
-type BioDirection = {
-  short: string;
-  long: string;
-};
-
 type Analysis = {
-  core_positioning: string;
-  one_liner: string;
-  not_this: string[];
-  bio_directions: BioDirection[];
-  content_angles: string[];
-  confidence_note: string;
+  main_message: string;
+  supporting_ideas: string[];
+  reassurance: string;
 };
-
-const TONE_OPTIONS = ["calm", "direct", "playful", "premium"] as const;
-const PLATFORM_OPTIONS = ["IG", "TikTok", "YouTube", "Website"] as const;
 
 const SpinnerIcon = ({ className = "h-4 w-4 animate-spin" }: { className?: string }) => (
   <svg
@@ -42,13 +31,11 @@ export default function MessagePositioningBuilderClient() {
   const [whatYouDo, setWhatYouDo] = useState("");
   const [whoYouHelp, setWhoYouHelp] = useState("");
   const [problemYouSolve, setProblemYouSolve] = useState("");
-  const [platform, setPlatform] = useState<(typeof PLATFORM_OPTIONS)[number] | "">("");
-  const [tone, setTone] = useState<(typeof TONE_OPTIONS)[number] | "">("");
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [error, setError] = useState<{ message: string; debugId?: string } | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const canAnalyze = whatYouDo.trim().length > 0 && platform && tone && !isPending;
+  const canAnalyze = whatYouDo.trim().length > 0 && !isPending;
 
   const handleCopy = async (text: string) => {
     if (!text || !navigator?.clipboard?.writeText) return;
@@ -63,8 +50,6 @@ export default function MessagePositioningBuilderClient() {
     what_you_do: string;
     who_you_help?: string;
     problem_you_solve?: string;
-    platform: (typeof PLATFORM_OPTIONS)[number];
-    tone: (typeof TONE_OPTIONS)[number];
   }) => {
     setError(null);
     setAnalysis(null);
@@ -89,17 +74,10 @@ export default function MessagePositioningBuilderClient() {
   };
 
   const handleAnalyze = () => {
-    if (!platform || !tone) {
-      setError({ message: "Tone and platform are required." });
-      return;
-    }
-
     runAnalysis({
       what_you_do: whatYouDo,
       who_you_help: whoYouHelp || undefined,
-      problem_you_solve: problemYouSolve || undefined,
-      platform,
-      tone
+      problem_you_solve: problemYouSolve || undefined
     });
   };
 
@@ -107,8 +85,6 @@ export default function MessagePositioningBuilderClient() {
     setWhatYouDo("I help creators simplify their content so they can show up consistently without burnout.");
     setWhoYouHelp("Overwhelmed creators and small business owners");
     setProblemYouSolve("Too much advice, not enough clarity");
-    setPlatform("IG");
-    setTone("calm");
     setAnalysis(null);
     setError(null);
   };
@@ -121,7 +97,7 @@ export default function MessagePositioningBuilderClient() {
           onSubmit={(event) => {
             event.preventDefault();
             if (!canAnalyze) {
-              setError({ message: "Please complete the required fields." });
+              setError({ message: "Please tell us what you do." });
               return;
             }
             handleAnalyze();
@@ -181,47 +157,6 @@ export default function MessagePositioningBuilderClient() {
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <label className="text-sm font-semibold text-[#143226]" htmlFor="platform-select">
-                Platform (required)
-              </label>
-              <select
-                id="platform-select"
-                className="mt-2 w-full rounded-xl border border-[#e2e8f0] bg-white px-4 py-2 text-sm text-[#0f172a] focus:border-[#143226] focus:outline-none"
-                value={platform}
-                onChange={(event) => setPlatform(event.target.value as (typeof PLATFORM_OPTIONS)[number])}
-                required
-              >
-                <option value="">Select platform</option>
-                {PLATFORM_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="text-sm font-semibold text-[#143226]" htmlFor="tone-select">
-                Tone (required)
-              </label>
-              <select
-                id="tone-select"
-                className="mt-2 w-full rounded-xl border border-[#e2e8f0] bg-white px-4 py-2 text-sm text-[#0f172a] focus:border-[#143226] focus:outline-none"
-                value={tone}
-                onChange={(event) => setTone(event.target.value as (typeof TONE_OPTIONS)[number])}
-                required
-              >
-                <option value="">Select tone</option>
-                {TONE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option.charAt(0).toUpperCase() + option.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
           <div className="flex flex-wrap gap-3">
             <button
               type="submit"
@@ -231,10 +166,10 @@ export default function MessagePositioningBuilderClient() {
               {isPending ? (
                 <span className="inline-flex items-center gap-2">
                   <SpinnerIcon />
-                  Building...
+                  Clarifying...
                 </span>
               ) : (
-                "Build positioning"
+                "Clarify my message"
               )}
             </button>
             <button
@@ -244,8 +179,6 @@ export default function MessagePositioningBuilderClient() {
                 setWhatYouDo("");
                 setWhoYouHelp("");
                 setProblemYouSolve("");
-                setPlatform("");
-                setTone("");
                 setAnalysis(null);
                 setError(null);
               }}
@@ -269,7 +202,7 @@ export default function MessagePositioningBuilderClient() {
         <ToolResultCard title="Analyzing">
           <div className="flex items-center gap-3 text-sm text-[#475569]">
             <SpinnerIcon className="h-5 w-5 animate-spin" />
-            Generating your positioning...
+            Generating your message...
           </div>
         </ToolResultCard>
       )}
@@ -277,76 +210,52 @@ export default function MessagePositioningBuilderClient() {
       {analysis && !isPending && (
         <div className="grid gap-6">
           <ToolResultCard
-            title="Core positioning statement"
+            title="Main message"
             action={
               <button
                 type="button"
                 className="rounded-full border border-[#cbd5f5] px-4 py-1 text-xs font-semibold text-[#143226] transition hover:border-[#143226]"
-                onClick={() => handleCopy(analysis.core_positioning)}
+                onClick={() => handleCopy(analysis.main_message)}
               >
                 Copy
               </button>
             }
           >
-            <p className="text-base font-semibold text-[#0f172a]">{analysis.core_positioning}</p>
+            <p className="text-base font-semibold text-[#0f172a]">{analysis.main_message}</p>
           </ToolResultCard>
 
           <ToolResultCard
-            title="One-line identity"
+            title="Supporting ideas"
             action={
               <button
                 type="button"
                 className="rounded-full border border-[#cbd5f5] px-4 py-1 text-xs font-semibold text-[#143226] transition hover:border-[#143226]"
-                onClick={() => handleCopy(analysis.one_liner)}
+                onClick={() => handleCopy(analysis.supporting_ideas.join("\n"))}
               >
                 Copy
               </button>
             }
           >
-            <p className="text-base font-semibold text-[#0f172a]">{analysis.one_liner}</p>
-          </ToolResultCard>
-
-          <ToolResultCard title="What you're NOT">
             <ul className="list-disc pl-5 text-sm text-[#475569]">
-              {analysis.not_this.map((item, index) => (
-                <li key={`${item}-${index}`}>{item}</li>
+              {analysis.supporting_ideas.map((idea, index) => (
+                <li key={`${idea}-${index}`}>{idea}</li>
               ))}
             </ul>
           </ToolResultCard>
 
-          <ToolResultCard title="Bio directions">
-            <div className="grid gap-4">
-              {analysis.bio_directions.map((bio, index) => (
-                <div key={`${bio.short}-${index}`} className="rounded-xl border border-[#e2e8f0] p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-[#94a3b8]">
-                      Option {index + 1}
-                    </p>
-                    <button
-                      type="button"
-                      className="rounded-full border border-[#cbd5f5] px-4 py-1 text-xs font-semibold text-[#143226] transition hover:border-[#143226]"
-                      onClick={() => handleCopy(`${bio.short}\n${bio.long}`)}
-                    >
-                      Copy
-                    </button>
-                  </div>
-                  <p className="mt-3 text-sm font-semibold text-[#0f172a]">{bio.short}</p>
-                  <p className="mt-2 text-sm text-[#475569]">{bio.long}</p>
-                </div>
-              ))}
-            </div>
-          </ToolResultCard>
-
-          <ToolResultCard title="Content angle suggestions">
-            <ul className="list-disc pl-5 text-sm text-[#475569]">
-              {analysis.content_angles.map((item, index) => (
-                <li key={`${item}-${index}`}>{item}</li>
-              ))}
-            </ul>
-          </ToolResultCard>
-
-          <ToolResultCard title="Confidence check">
-            <p className="text-sm text-[#475569]">{analysis.confidence_note}</p>
+          <ToolResultCard
+            title="Reassurance"
+            action={
+              <button
+                type="button"
+                className="rounded-full border border-[#cbd5f5] px-4 py-1 text-xs font-semibold text-[#143226] transition hover:border-[#143226]"
+                onClick={() => handleCopy(analysis.reassurance)}
+              >
+                Copy
+              </button>
+            }
+          >
+            <p className="text-base font-semibold text-[#0f172a]">{analysis.reassurance}</p>
           </ToolResultCard>
         </div>
       )}

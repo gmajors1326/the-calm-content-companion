@@ -10,17 +10,13 @@ export async function analyzeMessagePositioning(input: {
   what_you_do: string;
   who_you_help?: string;
   problem_you_solve?: string;
-  platform: "IG" | "TikTok" | "YouTube" | "Website";
-  tone: "calm" | "direct" | "playful" | "premium";
 }): Promise<MessagePositioningResult> {
   const debugId = `MPB-${Date.now().toString(36)}`;
   try {
     const data = await runMessagePositioningBuilder({
       what_you_do: input.what_you_do,
       who_you_help: input.who_you_help || "",
-      problem_you_solve: input.problem_you_solve || "",
-      platform: input.platform,
-      tone: input.tone
+      problem_you_solve: input.problem_you_solve || ""
     });
     return { ok: true, data };
   } catch (err: any) {

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const TOOLS = [
   { slug: "hook-clarity-analyzer", name: "Hook Clarity Analyzer", locked: false },
-  { slug: "message-positioning-builder", name: "Message Positioning Builder", locked: false },
+  { slug: "message-positioning-builder", name: "Your Main Instagram Message", locked: false },
   { slug: "content-direction-planner", name: "Content Direction Planner", locked: false },
   { slug: "engagement-signal-interpreter", name: "Engagement Signal Interpreter", locked: false },
   { slug: "weekly-content-reflection", name: "Weekly Content Reflection", locked: false },
