@@ -28,7 +28,7 @@ const TOOL_CARDS = [
     description: 'Get clear on the main message your Instagram posts should come back to — so your content feels focused, not scattered.',
     bestFor: 'Clarity · consistency · knowing what to say',
     href: '/tools/message-positioning-builder',
-    cta: 'Clarify my message'
+    cta: '👉 Clarify my message'
   },
   {
     icon: 'compass',
