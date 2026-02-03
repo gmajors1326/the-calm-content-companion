@@ -367,18 +367,7 @@ export default function PromotoLandingPage() {
             <p style={{ marginTop: '8px', fontSize: '12px', color: '#6b7280' }}>Instant access.</p>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '620px' }}>
-            <Image
-              src="/images/story 2.png"
-              alt="The Calm Content Starter guide preview"
-              width={820}
-              height={600}
-              className="h-auto w-full"
-              style={{ borderRadius: '18px', boxShadow: '0 18px 36px rgba(0,0,0,0.2)' }}
-            />
-          </div>
-        </div>
+        <div />
       </div>
     </section>
   );
