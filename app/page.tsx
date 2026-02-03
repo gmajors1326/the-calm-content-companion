@@ -24,8 +24,9 @@ const TOOL_CARDS = [
   },
   {
     icon: 'message',
-    title: 'Message Positioning Builder',
-    description: 'Get clear on what you’re actually about.',
+    title: 'Find Your Message',
+    subline: 'Clarity before consistency.',
+    description: 'Answer a few simple questions and walk away knowing what you’re trying to say — and who you’re saying it for.',
     bestFor: 'niche clarity, bio direction, confidence',
     href: '/tools/message-positioning-builder',
     cta: '👉 Try This Tool'
@@ -199,6 +200,9 @@ export default function PromotoLandingPage() {
               )}
             </div>
             <p style={{ fontSize: '18px', fontWeight: '700', color: '#111', margin: 0 }}>{card.title}</p>
+            {card.subline && (
+              <p style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', margin: '4px 0 0 0' }}>{card.subline}</p>
+            )}
             <p style={{ fontSize: '14px', color: '#374151', margin: '8px 0 0 0', lineHeight: '1.5' }}>{card.description}</p>
             <p style={{ fontSize: '13px', color: '#6b7280', margin: '10px 0 0 0' }}>Best for: {card.bestFor}</p>
             {card.href ? (
