@@ -201,48 +201,48 @@ export default function PromotoLandingPage() {
             <p style={{ fontSize: '18px', fontWeight: '700', color: '#111', margin: 0 }}>{card.title}</p>
             <p style={{ fontSize: '14px', color: '#374151', margin: '8px 0 0 0', lineHeight: '1.5' }}>{card.description}</p>
             <p style={{ fontSize: '13px', color: '#6b7280', margin: '10px 0 0 0' }}>Best for: {card.bestFor}</p>
-            {card.href ? (
-              <Link
-                href={card.href}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  marginTop: '14px',
-                  padding: '8px 14px',
-                  borderRadius: '999px',
-                  backgroundColor: '#143226',
-                  color: '#ffffff',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  textDecoration: 'none',
-                  boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
-                }}
-              >
-                {card.cta || '👉 Try This Tool'}
-              </Link>
-            ) : (
-              <button
-                type="button"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  marginTop: '14px',
-                  padding: '8px 14px',
-                  borderRadius: '999px',
-                  backgroundColor: '#143226',
-                  color: '#ffffff',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  border: 'none',
-                  cursor: 'not-allowed',
-                  opacity: 0.6,
-                  boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
-                }}
-                disabled
-              >
-                {card.cta || '👉 Try This Tool'}
-              </button>
-            )}
+            <div style={{ marginTop: 'auto', paddingTop: '14px' }}>
+              {card.href ? (
+                <Link
+                  href={card.href}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '8px 14px',
+                    borderRadius: '999px',
+                    backgroundColor: '#143226',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    textDecoration: 'none',
+                    boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
+                  }}
+                >
+                  {card.cta || '👉 Try This Tool'}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '8px 14px',
+                    borderRadius: '999px',
+                    backgroundColor: '#143226',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'not-allowed',
+                    opacity: 0.6,
+                    boxShadow: '0 6px 14px rgba(20,50,38,0.18)'
+                  }}
+                  disabled
+                >
+                  {card.cta || '👉 Try This Tool'}
+                </button>
+              )}
+            </div>
           </div>
         ))}
       </div>
