@@ -83,6 +83,7 @@ export default function PromotoLandingPage() {
         <header className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-[#ffffff] sm:text-[60px]">
             𝐓𝐡𝐞 𝐂𝐚𝐥𝐦 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐌𝐞𝐭𝐡𝐨𝐝 𝐆𝐮𝐢𝐝𝐞
+            <span style={{ fontSize: '18px', marginLeft: '6px' }}>(TM)</span>
           </h1>
           <h2 className="text-[22px] font-medium leading-[26px] text-[#ffffff]" style={{ marginTop: '18px' }}>
             A gentle guide to simplify your content, find a sustainable posting rhythm, and grow without&nbsp;burnout.
@@ -308,7 +309,7 @@ export default function PromotoLandingPage() {
           gap: '40px'
         }}
       >
-        <div style={{ textAlign: 'left' }}>
+        <div style={{ textAlign: 'left', fontFamily: '"Poppins", sans-serif' }}>
           <span
             style={{
               display: 'inline-flex',
@@ -359,27 +360,15 @@ export default function PromotoLandingPage() {
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '520px', textAlign: 'left', color: COLORS.TEXT_LIGHT, lineHeight: '1.8' }}>
+          <div style={{ width: '100%', maxWidth: '620px' }}>
             <Image
-              src="/images/TCCS_FREEBIE.png"
-              alt="The Calm Content Starter cover"
-              width={260}
-              height={360}
-              style={{ float: 'right', margin: '0 0 16px 16px', borderRadius: '16px', boxShadow: '0 12px 28px rgba(0,0,0,0.12)' }}
+              src="/images/story 2.png"
+              alt="The Calm Content Starter guide preview"
+              width={820}
+              height={600}
+              className="h-auto w-full"
+              style={{ borderRadius: '18px', boxShadow: '0 18px 36px rgba(0,0,0,0.2)' }}
             />
-            <p style={{ marginTop: 0 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae elit ut sem vulputate porta sed quis
-              justo. Cras varius, urna in placerat viverra, elit felis tincidunt urna, at facilisis massa tortor non
-              neque.
-            </p>
-            <p>
-              Sed at tortor non nibh tincidunt tincidunt. Mauris eget arcu quis risus egestas viverra. Integer
-              sollicitudin sem et lectus posuere, eget vulputate nisl posuere.
-            </p>
-            <p>
-              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam sed dui sit
-              amet metus porta egestas nec vel justo.
-            </p>
           </div>
         </div>
       </div>
