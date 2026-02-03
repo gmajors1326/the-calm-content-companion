@@ -780,24 +780,12 @@ export default function PromotoLandingPage() {
 
     const faqs = [
       {
-        q: "What comes with The Calm Content Guide?",
-        a: "The full Guide plus 5 runs per tool per day unlimited! It's to help you apply the system. No subscription required. <br>What is a run? Our FAQ's explain it."
-      },
-      {
         q: "Do I need to start with Pro or Elite?",
         a: "Not at all.\n\nMany people start with the Guide, try the tools, and upgrade only if it feels helpful.\n\nYou're not meant to rush."
       },
       {
         q: "What's the difference between the Guide, Pro, and Elite?",
         a: "The Guide teaches the system.\nPro gives you unlimited access to the tools.\nElite adds guidance, interpretation, and direction so you don't have to figure everything out yourself."
-      },
-      {
-        q: "Can I try the tools before paying?",
-        a: "Yes.\nGuests can run each tool once to see how it works.\n\nNo email required. No pressure."
-      },
-      {
-        q: "What's a \"run\"?",
-        a: "A run is one completed result from a tool.\n\nYou can tweak your inputs and run again when you're ready."
       },
       {
         q: "How many runs do I get before upgrading?",
@@ -810,14 +798,6 @@ export default function PromotoLandingPage() {
       {
         q: "What happens when I use all my runs?",
         a: "Nothing dramatic.\n\nYou'll simply see an option to upgrade if you want continued access.\nYou can also keep using the Guide without the tools."
-      },
-      {
-        q: "Are the tools limited in Pro?",
-        a: "No.\nPro includes unlimited access to all tools.\n\nNo run limits. No timers. No stress."
-      },
-      {
-        q: "What's the difference between Pro and Elite in practice?",
-        a: "Pro gives you full access to the tools.\nElite helps you decide what to focus on and what to ignore.\n\nElite adds interpretation, pattern recognition, and direction so you're not left wondering what the results mean."
       },
       {
         q: "Is Elite coaching or a mastermind?",
