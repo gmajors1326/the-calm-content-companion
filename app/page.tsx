@@ -270,25 +270,23 @@ export default function PromotoLandingPage() {
         }}
       >
         Once you understand the{' '}
-        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '26px', color: COLORS.TEXT_LIGHT }}>
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '30px', color: COLORS.TEXT_LIGHT }}>
           Calm Content Method
         </span>
         , something important begins to shift. You stop questioning what to do and start noticing where you still hesitate. The uncertainty becomes quieter, but it doesn’t disappear entirely.
         <br />
         <br />
-        <span style={{ color: COLORS.TEXT_LIGHT, fontFamily: '"Poppins", sans-serif', fontSize: '26px' }}>
-          You may still catch yourself thinking:
-        </span>{' '}
-        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '26px', color: COLORS.TEXT_LIGHT }}>
+        You may still catch yourself thinking:{' '}
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '30px', color: COLORS.TEXT_LIGHT }}>
           Does this hook actually make sense?
         </span>{' '}
         I know my message... but how do I express it today?{' '}
-        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '26px', color: COLORS.TEXT_LIGHT }}>
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '30px', color: COLORS.TEXT_LIGHT }}>
           Why does this still feel harder than it should after every post?
         </span>
         <br />
         <br />
-        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '26px', color: COLORS.TEXT_LIGHT }}>
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '30px', color: COLORS.TEXT_LIGHT }}>
           This isn’t a lack of clarity.
         </span>{' '}
         It’s the mental friction that shows up when you’re applying a system in real life. And that’s exactly why the
