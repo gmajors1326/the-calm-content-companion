@@ -541,7 +541,6 @@ export default function PromotoLandingPage() {
         ...(highlight
           ? {
               border: '3px solid #00ff00',
-              transform: 'translateY(-8px) scale(1.03)',
               boxShadow: '0 24px 44px rgba(15,42,30,0.22), 0 0 42px rgba(163,230,53,0.45)'
             }
           : {
@@ -608,7 +607,7 @@ export default function PromotoLandingPage() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
           <PricingCard
             badge="Freebie"
             title="The Calm Content Starter"
