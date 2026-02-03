@@ -270,23 +270,29 @@ export default function PromotoLandingPage() {
         }}
       >
         Once you understand the{' '}
-        <span style={{ fontFamily: '"Glyph", "Poppins", sans-serif', color: '#00ff00' }}>
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '22px', color: COLORS.TEXT_LIGHT }}>
           Calm Content Method
         </span>
         , something important begins to shift. You stop questioning what to do and start noticing where you still hesitate. The uncertainty becomes quieter, but it doesn’t disappear entirely.
         <br />
         <br />
-        <span style={{ fontFamily: '"Glyph", "Poppins", sans-serif', color: '#00ff00' }}>
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '22px', color: '#b35c3d' }}>
           You may still catch yourself thinking:
         </span>{' '}
-        Does this hook actually make sense? I know my message... but how do I express it today? Why does this still feel harder than it should after every post?
-        <br />
-        <br />
-        This isn’t a lack of clarity. It’s the{' '}
-        <span style={{ fontFamily: '"Glyph", "Poppins", sans-serif', color: '#00ff00' }}>
-          mental friction
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '22px', color: '#b35c3d' }}>
+          Does this hook actually make sense?
         </span>{' '}
-        that shows up when you’re applying a system in real life. And that’s exactly why the next piece exists.
+        I know my message... but how do I express it today?{' '}
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '22px', color: '#b35c3d' }}>
+          Why does this still feel harder than it should after every post?
+        </span>
+        <br />
+        <br />
+        <span style={{ fontFamily: '"Palmyra", serif', fontStyle: 'italic', fontSize: '22px', color: '#b35c3d' }}>
+          This isn’t a lack of clarity.
+        </span>{' '}
+        It’s the mental friction that shows up when you’re applying a system in real life. And that’s exactly why the
+        next piece exists.
       </p>
     </section>
   );
