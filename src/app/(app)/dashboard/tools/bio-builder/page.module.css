@@ -1,0 +1,773 @@
+.page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+
+.backLink:hover {
+    color: var(--primary-text);
+}
+
+.header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 3rem;
+}
+
+.eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage-accent);
+    margin-bottom: 0.75rem;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    font-weight: 400;
+    color: var(--primary-text);
+    margin-bottom: 0.75rem;
+}
+
+.subtitle {
+    color: var(--secondary-text);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* ── Layout ── */
+.grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 960px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page {
+        padding: 1.25rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+}
+
+/* ── Input Panel ── */
+.inputPanel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: sticky;
+    top: 1.5rem;
+}
+
+.panelTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panelTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-text);
+}
+
+.fillBtn {
+    font-size: 0.78rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    color: var(--secondary-text);
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.fillBtn:hover {
+    background: var(--border);
+    color: var(--primary-text);
+}
+
+.label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--secondary-text);
+    margin-bottom: 0.5rem;
+}
+
+.optional {
+    font-weight: 400;
+    opacity: 0.5;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: 0.3rem;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--primary-text);
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--sage-accent);
+    box-shadow: 0 0 0 3px rgba(111, 127, 106, 0.12);
+}
+
+.input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--primary-text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--sage-accent);
+    box-shadow: 0 0 0 3px rgba(111, 127, 106, 0.12);
+}
+
+.analyzeBtn {
+    width: 100%;
+    background: var(--deep-olive);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+    border: none;
+    margin-top: 0.25rem;
+}
+
+.analyzeBtn:hover:not(:disabled) {
+    background: #252e25;
+    transform: translateY(-1px);
+}
+
+.analyzeBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btnHint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--secondary-text);
+    opacity: 0.6;
+    margin-top: -0.5rem;
+}
+
+.btnSpinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Output Panel ── */
+.outputPanel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    flex: 1;
+    gap: 1rem;
+}
+
+.emptyIcon {
+    width: 60px;
+    height: 60px;
+    background: var(--background);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    border: 1px solid var(--border);
+}
+
+.emptyTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-text);
+}
+
+.emptyText {
+    font-size: 0.875rem;
+    color: var(--secondary-text);
+    max-width: 300px;
+    line-height: 1.5;
+}
+
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    flex: 1;
+    gap: 1.25rem;
+}
+
+.spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--deep-olive);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.loadingText {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.errorBox {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 1rem;
+    color: #e05e5e;
+    font-size: 0.9rem;
+    margin: 1.5rem;
+}
+
+.results {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    animation: fadeUp 0.4s ease;
+    overflow-y: auto;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.resultsHeader {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sage-accent);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Sections ── */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.sectionLabel {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--secondary-text);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Audience Clarity ── */
+.clarityGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.clarityCard {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+}
+
+.clarityFull {
+    grid-column: span 2;
+}
+
+.clarityKey {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--secondary-text);
+    margin-bottom: 0.3rem;
+}
+
+.clarityVal {
+    font-size: 0.875rem;
+    color: var(--primary-text);
+    line-height: 1.5;
+}
+
+.strengthNote {
+    font-size: 0.82rem;
+    color: var(--secondary-text);
+    font-style: italic;
+    padding: 0.6rem 0.9rem;
+    background: rgba(111, 127, 106, 0.06);
+    border-radius: 8px;
+    border-left: 3px solid var(--sage-accent);
+    line-height: 1.5;
+}
+
+/* ── Bio Style Tabs ── */
+.bioTabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.bioTab {
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 0.4rem 0.85rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--secondary-text);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.bioTab:hover {
+    color: var(--primary-text);
+    border-color: currentColor;
+}
+
+/* Style color variants — active state */
+.bioTabActive.styleBlue {
+    background: rgba(96, 165, 250, 0.12);
+    border-color: #60a5fa;
+    color: #2563eb;
+}
+
+.bioTabActive.styleAmber {
+    background: rgba(201, 168, 76, 0.12);
+    border-color: #c9a84c;
+    color: #b8880a;
+}
+
+.bioTabActive.styleGreen {
+    background: rgba(111, 127, 106, 0.12);
+    border-color: var(--sage-accent);
+    color: #3d5c38;
+}
+
+.bioTabActive.stylePurple {
+    background: rgba(167, 139, 250, 0.12);
+    border-color: #a78bfa;
+    color: #7c3aed;
+}
+
+.bioTabActive.styleRose {
+    background: rgba(244, 114, 114, 0.1);
+    border-color: #f47272;
+    color: #e05e5e;
+}
+
+/* ── Bio Preview ── */
+.bioPreviewWrap {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    animation: fadeUp 0.25s ease;
+}
+
+@media (max-width: 700px) {
+    .bioPreviewWrap {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* CSS iPhone mockup */
+.phoneFrame {
+    width: 200px;
+    background: #1c1c1e;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.phoneNotch {
+    width: 60px;
+    height: 8px;
+    background: #1c1c1e;
+    border-radius: 0 0 8px 8px;
+    margin: 0 auto 8px;
+}
+
+.phoneScreen {
+    background: white;
+    border-radius: 26px;
+    padding: 14px 12px;
+    min-height: 240px;
+}
+
+.igHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.igAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    flex-shrink: 0;
+}
+
+.igMeta {
+    flex: 1;
+    overflow: hidden;
+}
+
+.igHandle {
+    font-size: 9px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.igName {
+    font-size: 8px;
+    font-weight: 600;
+    color: #262626;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.igBio {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.igBioLine {
+    font-size: 8.5px;
+    color: #262626;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.igFollowBtn {
+    background: #efefef;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 5px 0;
+    color: #262626;
+}
+
+/* Bio text + actions */
+.bioDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.bioDetailTop {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.stylePill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+}
+
+.styleBlue {
+    background: rgba(96, 165, 250, 0.12);
+    color: #2563eb;
+}
+
+.styleAmber {
+    background: rgba(201, 168, 76, 0.12);
+    color: #b8880a;
+}
+
+.styleGreen {
+    background: rgba(111, 127, 106, 0.12);
+    color: #3d5c38;
+}
+
+.stylePurple {
+    background: rgba(167, 139, 250, 0.12);
+    color: #7c3aed;
+}
+
+.styleRose {
+    background: rgba(244, 114, 114, 0.1);
+    color: #e05e5e;
+}
+
+.charBadge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+}
+
+.charOk {
+    background: rgba(74, 175, 74, 0.1);
+    color: #2d8a2d;
+}
+
+.charWarn {
+    background: rgba(200, 150, 30, 0.1);
+    color: #9a6f10;
+}
+
+.bioText {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.bioLine {
+    font-size: 0.9rem;
+    color: var(--primary-text);
+    line-height: 1.65;
+    font-weight: 500;
+}
+
+.copyBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--secondary-text);
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+}
+
+.copyBtn:hover {
+    background: var(--border);
+    color: var(--primary-text);
+}
+
+.conversionNote {
+    font-size: 0.82rem;
+    color: var(--secondary-text);
+    line-height: 1.5;
+    padding: 0.6rem 0.85rem;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.conversionLabel {
+    font-weight: 700;
+    color: var(--primary-text);
+    margin-right: 0.3rem;
+}
+
+/* ── Name Field + Keywords ── */
+.metaGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.metaCard {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+}
+
+.metaKey {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--secondary-text);
+    margin-bottom: 0.35rem;
+}
+
+.metaVal {
+    font-size: 0.9rem;
+    color: var(--primary-text);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.metaNote {
+    font-size: 0.72rem;
+    color: var(--secondary-text);
+    margin-top: 0.3rem;
+}
+
+/* ── CTAs ── */
+.ctaRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.ctaCard {
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+}
+
+.ctaCardDirect {
+    background: rgba(111, 127, 106, 0.07);
+    border-color: rgba(111, 127, 106, 0.25);
+}
+
+.ctaLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--secondary-text);
+    margin-bottom: 0.35rem;
+}
+
+.ctaText {
+    font-size: 0.875rem;
+    color: var(--primary-text);
+    line-height: 1.5;
+}
+
+.linkNote {
+    font-size: 0.82rem;
+    color: var(--secondary-text);
+    font-style: italic;
+    padding: 0.5rem 0.75rem;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    line-height: 1.5;
+}

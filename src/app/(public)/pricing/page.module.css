@@ -1,0 +1,30 @@
+.page {
+    padding-top: 4rem;
+    padding-bottom: 8rem;
+    background-color: var(--background);
+}
+
+.intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-text);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+    line-height: 1.6;
+}
+
+.faqSection {
+    margin-top: 6rem;
+    padding: 0 2rem;
+}

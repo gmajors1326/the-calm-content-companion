@@ -1,0 +1,97 @@
+.section {
+    padding: 6rem 2rem 8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 4rem 1.5rem;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.headline {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    line-height: 1.1;
+    color: var(--primary-text);
+    letter-spacing: -0.02em;
+}
+
+.subheadline {
+    font-size: 1.25rem;
+    color: var(--secondary-text);
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+.actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.primaryCta {
+    background-color: var(--deep-olive);
+    color: var(--surface);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.primaryCta:hover {
+    transform: translateY(-2px);
+    background-color: #252e25;
+}
+
+.secondaryCta {
+    background-color: transparent;
+    color: var(--deep-olive);
+    padding: 1rem 2rem;
+    border: 1px solid var(--deep-olive);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: background-color 0.2s ease;
+}
+
+.secondaryCta:hover {
+    background-color: rgba(47, 58, 47, 0.05);
+}
+
+.visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.heroImageWrapper {
+    width: 100%;
+    max-width: 480px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.10);
+}
+
+.heroImage {
+    width: 100%;
+    height: auto;
+    display: block;
+}

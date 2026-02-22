@@ -1,0 +1,73 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(245, 241, 232, 0.85);
+    /* background with opacity */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 80px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--primary-text);
+}
+
+.monogram {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--deep-olive);
+    color: var(--surface);
+    border-radius: 50%;
+    /* sleek circle or soft square? User says "Modern but warm", maybe rounded square */
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.link {
+    font-size: 0.95rem;
+    color: var(--secondary-text);
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.link:hover {
+    color: var(--primary-text);
+}
+
+.cta {
+    padding: 0.6rem 1.2rem;
+    background-color: var(--deep-olive);
+    color: var(--surface);
+    border-radius: 6px;
+    font-weight: 500;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cta:hover {
+    transform: translateY(-1px);
+    background-color: #252e25;
+    /* slightly darker */
+}

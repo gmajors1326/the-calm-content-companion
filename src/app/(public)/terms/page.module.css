@@ -1,0 +1,30 @@
+.container {
+    padding: 6rem 2rem 8rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--primary-text);
+    margin-bottom: 2rem;
+}
+
+.content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--secondary-text);
+}
+
+.content h2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-text);
+}
+
+.content p {
+    margin-bottom: 1.5rem;
+}

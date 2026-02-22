@@ -1,0 +1,59 @@
+.section {
+    padding: 6rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.headline {
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.item {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.question {
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    color: var(--primary-text);
+    font-family: var(--font-serif);
+    cursor: pointer;
+}
+
+.answer {
+    color: var(--secondary-text);
+    font-size: 1rem;
+    line-height: 1.6;
+    padding-bottom: 1rem;
+    display: none;
+    /* hidden by default, would need JS for toggle */
+    /* In a real app we'd use state. For this shell, I will just show it or add minimal interactivity */
+}
+
+/* For simplicity in this demo, I might just show them open or add a checkbox hack */
+.details[open] .answer {
+    display: block;
+}
+
+.summary {
+    list-style: none;
+    /* remove default triangle */
+}
+
+/* standard details/summary styling */

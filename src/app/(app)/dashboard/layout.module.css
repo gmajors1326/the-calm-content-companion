@@ -1,0 +1,20 @@
+.layout {
+    display: flex;
+}
+
+.main {
+    flex: 1;
+    margin-left: 260px;
+    /* Sidebar width */
+    min-height: 100vh;
+    padding: 3rem;
+    background-color: var(--background);
+}
+
+@media (max-width: 900px) {
+    .main {
+        margin-left: 0;
+        padding-top: 5rem;
+        /* Space for mobile nav if we had one */
+    }
+}

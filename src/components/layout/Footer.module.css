@@ -1,0 +1,28 @@
+.footer {
+    background-color: var(--surface);
+    color: var(--secondary-text);
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.link {
+    transition: color 0.2s ease;
+}
+
+.link:hover {
+    color: var(--primary-text);
+}
+
+.copy {
+    margin-top: 2rem;
+    opacity: 0.7;
+}

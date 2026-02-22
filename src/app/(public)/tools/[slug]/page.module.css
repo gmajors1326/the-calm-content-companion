@@ -1,0 +1,172 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    color: var(--primary-text);
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+.whatItDoes {
+    color: var(--secondary-text);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.whatYouGetList {
+    list-style: none;
+}
+
+.listItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--secondary-text);
+}
+
+.check {
+    color: var(--sage-accent);
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.demoBox {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+}
+
+.demoLabel {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--secondary-text);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.demoContent {
+    font-family: var(--font-sans);
+    /* Monospace maybe? Or readable sans */
+    color: var(--primary-text);
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.scoreBadge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--sage-accent);
+    color: var(--surface);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.testimonials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+    .testimonials {
+        grid-template-columns: 1fr;
+    }
+}
+
+.testimonial {
+    background-color: var(--surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--secondary-text);
+    border: 1px solid transparent;
+}
+
+.author {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--primary-text);
+    font-size: 0.9rem;
+}
+
+.upgrade {
+    background-color: var(--deep-olive);
+    color: var(--surface);
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.upgradeTitle {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.upgradeText {
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+.upgradeBtn {
+    background-color: var(--surface);
+    color: var(--deep-olive);
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.upgradeBtn:hover {
+    transform: translateY(-2px);
+}
