@@ -118,7 +118,7 @@ YOUR RULES
 
 export async function POST(request: Request) {
     try {
-        const { hook, tone, storyFramework } = await request.json();
+        const { hook, tone, storyFramework, expansionType } = await request.json();
 
         if (!hook?.trim()) {
             return NextResponse.json({ error: 'Hook text is required.' }, { status: 400 });
@@ -141,6 +141,10 @@ export async function POST(request: Request) {
 
             plan = profile?.plan ?? 'free';
 
+            if (expansionType && plan !== 'elite') {
+                return NextResponse.json({ error: 'Elite plan required for expansions.' }, { status: 403 });
+            }
+
             // Paid plans have unlimited access
             if (!PAID_PLANS.includes(plan)) {
                 const { count } = await supabase
@@ -159,10 +163,6 @@ export async function POST(request: Request) {
                 }
             }
         } else {
-            // No user session — this tool requires sign-in to track usage
-            // We still allow up to FREE_RUN_LIMIT but can't track without auth.
-            // Return a prompt to sign in as their "0th" barrier.
-            // (Unauthenticated users hit the paywall immediately to protect the API)
             return NextResponse.json(
                 { limitReached: true, runsUsed: 0, limit: FREE_RUN_LIMIT, plan: 'guest' },
                 { status: 402 }
@@ -170,11 +170,17 @@ export async function POST(request: Request) {
         }
         // ── End gate ───────────────────────────────────────────────────────────
 
-        const userMessage = `Draft Hook: "${hook}"
+        let userMessage = `Draft Hook: "${hook}"
 Desired Tone: ${tone}
 Story Framework: ${storyFramework}
 
 Analyze this Instagram hook for a beginner audience (ages 45–65) using your deep knowledge of what performs on Instagram in 2025. Return your response as JSON only.`;
+
+        if (expansionType === 'reelScript') {
+            userMessage += `\n\nElite Expansion Task: Also generate a full 30-45 second Reel script. Include visual instructions and a call to action. Return this in a new "expansion" field.`;
+        } else if (expansionType === 'carouselPlan') {
+            userMessage += `\n\nElite Expansion Task: Also generate a 7-slide Carousel plan with Slide titles and caption pointers. Return this in a new "expansion" field.`;
+        }
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -183,13 +189,13 @@ Analyze this Instagram hook for a beginner audience (ages 45–65) using your de
                 Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
             },
             body: JSON.stringify({
-                model: 'gpt-4o-mini',
+                model: 'gpt-4o',
                 messages: [
-                    { role: 'system', content: SYSTEM_PROMPT },
+                    { role: 'system', content: SYSTEM_PROMPT + `\n\nIf expansion requested, include an "expansion" field (string with markdown formatting).` },
                     { role: 'user', content: userMessage },
                 ],
                 temperature: 0.75,
-                max_tokens: 700,
+                max_tokens: 1200,
                 response_format: { type: 'json_object' },
             }),
         });
@@ -202,14 +208,10 @@ Analyze this Instagram hook for a beginner audience (ages 45–65) using your de
 
         const data = await response.json();
         const content = data.choices?.[0]?.message?.content;
-
-        if (!content) {
-            return NextResponse.json({ error: 'No response from AI.' }, { status: 500 });
-        }
-
+        if (!content) return NextResponse.json({ error: 'No response from AI.' }, { status: 500 });
         const parsed = JSON.parse(content);
 
-        // ── Save run to tool_outputs (only for free-plan users to count future uses) ──
+        // Save run to tool_outputs
         if (user && !PAID_PLANS.includes(plan)) {
             await supabase.from('tool_outputs').insert({
                 user_id: user.id,
@@ -222,6 +224,6 @@ Analyze this Instagram hook for a beginner audience (ages 45–65) using your de
         return NextResponse.json({ ...parsed, runsUsed: runsUsed + 1, limit: FREE_RUN_LIMIT, plan });
     } catch (err) {
         console.error('Hook analyzer error:', err);
-        return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 });
+        return NextResponse.json({ error: 'Something went wrong.' }, { status: 500 });
     }
 }

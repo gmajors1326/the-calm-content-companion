@@ -123,6 +123,7 @@ type AnalysisResult = {
     runsUsed?: number;
     limit?: number;
     plan?: string;
+    expansion?: string;
 };
 
 type State = 'idle' | 'loading' | 'result' | 'error' | 'limit';
@@ -137,6 +138,13 @@ export default function FindYourHookPage() {
     const [runsUsed, setRunsUsed] = useState(0);
     const [isGuest, setIsGuest] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [plan, setPlan] = useState('free');
+
+    // Elite Expansion states
+    const [expansion, setExpansion] = useState<string | null>(null);
+    const [expansionType, setExpansionType] = useState<'reelScript' | 'carouselPlan' | null>(null);
+    const [expanding, setExpanding] = useState<'reelScript' | 'carouselPlan' | null>(null);
+
     const resultsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -144,6 +152,58 @@ export default function FindYourHookPage() {
             resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }, [state]);
+
+    async function handleExpansion(type: 'reelScript' | 'carouselPlan') {
+        if (plan !== 'elite') {
+            setShowModal(true);
+            return;
+        }
+
+        setExpanding(type);
+        setExpansionType(type);
+        setExpansion(null);
+
+        try {
+            const res = await fetch('/api/tools/hook-analyzer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    hook,
+                    tone,
+                    storyFramework: context,
+                    expansionType: type
+                }),
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                setExpansion(data.expansion);
+            } else {
+                setError(data.error || 'Expansion failed.');
+            }
+        } catch (err) {
+            setError('Expansion failed. Please check connection.');
+        } finally {
+            setExpanding(null);
+        }
+    }
+
+    async function mockUpgrade() {
+        try {
+            const res = await fetch('/api/user/upgrade', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: 'elite' }),
+            });
+            if (res.ok) {
+                setPlan('elite');
+                alert('Success! You are now on the Elite plan.');
+            }
+        } catch (err) {
+            console.error('Mock upgrade failed');
+        }
+    }
+
 
     // Close modal on Escape
     useEffect(() => {
@@ -168,6 +228,8 @@ export default function FindYourHookPage() {
         setState('idle');
         setResult(null);
         setError('');
+        setExpansion(null);
+        setExpanding(null);
     }
 
     async function analyze() {
@@ -175,6 +237,7 @@ export default function FindYourHookPage() {
         setState('loading');
         setError('');
         setResult(null);
+        setExpansion(null);
 
         try {
             const res = await fetch('/api/tools/hook-analyzer', {
@@ -201,6 +264,7 @@ export default function FindYourHookPage() {
             }
 
             if (data.runsUsed !== undefined) setRunsUsed(data.runsUsed);
+            if (data.plan) setPlan(data.plan);
             setResult(data);
             setState('result');
         } catch {
@@ -606,6 +670,41 @@ export default function FindYourHookPage() {
                                 </div>
                             )}
 
+                            {/* ── EXPANSION DISPLAY ── */}
+                            {expansion && (
+                                <div style={{
+                                    marginTop: '1.5rem',
+                                    padding: '1.25rem',
+                                    background: '#fcfaf2',
+                                    border: '1px solid #e3d5b0',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                                            <Crown size={16} color="#b8880a" />
+                                            <p style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#b8880a', margin: 0 }}>
+                                                {expansionType === 'reelScript' ? 'Reel Script Expansion' : 'Carousel Plan Expansion'}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={() => setExpansion(null)}
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer', opacity: 0.4 }}
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    </div>
+                                    <div style={{
+                                        lineHeight: 1.7,
+                                        fontSize: '0.92rem',
+                                        color: 'var(--primary-text)',
+                                        whiteSpace: 'pre-wrap',
+                                    }}>
+                                        {expansion}
+                                    </div>
+                                </div>
+                            )}
+
                             {/* ── WHAT TO DO NEXT: upgrade nudge ── */}
                             <div style={{
                                 marginTop: '1.5rem',
@@ -619,79 +718,88 @@ export default function FindYourHookPage() {
                                     borderBottom: '1px solid var(--border)',
                                 }}>
                                     <p style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', color: 'var(--secondary-text)', margin: 0 }}>
-                                        ✨ What to do next
+                                        ✨ Expansion Tools
                                     </p>
-                                </div>
-
-                                {/* Pro row */}
-                                <div style={{ padding: '1rem 1.1rem', borderBottom: '1px solid var(--border)' }}>
-                                    <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
-                                        Pro members
-                                    </p>
-                                    <ul style={{ margin: 0, paddingLeft: '1.2rem', color: 'var(--secondary-text)', fontSize: '0.875rem', lineHeight: 1.9 }}>
-                                        <li>Save this hook to your personal library</li>
-                                        <li>Run it through the <strong>Content Game Plan</strong> to build a full week around it</li>
-                                        <li>Use all 3 hook variations in your next Instagram post</li>
-                                    </ul>
                                 </div>
 
                                 {/* Elite row */}
                                 <div style={{ padding: '1rem 1.1rem', borderBottom: '1px solid var(--border)', background: 'rgba(201,168,76,0.04)' }}>
-                                    <p style={{ fontSize: '0.78rem', fontWeight: 700, color: '#b8880a', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
-                                        🔥 Elite members
-                                    </p>
-                                    <ul style={{ margin: 0, paddingLeft: '1.2rem', color: 'var(--secondary-text)', fontSize: '0.875rem', lineHeight: 1.9 }}>
-                                        <li>Turn this hook into a <strong>full Reel script</strong> in one click</li>
-                                        <li>Expand to a <strong>complete Instagram caption</strong> with CTA</li>
-                                        <li>Compare 3 hook versions side-by-side with the <strong>Batch Comparator</strong></li>
-                                        <li>Track how your hook score improves over time in <strong>Hook History</strong></li>
-                                        <li>Get 10 custom hook ideas monthly based on your unique story</li>
-                                    </ul>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                        <div>
+                                            <p style={{ fontSize: '0.78rem', fontWeight: 700, color: '#b8880a', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                                                Elite Expansion
+                                            </p>
+                                            <p style={{ fontSize: '0.85rem', color: 'var(--secondary-text)', margin: 0 }}>
+                                                Turn this hook into a full piece of content instantly.
+                                            </p>
+                                        </div>
+                                        {plan !== 'elite' && (
+                                            <span style={{ fontSize: '0.65rem', fontWeight: 800, background: '#eee', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>Locked</span>
+                                        )}
+                                    </div>
+
+                                    <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
+                                        <button
+                                            className={styles.expansionBtn}
+                                            onClick={() => handleExpansion('reelScript')}
+                                            disabled={expanding === 'reelScript'}
+                                        >
+                                            {expanding === 'reelScript' ? 'Generating...' : <><Zap size={14} /> Create Reel Script</>}
+                                        </button>
+                                        <button
+                                            className={styles.expansionBtn}
+                                            onClick={() => handleExpansion('carouselPlan')}
+                                            disabled={expanding === 'carouselPlan'}
+                                        >
+                                            {expanding === 'carouselPlan' ? 'Generating...' : <><Sparkles size={14} /> Create Carousel Plan</>}
+                                        </button>
+                                    </div>
                                 </div>
 
-                                {/* CTA row */}
-                                <div style={{
-                                    padding: '0.9rem 1.1rem',
-                                    display: 'flex',
-                                    gap: '0.75rem',
-                                    alignItems: 'center',
-                                    flexWrap: 'wrap',
-                                }}>
-                                    <a
-                                        href="/get-started?plan=pro"
-                                        style={{
-                                            fontSize: '0.82rem',
-                                            fontWeight: 600,
-                                            padding: '0.5rem 1.1rem',
-                                            borderRadius: '20px',
-                                            background: 'var(--deep-olive)',
-                                            color: '#fff',
-                                            textDecoration: 'none',
-                                            transition: 'opacity 0.2s',
-                                        }}
-                                        onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                                        onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                                    >
-                                        Upgrade to Pro — $17/mo
-                                    </a>
-                                    <a
-                                        href="/get-started?plan=elite"
-                                        style={{
-                                            fontSize: '0.82rem',
-                                            fontWeight: 600,
-                                            padding: '0.5rem 1.1rem',
-                                            borderRadius: '20px',
-                                            background: 'linear-gradient(135deg, #b8880a, #d4a017)',
-                                            color: '#fff',
-                                            textDecoration: 'none',
-                                            transition: 'opacity 0.2s',
-                                        }}
-                                        onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                                        onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                                    >
-                                        Go Elite — $47/mo
-                                    </a>
-                                </div>
+                                {/* CTA row for non-elite */}
+                                {plan !== 'elite' && (
+                                    <div style={{
+                                        padding: '0.9rem 1.1rem',
+                                        display: 'flex',
+                                        gap: '0.75rem',
+                                        alignItems: 'center',
+                                        flexWrap: 'wrap',
+                                        background: '#fff',
+                                    }}>
+                                        <span style={{ fontSize: '0.82rem', color: 'var(--secondary-text)' }}>Unlock expansions:</span>
+                                        <button
+                                            onClick={() => setShowModal(true)}
+                                            style={{
+                                                fontSize: '0.82rem',
+                                                fontWeight: 600,
+                                                padding: '0.4rem 1rem',
+                                                borderRadius: '20px',
+                                                background: 'linear-gradient(135deg, #b8880a, #d4a017)',
+                                                color: '#fff',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                            }}
+                                        >
+                                            Upgrade to Elite
+                                        </button>
+
+                                        {/* Mock Upgrade for Demo */}
+                                        <button
+                                            onClick={mockUpgrade}
+                                            style={{
+                                                fontSize: '0.65rem',
+                                                color: 'var(--secondary-text)',
+                                                background: 'none',
+                                                border: 'none',
+                                                textDecoration: 'underline',
+                                                cursor: 'pointer',
+                                                marginLeft: 'auto',
+                                            }}
+                                        >
+                                            (Debug: Mock Elite)
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
