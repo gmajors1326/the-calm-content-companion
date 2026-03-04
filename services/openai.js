@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 async function generateHook(userIdea) {
     // This is the "Secret Sauce" instruction set for this specific tool
-    const systemPrompt = `You are an expert Instagram content strategist for busy parents. 
+    const systemPrompt = `You are an expert Instagram content and marketing strategist. 
 The user will give you a messy idea. Your job is to turn it into 3 scroll-stopping hooks.
 
 Rules:
