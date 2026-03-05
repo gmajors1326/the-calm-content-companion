@@ -5,8 +5,8 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+// --- TOOL 1: FIND YOUR HOOK ---
 async function generateHook(userIdea, vibe, platform) {
-    // THE UPGRADED SECRET SAUCE PROMPT
     const systemPrompt = `You are an expert ${platform} content strategist for calm, authentic creators. 
 The user will give you a messy idea. Your job is to turn it into 3 scroll-stopping hooks.
 
@@ -30,8 +30,7 @@ Option 1
 💡 Why it works: [1 short sentence explaining the psychology]
 🎬 Suggested Visual: [1 short sentence describing an aesthetic, calm b-roll shot to play on screen]
 
-[Leave a blank line between options]
-`;
+[Leave a blank line between options]`;
 
     try {
         const response = await openai.chat.completions.create({
@@ -40,16 +39,64 @@ Option 1
                 { role: "system", content: systemPrompt },
                 { role: "user", content: userIdea }
             ],
-            temperature: 0.75, // Just enough creativity
+            temperature: 0.75,
         });
 
         return response.choices[0].message.content;
     } catch (error) {
-        console.error("OpenAI API Error:", error);
-        throw new Error("Failed to generate content from OpenAI.");
+        console.error("OpenAI API Error (Hooks):", error);
+        throw new Error("Failed to generate hooks.");
+    }
+}
+
+// --- TOOL 2: FIND YOUR VOICE ---
+async function humanizeText(boringText, tone, spice) {
+    const systemPrompt = `You are an expert copywriter and personal brand voice director.
+The user will provide a stiff, robotic, corporate, or AI-generated piece of text.
+Your job is to rewrite it to sound like a real, authentic human being.
+
+You MUST adopt this Core Tone: "${tone}"
+You MUST format it using this "Spice": "${spice}"
+
+Rules:
+- Remove all corporate jargon (synergy, leverage, utilize, delve, overarching, testament).
+- Make it flow naturally, as if someone is speaking to a friend over coffee.
+- If the spice is "Story-driven", add a brief relatable opening.
+- If the spice is "Punchy & Actionable", use short sentences and bullet points.
+- If the spice is "Heavy Metaphors", rely on a creative analogy.
+
+Format the output EXACTLY like this:
+
+✨ Your Authentic Rewrite:
+[The rewritten text goes here. Make it beautiful.]
+
+-------------------------
+
+💡 Why this sounds like you:
+[1 short sentence explaining the specific tonal shifts you made to match the requested tone/spice.]
+
+🚫 Cringe Check:
+[List 1 or 2 robotic/corporate words you removed from their original text and explain why they sounded bad, e.g., "Removed the word 'delve' because real people don't say that."]
+`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: boringText }
+            ],
+            temperature: 0.8, // Slightly higher temperature for more personality
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenAI API Error (Voice):", error);
+        throw new Error("Failed to humanize text.");
     }
 }
 
 module.exports = {
-    generateHook
+    generateHook,
+    humanizeText
 };
