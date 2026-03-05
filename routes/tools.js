@@ -6,18 +6,20 @@ const { generateHook } = require('../services/openai');
 // URL will be: http://localhost:3000/api/generate-hook
 router.post('/generate-hook', async (req, res) => {
     try {
-        // Grab the text the user typed in the Wix dashboard
-        const { userInput } = req.body;
+        // We are now grabbing THREE things from the Wix frontend
+        const { userInput, vibe, platform } = req.body;
 
-        // Validation: Make sure they actually sent something
         if (!userInput) {
             return res.status(400).json({ success: false, error: "Please provide an idea to generate hooks." });
         }
 
-        // Call the OpenAI service
-        const generatedHooks = await generateHook(userInput);
+        // Set defaults just in case Wix forgets to send them
+        const selectedVibe = vibe || "The Storyteller";
+        const selectedPlatform = platform || "Instagram Reels";
 
-        // Send the successful response back to Wix
+        // Pass all three to the OpenAI service
+        const generatedHooks = await generateHook(userInput, selectedVibe, selectedPlatform);
+
         res.json({
             success: true,
             data: generatedHooks
