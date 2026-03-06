@@ -202,9 +202,57 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
     }
 }
 
+// --- TOOL 4: ENGAGEMENT SIGNAL INTERPRETER ---
+async function interpretSignal(postContent, platform) {
+    const systemPrompt = `You are an elite Data & Content Analyst for social media creators.
+The user had a post that performed unusually well on ${platform}. They will provide a brief description, the hook, or the general concept of that winning post.
+
+Your job is to:
+1. Analyze the psychological "Signal" (Why did this resonate so well with their audience? Was it relatable? A harsh truth? Vulnerability?)
+2. Provide 3 specific "Spin-Off" content ideas to help them double down on this success without just posting the exact same thing again.
+
+IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
+{
+  "analysis": "1-2 punchy sentences explaining the core psychological reason this post popped off. (e.g., 'This worked because it validated a frustration your audience feels but is too afraid to say out loud.')",
+  "spinoff1": {
+    "angle": "The Deep Dive",
+    "hook": "Write a strong hook for this spin-off",
+    "concept": "Explain what the post should be about in 1 sentence"
+  },
+  "spinoff2": {
+    "angle": "The Contrarian Pivot",
+    "hook": "Write a strong hook for this spin-off",
+    "concept": "Explain what the post should be about in 1 sentence"
+  },
+  "spinoff3": {
+    "angle": "The Step-by-Step",
+    "hook": "Write a strong hook for this spin-off",
+    "concept": "Explain what the post should be about in 1 sentence"
+  }
+}`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: `Winning Post Concept/Content: ${postContent}\nPlatform: ${platform}` }
+            ],
+            temperature: 0.75,
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenAI API Error (Signal Interpreter):", error);
+        throw new Error("Failed to interpret signal.");
+    }
+}
+
 module.exports = {
     generateHook,
     humanizeText,
     planContentDirection,
-    generateBio
+    generateBio,
+    interpretSignal
 };

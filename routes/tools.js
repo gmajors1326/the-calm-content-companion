@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateHook, humanizeText, planContentDirection, generateBio } = require('../services/openai');
+const { generateHook, humanizeText, planContentDirection, generateBio, interpretSignal } = require('../services/openai');
 
 // --- TOOL 1: FIND YOUR HOOK ROUTE ---
 router.post('/generate-hook', async (req, res) => {
@@ -93,6 +93,28 @@ router.post('/generate-bio', async (req, res) => {
 
     } catch (error) {
         console.error("Route Error (Bio Builder):", error);
+        res.status(500).json({ success: false, error: "Internal server error." });
+    }
+});
+
+// --- TOOL 4: SIGNAL INTERPRETER ROUTE ---
+router.post('/interpret-signal', async (req, res) => {
+    try {
+        const { postContent, platform } = req.body;
+
+        if (!postContent) {
+            return res.status(400).json({ success: false, error: "Please provide info about your winning post." });
+        }
+
+        const selectedPlatform = platform || "Instagram/TikTok";
+
+        const analysisDataString = await interpretSignal(postContent, selectedPlatform);
+        const analysisDataJSON = JSON.parse(analysisDataString);
+
+        res.json({ success: true, data: analysisDataJSON });
+
+    } catch (error) {
+        console.error("Route Error (Signal Interpreter):", error);
         res.status(500).json({ success: false, error: "Internal server error." });
     }
 });
