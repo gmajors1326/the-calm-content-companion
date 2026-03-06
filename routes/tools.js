@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateHook, humanizeText, planContentDirection } = require('../services/openai');
+const { generateHook, humanizeText, planContentDirection, generateBio } = require('../services/openai');
 
 // --- TOOL 1: FIND YOUR HOOK ROUTE ---
 router.post('/generate-hook', async (req, res) => {
@@ -70,6 +70,29 @@ router.post('/content-direction', async (req, res) => {
 
     } catch (error) {
         console.error("Route Error (Content Planner):", error);
+        res.status(500).json({ success: false, error: "Internal server error." });
+    }
+});
+
+// --- TOOL 5: BIO BUILDER ROUTE ---
+router.post('/generate-bio', async (req, res) => {
+    try {
+        const { niche, offer, platform, vibe } = req.body;
+
+        if (!niche || !offer) {
+            return res.status(400).json({ success: false, error: "Please provide your niche and offer." });
+        }
+
+        const selectedPlatform = platform || "Instagram";
+        const selectedVibe = vibe || "Clear & Professional";
+
+        const bioDataString = await generateBio(niche, offer, selectedPlatform, selectedVibe);
+        const bioDataJSON = JSON.parse(bioDataString);
+
+        res.json({ success: true, data: bioDataJSON });
+
+    } catch (error) {
+        console.error("Route Error (Bio Builder):", error);
         res.status(500).json({ success: false, error: "Internal server error." });
     }
 });
