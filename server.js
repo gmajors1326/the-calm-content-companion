@@ -20,11 +20,20 @@ const openai = new OpenAI({
 });
 
 /**
- * GENIUS TIP FOR BEGINNERS:
- * Since you built a "Runs" collection in Wix, you should pass the 'userId' 
- * from Wix to this server. This allows you to track exactly who is using the 
- * tools and how many runs they have left.
+ * DOUBLE FAIL-SAFE SANITIZER
+ * This function runs on EVERY response to ensure brand names and hashtags 
+ * are physically impossible to display in the UI.
  */
+function sanitize(text) {
+    if (!text) return "";
+    return text
+        .replace(/#\w+/g, '') // Removes all hashtags
+        .replace(/The Calm Content Method/gi, '')
+        .replace(/The Calm Content Companion/gi, '')
+        .replace(/itscandicemajors/gi, '')
+        .replace(/\s\s+/g, ' ') // Removes double spaces left by deletions
+        .trim();
+}
 
 /**
  * TOOL 1: BIO BUILDER
@@ -32,25 +41,12 @@ const openai = new OpenAI({
 app.post('/generate-bio', async (req, res) => {
     try {
         const { userId, niche, audience, mission, personal, tone } = req.body;
+        if (!userId) return res.status(400).json({ error: "User ID required." });
 
-        // Credit Guard: In a genius setup, you'd check the Wix Collection here first.
-        if (!userId) {
-            return res.status(400).json({ error: "User ID is required to track runs." });
-        }
-
-        const prompt = `
-            Write a professional Instagram bio (strictly no hashtags, no mentions of brand names or specific methods).
-            Niche: ${niche}
-            Audience: ${audience}
-            Mission: ${mission}
-            Personal Touch: ${personal}
-            Tone: ${tone}
-            
-            Requirements: 
-            - Use 1-2 intentional emojis.
-            - Keep it under 150 characters.
-            - Ensure it feels human and high-end.
-        `;
+        const prompt = `Write an Instagram bio for a beginner. 
+        Niche: ${niche}. Target: ${audience}. Mission: ${mission}. Fun Detail: ${personal}. 
+        Tone: ${tone}. 
+        STRICT RULES: NO hashtags. NO brand names. Keep it under 150 chars. High-end but simple.`;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
@@ -59,40 +55,25 @@ app.post('/generate-bio', async (req, res) => {
         });
 
         res.json({
-            bio: completion.choices[0].message.content,
-            status: "success" // Wix can use this 'success' to decrement a run in your collection
+            bio: sanitize(completion.choices[0].message.content),
+            status: "success"
         });
     } catch (error) {
-        res.status(500).json({ error: "Server busy" });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
 /**
- * TOOL 2: FIND YOUR HOOK (GENIUS LEVEL)
+ * TOOL 2: FIND YOUR HOOK
  */
 app.post('/generate-hook', async (req, res) => {
     try {
         const { userId, idea, audience, painPoint, transformation, strategy } = req.body;
-
         if (!userId) return res.status(400).json({ error: "User ID required." });
 
-        const prompt = `
-            You are a world-class Instagram content strategist. 
-            Transform this idea: "${idea}" into 3 genius-level scroll-stopping hooks.
-            Target Audience: ${audience}
-            Pain Point: ${painPoint}
-            Desired Transformation: ${transformation}
-            Strategy Style: ${strategy}
-
-            Guidelines:
-            - NO hashtags.
-            - NO mentions of any specific brand names or method names.
-            - Hook 1: A massive pattern interrupt.
-            - Hook 2: A relatable "ease-based" entry.
-            - Hook 3: An authoritative "hard truth."
-            
-            Format the output clearly with line breaks between hooks.
-        `;
+        const prompt = `Act as a genius IG strategist. Convert "${idea}" into 3 scroll-stopping hooks for ${audience}.
+        Pain Point: ${painPoint}. Goal: ${transformation}. Strategy: ${strategy}.
+        STRICT RULES: NO hashtags. NO brand names. Use layman's terms.`;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
@@ -101,38 +82,25 @@ app.post('/generate-hook', async (req, res) => {
         });
 
         res.json({
-            hooks: completion.choices[0].message.content,
+            hooks: sanitize(completion.choices[0].message.content),
             status: "success"
         });
     } catch (error) {
-        res.status(500).json({ error: "Server busy" });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
 /**
- * TOOL 3: SIGNAL INTERPRETER (GENIUS & LAYMAN)
+ * TOOL 3: SIGNAL INTERPRETER
  */
 app.post('/interpret-signals', async (req, res) => {
     try {
         const { userId, data, depth } = req.body;
-
         if (!userId) return res.status(400).json({ error: "User ID required." });
 
-        const prompt = `
-            You are an Instagram Algorithm Expert. Analyze this post data for a beginner:
-            Data: ${data}
-            Depth Level: ${depth}
-
-            Provide a "Genius Level" interpretation using these simple sections:
-            1. THE VIBE CHECK: In plain English, how did this post actually perform?
-            2. THE SECRET SAUCE: Why did the Instagram algorithm treat it this way? (Explain the 'why' like I'm 5).
-            3. YOUR NEXT MOVE: Give me one simple, actionable instruction for my next post to get better results.
-
-            Strict Guidelines:
-            - NO hashtags.
-            - NO mentions of brand names.
-            - Use a supportive, encouraging tone.
-        `;
+        const prompt = `Analyze this IG post data for a beginner: ${data}. 
+        Explain performance (The Vibe Check), algorithm behavior (The Secret Sauce), and the next step (Your Next Move). 
+        STRICT: NO hashtags. NO brand names. Simple language.`;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
@@ -141,11 +109,11 @@ app.post('/interpret-signals', async (req, res) => {
         });
 
         res.json({
-            analysis: completion.choices[0].message.content,
+            analysis: sanitize(completion.choices[0].message.content),
             status: "success"
         });
     } catch (error) {
-        res.status(500).json({ error: "Server busy" });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
@@ -155,22 +123,11 @@ app.post('/interpret-signals', async (req, res) => {
 app.post('/generate-voice', async (req, res) => {
     try {
         const { userId, values, personality, inspiration } = req.body;
-
         if (!userId) return res.status(400).json({ error: "User ID required." });
 
-        const prompt = `
-            You are a Brand Identity Expert. Based on these details, define a "Genius Level" brand voice for a beginner:
-            - Values: ${values}
-            - Personality: ${personality}
-            - Inspiration: ${inspiration}
-
-            Output:
-            1. A 1-sentence "Voice Mission."
-            2. Three "Voice Pillars" (Rules on how to speak).
-            3. A short "Say This, Not That" example.
-            
-            Keep it simple, avoid jargon, and strictly NO hashtags or brand names.
-        `;
+        const prompt = `Define a beginner brand voice. Values: ${values}. Personality: ${personality}. Inspo: ${inspiration}.
+        Provide: 1-sentence mission, 3 simple rules, and a "Say This, Not That" example. 
+        STRICT: NO hashtags. NO brand names.`;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
@@ -179,11 +136,11 @@ app.post('/generate-voice', async (req, res) => {
         });
 
         res.json({
-            result: completion.choices[0].message.content,
+            result: sanitize(completion.choices[0].message.content),
             status: "success"
         });
     } catch (error) {
-        res.status(500).json({ error: "Server busy" });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
@@ -193,23 +150,11 @@ app.post('/generate-voice', async (req, res) => {
 app.post('/generate-plan', async (req, res) => {
     try {
         const { userId, goal, niche, timeframe } = req.body;
-
         if (!userId) return res.status(400).json({ error: "User ID required." });
 
-        const prompt = `
-            Create a strategic, genius-level content plan for a beginner.
-            Goal: ${goal}
-            Niche: ${niche}
-            Timeframe: ${timeframe}
-
-            Provide a simple 7-day breakdown:
-            - Day 1-7: Theme, Content Type (Reel/Carousel/Static), and a 1-sentence instruction on what to say.
-            
-            Strategy:
-            - Include a mix of Education, Connection, and Promotion.
-            - Focus on engagement and building trust.
-            - NO hashtags. NO brand names.
-        `;
+        const prompt = `Create a 7-day beginner content plan. Goal: ${goal}. Niche: ${niche}. 
+        Give 1 theme/type per day and a simple 1-sentence instruction. 
+        STRICT: NO hashtags. NO brand names. Simple laymans terms.`;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
@@ -218,11 +163,11 @@ app.post('/generate-plan', async (req, res) => {
         });
 
         res.json({
-            result: completion.choices[0].message.content,
+            result: sanitize(completion.choices[0].message.content),
             status: "success"
         });
     } catch (error) {
-        res.status(500).json({ error: "Server busy" });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
