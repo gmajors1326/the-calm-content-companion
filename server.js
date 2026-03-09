@@ -6,10 +6,9 @@ const toolRoutes = require('./routes/tools');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// This allows your Wix site to access this backend
-app.use(cors({
-    origin: 'https://www.freespiritmarketer.com'
-}));
+// Use this to allow your Wix site to talk to your backend
+app.use(cors());
+
 app.use(express.json());
 
 app.post('/generate-bio', async (req, res) => {
