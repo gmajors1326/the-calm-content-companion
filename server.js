@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const OpenAI = require('openai');
 const toolRoutes = require('./routes/tools');
 
 const app = express();
@@ -14,26 +15,40 @@ app.use(cors());
 // This allows your server to read the {niche, audience, tone} you're sending.
 app.use(express.json());
 
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY // Set this in your Render Dashboard
+});
+
 // 3. THE BIO BUILDER ROUTE
 app.post('/generate-bio', async (req, res) => {
     try {
         const { niche, audience, tone } = req.body;
 
-        // Validation check
-        if (!niche || !audience) {
-            return res.status(400).json({ error: "Missing niche or audience" });
-        }
+        // Structured prompt for high-quality, professional bios
+        const prompt = `
+            You are a social media strategist for "@itscandicemajors" and "The Calm Content Method."
+            Write a professional Instagram bio for:
+            - Niche: ${niche}
+            - Audience: ${audience}
+            - Tone: ${tone}
 
-        // PLACEHOLDER FOR AI LOGIC
-        // This is where you'll eventually add your OpenAI/Antigravity AI call.
-        const generatedBio = `✨ Helping ${audience} master ${niche} with a ${tone} approach. #TheCalmContentMethod`;
+            Requirements:
+            1. Reflect the "Calm Content" philosophy (mindful, ease-focused).
+            2. Include 2-3 intentional emojis.
+            3. Include a clear Call to Action (CTA).
+            4. Keep it under 150 characters.
+        `;
 
-        // Send the response back to Wix
-        res.json({ bio: generatedBio });
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+        });
 
+        res.json({ bio: completion.choices[0].message.content });
     } catch (error) {
-        console.error("Server Error:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("API Error:", error);
+        res.status(500).json({ error: "The Companion is resting. Try again soon." });
     }
 });
 
