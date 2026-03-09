@@ -6,14 +6,21 @@ const toolRoutes = require('./routes/tools');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// CORS configuration - allowing specific Wix site
-const corsOptions = {
-    origin: process.env.WIX_SITE_URL || '*', // In production, replace with your actual Wix URL
-    optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
+// This allows your Wix site to access this backend
+app.use(cors({
+    origin: 'https://www.freespiritmarketer.com'
+}));
 app.use(express.json());
+
+app.post('/generate-bio', async (req, res) => {
+    const { niche, audience, tone } = req.body;
+
+    // This is where you call your OpenAI or AI model
+    // For now, we'll send a test response to make sure the "plumbing" works
+    const aiResponse = `✨ Professional ${tone} bio for a ${niche} expert helping ${audience}.`;
+
+    res.json({ bio: aiResponse });
+});
 
 // API Routes
 app.use('/api', toolRoutes);
