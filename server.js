@@ -19,24 +19,25 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY // Set this in your Render Dashboard
 });
 
-// 3. THE BIO BUILDER ROUTE
+/**
+ * TOOL 1: BIO BUILDER
+ */
 app.post('/generate-bio', async (req, res) => {
     try {
-        const { niche, audience, tone } = req.body;
+        const { niche, audience, mission, personal, tone } = req.body;
 
-        // Structured prompt for high-quality, professional bios
         const prompt = `
-            You are a social media strategist for "@itscandicemajors" and "The Calm Content Method."
-            Write a professional Instagram bio for:
-            - Niche: ${niche}
-            - Audience: ${audience}
-            - Tone: ${tone}
-
-            Requirements:
-            1. Reflect the "Calm Content" philosophy (mindful, ease-focused).
-            2. Include 2-3 intentional emojis.
-            3. Include a clear Call to Action (CTA).
-            4. Keep it under 150 characters.
+            Write a professional Instagram bio (strictly no hashtags, no mentions of "The Calm Content Method").
+            Niche: ${niche}
+            Audience: ${audience}
+            Mission: ${mission}
+            Personal Touch: ${personal}
+            Tone: ${tone}
+            
+            Requirements: 
+            - Use 1-2 intentional emojis.
+            - Keep it under 150 characters.
+            - Ensure it feels human and high-end.
         `;
 
         const completion = await openai.chat.completions.create({
@@ -47,8 +48,72 @@ app.post('/generate-bio', async (req, res) => {
 
         res.json({ bio: completion.choices[0].message.content });
     } catch (error) {
-        console.error("API Error:", error);
-        res.status(500).json({ error: "The Companion is resting. Try again soon." });
+        res.status(500).json({ error: "Server busy" });
+    }
+});
+
+/**
+ * TOOL 2: FIND YOUR HOOK (GENIUS LEVEL)
+ */
+app.post('/generate-hook', async (req, res) => {
+    try {
+        const { idea, audience, painPoint, transformation, strategy } = req.body;
+
+        const prompt = `
+            You are a world-class Instagram content strategist. 
+            Transform this idea: "${idea}" into 3 genius-level scroll-stopping hooks.
+            Target Audience: ${audience}
+            Pain Point: ${painPoint}
+            Desired Transformation: ${transformation}
+            Strategy Style: ${strategy}
+
+            Guidelines:
+            - NO hashtags.
+            - NO mentions of any specific brand names or method names.
+            - Hook 1: A massive pattern interrupt.
+            - Hook 2: A relatable "ease-based" entry.
+            - Hook 3: An authoritative "hard truth."
+            
+            Format the output clearly with line breaks between hooks.
+        `;
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.8,
+        });
+
+        res.json({ hooks: completion.choices[0].message.content });
+    } catch (error) {
+        res.status(500).json({ error: "Server busy" });
+    }
+});
+
+/**
+ * TOOL 3: SIGNAL INTERPRETER
+ */
+app.post('/interpret-signals', async (req, res) => {
+    try {
+        const { data, depth } = req.body;
+
+        const prompt = `
+            Analyze the following Instagram post data and provide a ${depth} analysis.
+            Data: ${data}
+            
+            Focus on:
+            - Why it worked or didn't work based on 2024-2025 IG algorithms.
+            - Specific advice for the next post.
+            - Do not use any brand names or hashtags.
+        `;
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [{ role: "user", content: prompt }],
+        });
+
+        res.json({ analysis: completion.choices[0].message.content });
+    } catch (error) {
+        res.status(500).json({ error: "Server busy" });
     }
 });
 
@@ -60,6 +125,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`Allowing requests from: ${process.env.WIX_SITE_URL || 'All origins (Warning: Set WIX_SITE_URL in .env)'}`);
+    console.log(`Dashboard Server Live on ${PORT}`);
 });
