@@ -20,11 +20,23 @@ const openai = new OpenAI({
 });
 
 /**
+ * GENIUS TIP FOR BEGINNERS:
+ * Since you built a "Runs" collection in Wix, you should pass the 'userId' 
+ * from Wix to this server. This allows you to track exactly who is using the 
+ * tools and how many runs they have left.
+ */
+
+/**
  * TOOL 1: BIO BUILDER
  */
 app.post('/generate-bio', async (req, res) => {
     try {
-        const { niche, audience, mission, personal, tone } = req.body;
+        const { userId, niche, audience, mission, personal, tone } = req.body;
+
+        // Credit Guard: In a genius setup, you'd check the Wix Collection here first.
+        if (!userId) {
+            return res.status(400).json({ error: "User ID is required to track runs." });
+        }
 
         const prompt = `
             Write a professional Instagram bio (strictly no hashtags, no mentions of brand names or specific methods).
@@ -46,7 +58,10 @@ app.post('/generate-bio', async (req, res) => {
             temperature: 0.7,
         });
 
-        res.json({ bio: completion.choices[0].message.content });
+        res.json({
+            bio: completion.choices[0].message.content,
+            status: "success" // Wix can use this 'success' to decrement a run in your collection
+        });
     } catch (error) {
         res.status(500).json({ error: "Server busy" });
     }
@@ -57,7 +72,9 @@ app.post('/generate-bio', async (req, res) => {
  */
 app.post('/generate-hook', async (req, res) => {
     try {
-        const { idea, audience, painPoint, transformation, strategy } = req.body;
+        const { userId, idea, audience, painPoint, transformation, strategy } = req.body;
+
+        if (!userId) return res.status(400).json({ error: "User ID required." });
 
         const prompt = `
             You are a world-class Instagram content strategist. 
@@ -83,7 +100,10 @@ app.post('/generate-hook', async (req, res) => {
             temperature: 0.8,
         });
 
-        res.json({ hooks: completion.choices[0].message.content });
+        res.json({
+            hooks: completion.choices[0].message.content,
+            status: "success"
+        });
     } catch (error) {
         res.status(500).json({ error: "Server busy" });
     }
@@ -94,7 +114,9 @@ app.post('/generate-hook', async (req, res) => {
  */
 app.post('/interpret-signals', async (req, res) => {
     try {
-        const { data, depth } = req.body;
+        const { userId, data, depth } = req.body;
+
+        if (!userId) return res.status(400).json({ error: "User ID required." });
 
         const prompt = `
             You are an Instagram Algorithm Expert. Analyze this post data for a beginner:
@@ -108,7 +130,7 @@ app.post('/interpret-signals', async (req, res) => {
 
             Strict Guidelines:
             - NO hashtags.
-            - NO mentions of "The Calm Content Method" or any brand names.
+            - NO mentions of brand names.
             - Use a supportive, encouraging tone.
         `;
 
@@ -118,7 +140,10 @@ app.post('/interpret-signals', async (req, res) => {
             temperature: 0.7,
         });
 
-        res.json({ analysis: completion.choices[0].message.content });
+        res.json({
+            analysis: completion.choices[0].message.content,
+            status: "success"
+        });
     } catch (error) {
         res.status(500).json({ error: "Server busy" });
     }
@@ -129,7 +154,9 @@ app.post('/interpret-signals', async (req, res) => {
  */
 app.post('/generate-voice', async (req, res) => {
     try {
-        const { values, personality, inspiration } = req.body;
+        const { userId, values, personality, inspiration } = req.body;
+
+        if (!userId) return res.status(400).json({ error: "User ID required." });
 
         const prompt = `
             You are a Brand Identity Expert. Based on these details, define a "Genius Level" brand voice for a beginner:
@@ -151,7 +178,10 @@ app.post('/generate-voice', async (req, res) => {
             temperature: 0.7,
         });
 
-        res.json({ result: completion.choices[0].message.content });
+        res.json({
+            result: completion.choices[0].message.content,
+            status: "success"
+        });
     } catch (error) {
         res.status(500).json({ error: "Server busy" });
     }
@@ -162,7 +192,9 @@ app.post('/generate-voice', async (req, res) => {
  */
 app.post('/generate-plan', async (req, res) => {
     try {
-        const { goal, niche, timeframe } = req.body;
+        const { userId, goal, niche, timeframe } = req.body;
+
+        if (!userId) return res.status(400).json({ error: "User ID required." });
 
         const prompt = `
             Create a strategic, genius-level content plan for a beginner.
@@ -185,7 +217,10 @@ app.post('/generate-plan', async (req, res) => {
             temperature: 0.7,
         });
 
-        res.json({ result: completion.choices[0].message.content });
+        res.json({
+            result: completion.choices[0].message.content,
+            status: "success"
+        });
     } catch (error) {
         res.status(500).json({ error: "Server busy" });
     }
