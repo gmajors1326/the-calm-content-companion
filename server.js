@@ -6,20 +6,34 @@ const toolRoutes = require('./routes/tools');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Use this to allow your Wix site to talk to your backend
+// 1. ALLOW CORS
+// Using a simple app.use(cors()) allows all origins, which is easiest for testing.
 app.use(cors());
 
+// 2. PARSE JSON
+// This allows your server to read the {niche, audience, tone} you're sending.
 app.use(express.json());
 
+// 3. THE BIO BUILDER ROUTE
 app.post('/generate-bio', async (req, res) => {
     try {
         const { niche, audience, tone } = req.body;
-        // This is a test response; later you'll add your AI logic here
-        const generatedBio = `✨ Helping ${audience} master ${niche} with a ${tone} approach.`;
 
+        // Validation check
+        if (!niche || !audience) {
+            return res.status(400).json({ error: "Missing niche or audience" });
+        }
+
+        // PLACEHOLDER FOR AI LOGIC
+        // This is where you'll eventually add your OpenAI/Antigravity AI call.
+        const generatedBio = `✨ Helping ${audience} master ${niche} with a ${tone} approach. #TheCalmContentMethod`;
+
+        // Send the response back to Wix
         res.json({ bio: generatedBio });
+
     } catch (error) {
-        res.status(500).json({ error: "Something went wrong" });
+        console.error("Server Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
