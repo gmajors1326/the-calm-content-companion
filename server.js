@@ -12,13 +12,15 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/generate-bio', async (req, res) => {
-    const { niche, audience, tone } = req.body;
+    try {
+        const { niche, audience, tone } = req.body;
+        // This is a test response; later you'll add your AI logic here
+        const generatedBio = `✨ Helping ${audience} master ${niche} with a ${tone} approach.`;
 
-    // This is where you call your OpenAI or AI model
-    // For now, we'll send a test response to make sure the "plumbing" works
-    const aiResponse = `✨ Professional ${tone} bio for a ${niche} expert helping ${audience}.`;
-
-    res.json({ bio: aiResponse });
+        res.json({ bio: generatedBio });
+    } catch (error) {
+        res.status(500).json({ error: "Something went wrong" });
+    }
 });
 
 // API Routes
