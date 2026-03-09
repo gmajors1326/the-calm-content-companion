@@ -27,7 +27,7 @@ app.post('/generate-bio', async (req, res) => {
         const { niche, audience, mission, personal, tone } = req.body;
 
         const prompt = `
-            Write a professional Instagram bio (strictly no hashtags, no mentions of "The Calm Content Method").
+            Write a professional Instagram bio (strictly no hashtags, no mentions of brand names or specific methods).
             Niche: ${niche}
             Audience: ${audience}
             Mission: ${mission}
@@ -90,28 +90,102 @@ app.post('/generate-hook', async (req, res) => {
 });
 
 /**
- * TOOL 3: SIGNAL INTERPRETER
+ * TOOL 3: SIGNAL INTERPRETER (GENIUS & LAYMAN)
  */
 app.post('/interpret-signals', async (req, res) => {
     try {
         const { data, depth } = req.body;
 
         const prompt = `
-            Analyze the following Instagram post data and provide a ${depth} analysis.
+            You are an Instagram Algorithm Expert. Analyze this post data for a beginner:
             Data: ${data}
-            
-            Focus on:
-            - Why it worked or didn't work based on 2024-2025 IG algorithms.
-            - Specific advice for the next post.
-            - Do not use any brand names or hashtags.
+            Depth Level: ${depth}
+
+            Provide a "Genius Level" interpretation using these simple sections:
+            1. THE VIBE CHECK: In plain English, how did this post actually perform?
+            2. THE SECRET SAUCE: Why did the Instagram algorithm treat it this way? (Explain the 'why' like I'm 5).
+            3. YOUR NEXT MOVE: Give me one simple, actionable instruction for my next post to get better results.
+
+            Strict Guidelines:
+            - NO hashtags.
+            - NO mentions of "The Calm Content Method" or any brand names.
+            - Use a supportive, encouraging tone.
         `;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
             messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
         });
 
         res.json({ analysis: completion.choices[0].message.content });
+    } catch (error) {
+        res.status(500).json({ error: "Server busy" });
+    }
+});
+
+/**
+ * TOOL 4: FIND YOUR VOICE
+ */
+app.post('/generate-voice', async (req, res) => {
+    try {
+        const { values, personality, inspiration } = req.body;
+
+        const prompt = `
+            You are a Brand Identity Expert. Based on these details, define a "Genius Level" brand voice for a beginner:
+            - Values: ${values}
+            - Personality: ${personality}
+            - Inspiration: ${inspiration}
+
+            Output:
+            1. A 1-sentence "Voice Mission."
+            2. Three "Voice Pillars" (Rules on how to speak).
+            3. A short "Say This, Not That" example.
+            
+            Keep it simple, avoid jargon, and strictly NO hashtags or brand names.
+        `;
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+        });
+
+        res.json({ result: completion.choices[0].message.content });
+    } catch (error) {
+        res.status(500).json({ error: "Server busy" });
+    }
+});
+
+/**
+ * TOOL 5: CONTENT PLANNER
+ */
+app.post('/generate-plan', async (req, res) => {
+    try {
+        const { goal, niche, timeframe } = req.body;
+
+        const prompt = `
+            Create a strategic, genius-level content plan for a beginner.
+            Goal: ${goal}
+            Niche: ${niche}
+            Timeframe: ${timeframe}
+
+            Provide a simple 7-day breakdown:
+            - Day 1-7: Theme, Content Type (Reel/Carousel/Static), and a 1-sentence instruction on what to say.
+            
+            Strategy:
+            - Include a mix of Education, Connection, and Promotion.
+            - Focus on engagement and building trust.
+            - NO hashtags. NO brand names.
+        `;
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+        });
+
+        res.json({ result: completion.choices[0].message.content });
     } catch (error) {
         res.status(500).json({ error: "Server busy" });
     }
