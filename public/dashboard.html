@@ -179,11 +179,15 @@
             border-radius: 15px;
             border: 1px dashed #d1d8e0;
             min-height: 120px;
-            max-height: 250px;
+            max-height: 400px;
             overflow-y: auto;
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.6;
             color: #4b5563;
+
+            /* THE MAGIC LINE: This makes it look like a real bio */
+            white-space: pre-wrap;
+            text-align: left;
         }
 
         @keyframes fadeIn {
@@ -336,9 +340,9 @@
                     displayText = JSON.stringify(displayText, null, 2);
                 }
 
-                resultDiv.innerText = displayText || "Error processing request.";
+                resultDiv.textContent = displayText || "Error processing request.";
             } catch (error) {
-                resultDiv.innerText = "Check your Render connection.";
+                resultDiv.textContent = "Check your Render connection.";
             }
         }
     </script>

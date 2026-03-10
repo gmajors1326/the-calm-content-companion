@@ -153,46 +153,25 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
 }
 
 // --- TOOL 5: BIO BUILDER ---
-async function generateBio(niche, offer, platform, vibe) {
-    const systemPrompt = `You are an elite Social Media Profile Optimizer. 
-The user wants a high-converting bio for ${platform}.
-They will give you their Target Audience/Niche, their Main Offer/CTA, and their desired Vibe.
+async function generateBio(niche, audience, tone) {
+    const prompt = `
+    Create 3 distinct Instagram bio variations for a ${niche} targeting ${audience}. 
+    Tone: ${tone}.
 
-Your job is to write 3 distinct bio options. 
-Rules:
-- Strictly format for ${platform} (e.g., IG allows line breaks, Twitter is one paragraph, TikTok is very short).
-- Tone MUST match the "${vibe}" vibe.
-- Avoid overused emojis unless it fits the platform perfectly. No cringe marketing speak.
-- Include a "Link Text" suggestion (what the text pointing to the URL should say).
-
-IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
-{
-  "option1": {
-    "style": "👑 The Authority (Credibility focused)",
-    "bioText": "Line 1\\nLine 2\\nLine 3",
-    "linkText": "Download the guide 👇"
-  },
-  "option2": {
-    "style": "🤝 The Relatable (Story/Community focused)",
-    "bioText": "Line 1\\nLine 2\\nLine 3",
-    "linkText": "Join the community 👇"
-  },
-  "option3": {
-    "style": "⚡ Short & Punchy (Direct and minimal)",
-    "bioText": "Line 1\\nLine 2\\nLine 3",
-    "linkText": "Get started 👇"
-  }
-}`;
+    STRICT FORMATTING RULES:
+    - Provide 3 numbered options.
+    - Separate each option with a clear line.
+    - Use line breaks like a real Instagram bio.
+    - NO JSON, no brackets, no curly braces.
+    - NO hashtags.
+    - Include "Link in bio" or 👇 at the end of each.
+    `;
 
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            response_format: { type: "json_object" },
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: `Niche/Audience: ${niche}\nOffer/Goal: ${offer}\nPlatform: ${platform}\nVibe: ${vibe}` }
-            ],
-            temperature: 0.75,
+            model: "gpt-4o-mini", // Replaced gpt-4-turbo-preview with current model for speed
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
         });
 
         return response.choices[0].message.content;
