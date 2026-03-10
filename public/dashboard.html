@@ -149,6 +149,47 @@
             display: flex;
         }
 
+        /* --- TOOL HEADER --- */
+        .tool-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: -10px;
+            /* Pulls the header closer to the title */
+            padding-bottom: 20px;
+        }
+
+        .energy-status {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            background: #f1f3ef;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .upgrade-pill {
+            background: var(--text-dark) !important;
+            color: #fff !important;
+            font-size: 0.7rem !important;
+            padding: 6px 14px !important;
+            width: auto !important;
+            /* Overrides the 100% width of main buttons */
+            margin: 0 !important;
+            border-radius: 20px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .upgrade-pill:hover {
+            background: #000 !important;
+            transform: scale(1.05);
+        }
+
         h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
@@ -439,14 +480,6 @@
                 <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
-
-                <div class="energy-meter">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="energy-fill"></div>
-                    </div>
-                    <span id="energy-text">2 runs left today.</span>
-                    <a href="/upgrade" target="_top">Upgrade to Elite</a>
-                </div>
             </div>
         </nav>
 
@@ -462,6 +495,13 @@
         <main class="main-content">
 
             <section id="find-your-voice" class="tool-card active">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-left">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
                 <h3>Find Your Voice</h3>
                 <p>Paste your rough text, and we'll "soulfully humanize" it while optimizing for search.</p>
                 <label>Rough Text / Main Points</label>
@@ -489,6 +529,13 @@
             </section>
 
             <section id="bio-builder" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-left">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
                 <h3>Bio Builder</h3>
                 <p>Craft a soulful, high-converting bio in seconds.</p>
                 <label>Niche</label>
@@ -500,6 +547,13 @@
             </section>
 
             <section id="find-your-hook" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-left">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
                 <h3>Find Your Hook</h3>
                 <p>Turn messy ideas into magnetic openings (anti-guru style).</p>
                 <label>Your Idea</label>
@@ -509,6 +563,13 @@
             </section>
 
             <section id="content-planner" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-left">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
                 <h3>Content Planner</h3>
                 <p>Stop guessing. Map out your next 3 strategic posts.</p>
                 <label>Weekly Goal</label>
@@ -537,14 +598,10 @@
         };
 
         function updateEnergyMeter() {
-            const energyText = document.getElementById('energy-text');
-            const energyFill = document.getElementById('energy-fill');
-            if (energyText && energyFill) {
-                const runsLeft = Math.max(0, userStats.dailyLimit - userStats.runsUsed);
-                energyText.innerText = `You have ${runsLeft} run${runsLeft !== 1 ? 's' : ''} left today.`;
-                const fillPercent = (runsLeft / userStats.dailyLimit) * 100;
-                energyFill.style.width = `${fillPercent}%`;
-            }
+            const remaining = Math.max(0, userStats.dailyLimit - userStats.runsUsed);
+            document.querySelectorAll('#runs-left').forEach(el => {
+                el.innerText = `${remaining}/${userStats.dailyLimit} Runs Left`;
+            });
         }
 
         document.addEventListener("DOMContentLoaded", updateEnergyMeter);
