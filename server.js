@@ -10,6 +10,11 @@ app.use(cors());
 // 1. SERVE STATIC FILES (This fixes the blank screen issue)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Root Route: Serve the dashboard immediately on load
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
 // 2. SECURITY HEADERS FOR WIX IFRAME
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://*.wix.com https://www.freespiritmarketer.com;");
