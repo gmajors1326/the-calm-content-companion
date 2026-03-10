@@ -60,20 +60,23 @@
             z-index: 1;
             pointer-events: none;
 
-            /* THE MAGIC LINE: 25% Transparency */
-            opacity: 0.25;
+            /* GHOST EFFECT: 15% is the sweet spot for videos */
+            opacity: 0.15;
 
-            /* PRO TOUCH: Fades the video out at the very top and bottom */
-            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            /* This makes the green vine blend INTO the paper-white background */
+            mix-blend-mode: multiply;
+
+            /* Smooth fade at the top so it doesn't hit the 'Companion Tools' text too hard */
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
         }
 
         #growth-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Keeps the green soft and luxury-grade */
-            filter: saturate(0.7) brightness(1.1);
+            /* Soften the green so it's not a 'neon' distraction */
+            filter: saturate(0.5) contrast(0.9);
         }
 
         .sidebar-content {
