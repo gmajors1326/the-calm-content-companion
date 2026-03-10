@@ -334,15 +334,10 @@
                 });
                 const result = await response.json();
 
-                // Format object responses into readable strings if needed
-                let displayText = result.data;
-                if (typeof displayText === 'object' && displayText !== null) {
-                    displayText = JSON.stringify(displayText, null, 2);
-                }
-
-                resultDiv.textContent = displayText || "Error processing request.";
+                // USE THIS LINE: It clears the "Creating..." text and puts in clean AI text
+                resultDiv.innerText = result.data || "Error processing request.";
             } catch (error) {
-                resultDiv.textContent = "Check your Render connection.";
+                resultDiv.innerText = "Connection error. Please try again.";
             }
         }
     </script>

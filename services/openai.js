@@ -98,51 +98,31 @@ Format the output EXACTLY like this:
 
 // --- TOOL 3: CONTENT DIRECTION PLANNER (UPGRADED JSON VERSION) ---
 async function generateContentPlan(audienceStruggle, vibe, platform, goal) {
-    const systemPrompt = `You are an elite, high-end Content Director for authentic creators.
-The user will provide their Target Audience & Pain Point, their Current Goal, their Platform, and their desired Vibe.
-Your job is to generate a highly actionable 3-Post Content Game Plan that acts as a mini-funnel.
+    const prompt = `
+    Act as a Professional Content Strategist. Create a 3-post SEO-optimized content plan for the following:
+    
+    Goal: ${goal}
+    Target Audience Struggle: ${audienceStruggle}
 
-Post 1: Top of Funnel (Attract new eyes / Broad appeal)
-Post 2: Middle of Funnel (Nurture and build trust / Story-driven)
-Post 3: Bottom of Funnel (Convert / Soft pitch tailored to their goal)
-
-Rules:
-- Tailor the formatting, hooks, and visual advice strictly to the selected Platform (${platform}).
-- Keep the tone matching their requested "Vibe".
-- Do NOT use cringe marketing speak, hype-bro language, or aggressive sales tactics.
-- Keep it calm, premium, and actionable.
-
-IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
-{
-  "post1": {
-    "type": "🚀 The Attraction Post",
-    "hook": "Write a scroll-stopping hook",
-    "coreMessage": "1-2 sentences explaining what to teach/show",
-    "visualOrFormat": "A platform-specific visual or formatting idea"
-  },
-  "post2": {
-    "type": "🤝 The Trust Builder",
-    "hook": "Write a relatable, story-driven hook",
-    "coreMessage": "1-2 sentences sharing a vulnerable story or behind-the-scenes reality",
-    "visualOrFormat": "A platform-specific visual or formatting idea"
-  },
-  "post3": {
-    "type": "🎯 The Conversion Post",
-    "hook": "Write a hook that speaks directly to a specific pain point",
-    "coreMessage": "1-2 sentences transitioning from the pain point to the solution/goal",
-    "callToAction": "Exactly what to tell the viewer to do (e.g., Comment 'GUIDE')"
-  }
-}`;
+    STRICT FORMATTING RULES:
+    - NO JSON, NO brackets {}, and NO technical syntax.
+    - Use clear headings for Post 1, Post 2, and Post 3.
+    - For each post, provide:
+        1. A Searchable Title (SEO Optimized)
+        2. A Scroll-Stopping Hook
+        3. The Core Value/Message
+    - Use simple line breaks and dashes for bullet points.
+    - Separate each post with a horizontal line like this: ---
+    `;
 
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            response_format: { type: "json_object" }, // Enforces pure JSON output
+            model: "gpt-4o-mini", // Keeping the updated fast model
             messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: `Audience & Pain Point: ${audienceStruggle}\nGoal: ${goal}\nPlatform: ${platform}\nVibe: ${vibe}` }
+                { role: "system", content: "You are an SEO expert. You deliver clean, human-readable text plans. Never use code or JSON formatting." },
+                { role: "user", content: prompt }
             ],
-            temperature: 0.75,
+            temperature: 0.6,
         });
 
         return response.choices[0].message.content;
