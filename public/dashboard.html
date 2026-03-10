@@ -172,6 +172,32 @@
             transform: translateY(-1px);
         }
 
+        /* The spinning animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner-icon {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 1.2rem;
+            vertical-align: middle;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Optional: Subtle pulse for the button while generating */
+        button.loading {
+            background: var(--primary-hover);
+            cursor: wait;
+            opacity: 0.8;
+        }
+
         /* --- OUTPUT BOX (INTERNAL SCROLL ONLY) --- */
         .output-container {
             margin-top: 25px;
@@ -405,7 +431,16 @@
 
         async function runTool(type) {
             const resultDiv = document.getElementById(`${type}-result`);
-            resultDiv.innerHTML = "Crafting magic... ✨";
+            // Find the button inside the active section
+            const activeSection = document.getElementById(`${type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : 'content-planner'}`);
+            const btn = activeSection.querySelector('button');
+            const originalText = btn.innerText;
+
+            // 1. Start Loading State
+            resultDiv.innerHTML = "Gathering insights... ✨";
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = `Thinking... <span class="spinner-icon">↻</span>`;
 
             let payload = {};
             let endpoint = `/api/tools/generate-${type}`;
@@ -432,10 +467,14 @@
                 });
                 const result = await response.json();
 
-                // USE THIS LINE: It clears the "Creating..." text and puts in clean AI text
                 resultDiv.innerText = result.data || "Error processing request.";
             } catch (error) {
                 resultDiv.innerText = "Connection error. Please try again.";
+            } finally {
+                // 2. Reset Button State
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerText = originalText;
             }
         }
     </script>
