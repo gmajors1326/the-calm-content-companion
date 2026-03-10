@@ -276,6 +276,19 @@
             cursor: not-allowed;
         }
 
+        /* Ensure the upgrade pill stays small and stationary */
+        .upgrade-pill,
+        .upgrade-btn {
+            width: auto !important;
+            animation: none !important;
+            transform: none !important;
+        }
+
+        /* Ensure the big generate button is the only one that spins */
+        .btn-generate.loading .spinner-icon {
+            display: inline-block;
+        }
+
         /* --- OUTPUT BOX (PRO/SEO READY) --- */
         .output-container {
             margin-top: 25px;
@@ -524,7 +537,7 @@
                     <option value="spicy">Vulnerable & Strong (High Story, Bold Opinion)</option>
                 </select>
 
-                <button onclick="runTool('voice')">Find My Voice</button>
+                <button class="btn-generate" onclick="runTool('voice')">Find My Voice</button>
                 <div id="voice-result" class="output-container">Results will appear here...</div>
             </section>
 
@@ -542,7 +555,7 @@
                 <input type="text" id="bio-niche" placeholder="e.g. Wellness Coaching">
                 <label>Target Audience</label>
                 <input type="text" id="bio-audience" placeholder="e.g. Stressed Moms over 50">
-                <button onclick="runTool('bio')">Generate Bio</button>
+                <button class="btn-generate" onclick="runTool('bio')">Generate Bio</button>
                 <div id="bio-result" class="output-container">Results will appear here...</div>
             </section>
 
@@ -558,7 +571,7 @@
                 <p>Turn messy ideas into magnetic openings (anti-guru style).</p>
                 <label>Your Idea</label>
                 <textarea id="hook-idea" rows="3" placeholder="What is your post about?"></textarea>
-                <button onclick="runTool('hook')">Create Hook</button>
+                <button class="btn-generate" onclick="runTool('hook')">Create Hook</button>
                 <div id="hook-result" class="output-container">Results will appear here...</div>
             </section>
 
@@ -582,7 +595,7 @@
                     <span>🔒</span>
                 </div>
 
-                <button onclick="runTool('plan')">Map Strategy</button>
+                <button class="btn-generate" onclick="runTool('plan')">Map Strategy</button>
                 <div id="plan-result" class="output-container">Results will appear here...</div>
             </section>
         </main>
@@ -648,7 +661,7 @@
             }
 
             const activeSection = document.getElementById(`${type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : 'content-planner'}`);
-            const btn = activeSection.querySelector('button');
+            const btn = activeSection.querySelector('.btn-generate');
             const originalText = btn.innerText;
 
             // 1. Loading State (Prevents double clicks)
