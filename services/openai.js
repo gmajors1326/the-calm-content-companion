@@ -97,7 +97,7 @@ Format the output EXACTLY like this:
 }
 
 // --- TOOL 3: CONTENT DIRECTION PLANNER (UPGRADED JSON VERSION) ---
-async function planContentDirection(audiencePainPoint, goal, platform, vibe) {
+async function generateContentPlan(audienceStruggle, vibe, platform, goal) {
     const systemPrompt = `You are an elite, high-end Content Director for authentic creators.
 The user will provide their Target Audience & Pain Point, their Current Goal, their Platform, and their desired Vibe.
 Your job is to generate a highly actionable 3-Post Content Game Plan that acts as a mini-funnel.
@@ -140,7 +140,7 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
             response_format: { type: "json_object" }, // Enforces pure JSON output
             messages: [
                 { role: "system", content: systemPrompt },
-                { role: "user", content: `Audience & Pain Point: ${audiencePainPoint}\nGoal: ${goal}\nPlatform: ${platform}\nVibe: ${vibe}` }
+                { role: "user", content: `Audience & Pain Point: ${audienceStruggle}\nGoal: ${goal}\nPlatform: ${platform}\nVibe: ${vibe}` }
             ],
             temperature: 0.75,
         });
@@ -252,7 +252,7 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
 module.exports = {
     generateHook,
     humanizeText,
-    planContentDirection,
+    generateContentPlan,
     generateBio,
     interpretSignal
 };

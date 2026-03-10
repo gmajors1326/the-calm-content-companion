@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,26 @@
     <style>
         :root {
             --container-bg: #FFFFFF;
-            --text-heading: #3C4B3E; 
-            --text-body: #566458;    
-            --text-label: #A0B2A1;   
-            --btn-bg: #7C8B7D; 
-            --gold-accent: #E1CE86; 
-            --input-bg: #FAF9F1;     
+            --text-heading: #3C4B3E;
+            --text-body: #566458;
+            --text-label: #A0B2A1;
+            --btn-bg: #7C8B7D;
+            --gold-accent: #E1CE86;
+            --input-bg: #FAF9F1;
             --input-border: #DCDDC0;
             --sidebar-bg: #F8F9F2;
-            --placeholder-gray: #CBD5E1; 
+            --placeholder-gray: #CBD5E1;
         }
 
-        html, body {
+        html,
+        body {
             height: auto;
             min-height: 100%;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            overflow-y: visible; /* Page scroll only */
+            overflow-y: visible;
+            /* Page scroll only */
         }
 
         body {
@@ -105,7 +108,7 @@
             border: 1px solid var(--input-border);
             margin-top: 30px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
         .credit-label {
@@ -148,16 +151,40 @@
             height: auto;
         }
 
-        .tool-panel { display: none; animation: fadeIn 0.4s ease; }
-        .tool-panel.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        .tool-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
         }
 
-        h2 { margin: 0 0 8px 0; font-size: 2rem; color: var(--text-heading); font-weight: 700; }
-        .subtitle { font-size: 1rem; color: var(--text-label); margin-bottom: 35px; line-height: 1.5; }
+        .tool-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+            color: var(--text-heading);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-label);
+            margin-bottom: 35px;
+            line-height: 1.5;
+        }
 
         /* Form Controls */
         label {
@@ -170,7 +197,9 @@
             letter-spacing: 0.5px;
         }
 
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             width: 100%;
             padding: 16px;
             background: var(--input-bg);
@@ -183,12 +212,17 @@
             transition: all 0.2s ease;
         }
 
-        input:focus, textarea:focus, select:focus {
+        input:focus,
+        textarea:focus,
+        select:focus {
             border-color: var(--btn-bg);
             background: #fff;
         }
 
-        ::placeholder { color: var(--placeholder-gray); opacity: 1; }
+        ::placeholder {
+            color: var(--placeholder-gray);
+            opacity: 1;
+        }
 
         .generate-btn {
             width: 100%;
@@ -208,15 +242,15 @@
             transition: 0.3s;
         }
 
-        .generate-btn:hover:not(:disabled) { 
-            background: #6D7C6E; 
+        .generate-btn:hover:not(:disabled) {
+            background: #6D7C6E;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(124, 139, 125, 0.2);
         }
-        
-        .generate-btn:disabled { 
-            opacity: 0.5; 
-            cursor: not-allowed; 
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
             background: #A0B2A1;
         }
 
@@ -254,12 +288,14 @@
             transition: 0.2s;
         }
 
-        .copy-btn:hover { background: #6D7C6E; }
+        .copy-btn:hover {
+            background: #6D7C6E;
+        }
 
-        #output-text { 
-            line-height: 1.8; 
-            color: var(--text-heading); 
-            font-size: 1.25rem; 
+        #output-text {
+            line-height: 1.8;
+            color: var(--text-heading);
+            font-size: 1.25rem;
             white-space: pre-line;
             padding-top: 15px;
         }
@@ -272,379 +308,457 @@
 
         /* Mobile Adjustments */
         @media (max-width: 850px) {
-            .dashboard { flex-direction: column; border-radius: 0; box-shadow: none; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--input-border); padding: 25px; box-sizing: border-box; }
-            .sidebar-header, .sidebar-nav { display: none; }
-            .mobile-nav-container { display: block !important; }
-            .main-content { padding: 30px; }
-            .credit-card { margin-top: 10px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-            .credit-bar { display: none; }
-            .credit-count { margin: 0; font-size: 1.4rem; }
+            .dashboard {
+                flex-direction: column;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--input-border);
+                padding: 25px;
+                box-sizing: border-box;
+            }
+
+            .sidebar-header,
+            .sidebar-nav {
+                display: none;
+            }
+
+            .mobile-nav-container {
+                display: block !important;
+            }
+
+            .main-content {
+                padding: 30px;
+            }
+
+            .credit-card {
+                margin-top: 10px;
+                padding: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .credit-bar {
+                display: none;
+            }
+
+            .credit-count {
+                margin: 0;
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="dashboard">
-    <div class="sidebar">
-        <div class="sidebar-top">
-            <div class="sidebar-header">Creator Tools</div>
-            <div class="sidebar-nav">
-                <div class="nav-item active" data-tool="bio-builder" onclick="switchTool(this, 'bio-builder')">Bio Builder</div>
-                <div class="nav-item" data-tool="hook-gen" onclick="switchTool(this, 'hook-gen')">Find Your Hook</div>
-                <div class="nav-item" data-tool="voice-gen" onclick="switchTool(this, 'voice-gen')">Find Your Voice</div>
-                <div class="nav-item" data-tool="interpreter" onclick="switchTool(this, 'interpreter')">Signal Interpreter</div>
-                <div class="nav-item" data-tool="planner" onclick="switchTool(this, 'planner')">Content Planner</div>
-                <div class="nav-item" data-tool="carousel" onclick="switchTool(this, 'carousel')">Carousel Mapper</div>
-                <div class="nav-item" data-tool="reel" onclick="switchTool(this, 'reel')">Reel Script Master</div>
-                <div class="nav-item" data-tool="seo" onclick="switchTool(this, 'seo')">Caption Optimizer</div>
-                <div class="nav-item" data-tool="story" onclick="switchTool(this, 'story')">Story Arc Gen</div>
-                <div class="nav-item" data-tool="reply" onclick="switchTool(this, 'reply')">Reply Assistant</div>
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header">Creator Tools</div>
+                <div class="sidebar-nav">
+                    <div class="nav-item active" data-tool="bio-builder" onclick="switchTool(this, 'bio-builder')">Bio
+                        Builder</div>
+                    <div class="nav-item" data-tool="hook-gen" onclick="switchTool(this, 'hook-gen')">Find Your Hook
+                    </div>
+                    <div class="nav-item" data-tool="voice-gen" onclick="switchTool(this, 'voice-gen')">Find Your Voice
+                    </div>
+                    <div class="nav-item" data-tool="interpreter" onclick="switchTool(this, 'interpreter')">Signal
+                        Interpreter</div>
+                    <div class="nav-item" data-tool="planner" onclick="switchTool(this, 'planner')">Content Planner
+                    </div>
+                    <div class="nav-item" data-tool="carousel" onclick="switchTool(this, 'carousel')">Carousel Mapper
+                    </div>
+                    <div class="nav-item" data-tool="reel" onclick="switchTool(this, 'reel')">Reel Script Master</div>
+                    <div class="nav-item" data-tool="seo" onclick="switchTool(this, 'seo')">Caption Optimizer</div>
+                    <div class="nav-item" data-tool="story" onclick="switchTool(this, 'story')">Story Arc Gen</div>
+                    <div class="nav-item" data-tool="reply" onclick="switchTool(this, 'reply')">Reply Assistant</div>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-label">Runs Remaining</div>
+                <div id="runs-left" class="credit-count">--</div>
+                <div class="credit-bar">
+                    <div id="credit-progress" class="credit-progress"></div>
+                </div>
             </div>
         </div>
 
-        <div class="credit-card">
-            <div class="credit-label">Runs Remaining</div>
-            <div id="runs-left" class="credit-count">--</div>
-            <div class="credit-bar"><div id="credit-progress" class="credit-progress"></div></div>
+        <div class="main-content">
+            <!-- Mobile Tool Switcher -->
+            <div class="mobile-nav-container" style="display:none; margin-bottom:25px;">
+                <label>Select Tool</label>
+                <select class="mobile-dropdown" onchange="handleMobileSwitch(this.value)"
+                    style="width:100%; padding:16px; border:2px solid var(--gold-accent); border-radius:14px;">
+                    <option value="bio-builder">Bio Builder</option>
+                    <option value="hook-gen">Find Your Hook</option>
+                    <option value="voice-gen">Find Your Voice</option>
+                    <option value="interpreter">Signal Interpreter</option>
+                    <option value="planner">Content Planner</option>
+                    <option value="carousel">Carousel Mapper</option>
+                    <option value="reel">Reel Script Master</option>
+                    <option value="seo">Caption Optimizer</option>
+                    <option value="story">Story Arc Gen</option>
+                    <option value="reply">Reply Assistant</option>
+                </select>
+            </div>
+
+            <!-- 1. Bio Builder -->
+            <div id="bio-builder" class="tool-panel active">
+                <h2>Bio Builder</h2>
+                <p class="subtitle">Mindful bios designed for high-end creators.</p>
+                <label>Niche</label> <input type="text" id="bio-niche" placeholder="e.g. Wellness Coaching">
+                <label>Audience</label> <input type="text" id="bio-audience" placeholder="e.g. Stressed Moms">
+                <label>Core Mission</label> <input type="text" id="bio-mission"
+                    placeholder="e.g. Finding peace in chaos">
+                <label>Personal Detail</label> <input type="text" id="bio-personal" placeholder="e.g. Tea lover">
+                <label>Tone</label>
+                <select id="bio-tone">
+                    <option value="calm">Calm & Mindful</option>
+                    <option value="professional">Direct & Professional</option>
+                    <option value="bold">Bold & Energetic</option>
+                </select>
+                <button class="generate-btn" onclick="runTool('bio')"><span>Generate Bio</span></button>
+            </div>
+
+            <!-- 2. Find Your Hook -->
+            <div id="hook-gen" class="tool-panel">
+                <h2>Find Your Hook</h2>
+                <p class="subtitle">Genius level pattern-interrupts to stop the scroll.</p>
+                <label>Core Idea</label> <textarea id="hook-idea" rows="3"
+                    placeholder="e.g. I want to talk about rest as productivity..."></textarea>
+                <label>Target Audience</label> <input type="text" id="hook-audience"
+                    placeholder="e.g. Busy Entrepreneurs">
+                <label>Deepest Pain Point</label> <input type="text" id="hook-pain" placeholder="e.g. No free weekends">
+                <label>Transformation</label> <input type="text" id="hook-transformation"
+                    placeholder="e.g. Getting Saturdays back">
+                <label>Strategy</label>
+                <select id="hook-strategy">
+                    <option value="pattern-interrupt">Pattern Interrupt</option>
+                    <option value="relatable-ease">Relatable Ease</option>
+                    <option value="hard-truth">Authority Shift</option>
+                </select>
+                <button class="generate-btn" onclick="runTool('hook')"><span>Generate Hooks</span></button>
+            </div>
+
+            <!-- 3. Find Your Voice -->
+            <div id="voice-gen" class="tool-panel">
+                <h2>Find Your Voice</h2>
+                <p class="subtitle">Establish an authentic presence that builds trust.</p>
+                <label>Your Core Values</label> <input type="text" id="voice-values"
+                    placeholder="e.g. Honesty, Simplicity, Joy">
+                <label>Your Personality</label> <input type="text" id="voice-personality"
+                    placeholder="e.g. Direct, witty, but warm">
+                <label>Brand Inspiration</label> <input type="text" id="voice-inspiration"
+                    placeholder="e.g. Minimalist design, high-end magazines">
+                <button class="generate-btn" onclick="runTool('voice')"><span>Define Voice</span></button>
+            </div>
+
+            <!-- 4. Signal Interpreter -->
+            <div id="interpreter" class="tool-panel">
+                <h2>Signal Interpreter</h2>
+                <p class="subtitle">Understand your data in simple, layman's terms.</p>
+                <label>Post Data / Insights</label> <textarea id="signal-data" rows="5"
+                    placeholder="Paste your likes, comments, and saves here..."></textarea>
+                <button class="generate-btn" onclick="runTool('signal')"><span>Interpret Signals</span></button>
+            </div>
+
+            <!-- 5. Content Planner -->
+            <div id="planner" class="tool-panel">
+                <h2>Content Planner</h2>
+                <p class="subtitle">A genius roadmap for the next 7 days.</p>
+                <label>Audience Struggle</label> <input type="text" id="plan-struggle"
+                    placeholder="e.g. No time to cook healthy meals">
+                <label>Vibe</label> <input type="text" id="plan-vibe" placeholder="e.g. Educational & Calm">
+                <label>Platform</label>
+                <select id="plan-platform">
+                    <option value="Instagram">Instagram</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="TikTok">TikTok</option>
+                </select>
+                <label>Current Goal</label> <input type="text" id="plan-goal"
+                    placeholder="e.g. Sell more coaching calls">
+                <button class="generate-btn" onclick="runTool('planner')"><span>Generate Plan</span></button>
+            </div>
+
+            <!-- 6. Carousel Mapper -->
+            <div id="carousel" class="tool-panel">
+                <h2>Carousel Mapper</h2>
+                <p class="subtitle">Map out a high-saving 6-slide carousel strategy.</p>
+                <label>Main Topic / Idea</label> <input type="text" id="carousel-topic"
+                    placeholder="e.g. 5 steps to better sleep">
+                <label>Content Goal</label>
+                <select id="carousel-goal">
+                    <option value="educational">Education / Value</option>
+                    <option value="relatability">Connection / Relatability</option>
+                    <option value="showcase">Product / Service Showcase</option>
+                </select>
+                <button class="generate-btn" onclick="runTool('carousel')"><span>Map Slide Deck</span></button>
+            </div>
+
+            <!-- 7. Reel Script Master -->
+            <div id="reel" class="tool-panel">
+                <h2>Reel Script Master</h2>
+                <p class="subtitle">Convert a messy idea into a high-retention 30s script.</p>
+                <label>Core Idea</label> <textarea id="reel-idea" rows="3"
+                    placeholder="e.g. Why people fail at habits..."></textarea>
+                <label>Visual Tone</label>
+                <select id="reel-tone">
+                    <option value="calm">Calm & Minimalist</option>
+                    <option value="energetic">High-Energy & Fast-Cut</option>
+                    <option value="vlog">Vlog Style / Relatable</option>
+                </select>
+                <button class="generate-btn" onclick="runTool('reel')"><span>Generate Script</span></button>
+            </div>
+
+            <!-- 8. Caption Optimizer -->
+            <div id="seo" class="tool-panel">
+                <h2>Caption SEO Optimizer</h2>
+                <p class="subtitle">Weave keywords into your caption for maximum searchability.</p>
+                <label>Your Current Caption</label> <textarea id="seo-caption" rows="4"
+                    placeholder="Paste your draft here..."></textarea>
+                <label>Target Search Terms</label> <input type="text" id="seo-keywords"
+                    placeholder="e.g. Yoga for back pain, wellness tips">
+                <button class="generate-btn" onclick="runTool('seo')"><span>Optimize SEO</span></button>
+            </div>
+
+            <!-- 9. Story Arc Gen -->
+            <div id="story" class="tool-panel">
+                <h2>Story Arc Generator</h2>
+                <p class="subtitle">Create a 3-part daily story sequence to boost views.</p>
+                <label>Today's Main Focus</label> <input type="text" id="story-focus"
+                    placeholder="e.g. Behind the scenes of my morning">
+                <label>Desired Outcome</label>
+                <select id="story-outcome">
+                    <option value="engagement">Engagement / Conversation</option>
+                    <option value="sale">Selling / Awareness</option>
+                    <option value="vulnerability">Deep Connection / Sharing</option>
+                </select>
+                <button class="generate-btn" onclick="runTool('story')"><span>Generate Story Arc</span></button>
+            </div>
+
+            <!-- 10. Reply Assistant -->
+            <div id="reply" class="tool-panel">
+                <h2>Reply Assistant</h2>
+                <p class="subtitle">Thoughtful, non-generic replies to boost comment depth.</p>
+                <label>Comment Received</label> <textarea id="reply-input" rows="3"
+                    placeholder="Paste the comment you want to reply to..."></textarea>
+                <label>Your Desired Vibe</label>
+                <select id="reply-vibe">
+                    <option value="gratitude">Warm & Grateful</option>
+                    <option value="expert">Thought Leader / Expert</option>
+                    <option value="witty">Witty & Playful</option>
+                </select>
+                <button class="generate-btn" onclick="runTool('reply')"><span>Generate Reply</span></button>
+            </div>
+
+            <!-- Static Output Box -->
+            <div class="result-box">
+                <button class="copy-btn" onclick="copyResult()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="copy-label">Copy</span>
+                </button>
+                <label style="color: var(--text-heading); margin-top: 0;">AI Suggestions:</label>
+                <div id="output-text"></div>
+            </div>
         </div>
     </div>
 
-    <div class="main-content">
-        <!-- Mobile Tool Switcher -->
-        <div class="mobile-nav-container" style="display:none; margin-bottom:25px;">
-            <label>Select Tool</label>
-            <select class="mobile-dropdown" onchange="handleMobileSwitch(this.value)" style="width:100%; padding:16px; border:2px solid var(--gold-accent); border-radius:14px;">
-                <option value="bio-builder">Bio Builder</option>
-                <option value="hook-gen">Find Your Hook</option>
-                <option value="voice-gen">Find Your Voice</option>
-                <option value="interpreter">Signal Interpreter</option>
-                <option value="planner">Content Planner</option>
-                <option value="carousel">Carousel Mapper</option>
-                <option value="reel">Reel Script Master</option>
-                <option value="seo">Caption Optimizer</option>
-                <option value="story">Story Arc Gen</option>
-                <option value="reply">Reply Assistant</option>
-            </select>
-        </div>
+    <script>
+        let runsRemaining = 0;
+        let maxRuns = 10;
+        let currentUserId = null;
 
-        <!-- 1. Bio Builder -->
-        <div id="bio-builder" class="tool-panel active">
-            <h2>Bio Builder</h2>
-            <p class="subtitle">Mindful bios designed for high-end creators.</p>
-            <label>Niche</label> <input type="text" id="bio-niche" placeholder="e.g. Wellness Coaching">
-            <label>Audience</label> <input type="text" id="bio-audience" placeholder="e.g. Stressed Moms">
-            <label>Core Mission</label> <input type="text" id="bio-mission" placeholder="e.g. Finding peace in chaos">
-            <label>Personal Detail</label> <input type="text" id="bio-personal" placeholder="e.g. Tea lover">
-            <label>Tone</label>
-            <select id="bio-tone">
-                <option value="calm">Calm & Mindful</option>
-                <option value="professional">Direct & Professional</option>
-                <option value="bold">Bold & Energetic</option>
-            </select>
-            <button class="generate-btn" onclick="runTool('bio')"><span>Generate Bio</span></button>
-        </div>
-
-        <!-- 2. Find Your Hook -->
-        <div id="hook-gen" class="tool-panel">
-            <h2>Find Your Hook</h2>
-            <p class="subtitle">Genius level pattern-interrupts to stop the scroll.</p>
-            <label>Core Idea</label> <textarea id="hook-idea" rows="3" placeholder="e.g. I want to talk about rest as productivity..."></textarea>
-            <label>Target Audience</label> <input type="text" id="hook-audience" placeholder="e.g. Busy Entrepreneurs">
-            <label>Deepest Pain Point</label> <input type="text" id="hook-pain" placeholder="e.g. No free weekends">
-            <label>Transformation</label> <input type="text" id="hook-transformation" placeholder="e.g. Getting Saturdays back">
-            <label>Strategy</label>
-            <select id="hook-strategy">
-                <option value="pattern-interrupt">Pattern Interrupt</option>
-                <option value="relatable-ease">Relatable Ease</option>
-                <option value="hard-truth">Authority Shift</option>
-            </select>
-            <button class="generate-btn" onclick="runTool('hook')"><span>Generate Hooks</span></button>
-        </div>
-
-        <!-- 3. Find Your Voice -->
-        <div id="voice-gen" class="tool-panel">
-            <h2>Find Your Voice</h2>
-            <p class="subtitle">Establish an authentic presence that builds trust.</p>
-            <label>Your Core Values</label> <input type="text" id="voice-values" placeholder="e.g. Honesty, Simplicity, Joy">
-            <label>Your Personality</label> <input type="text" id="voice-personality" placeholder="e.g. Direct, witty, but warm">
-            <label>Brand Inspiration</label> <input type="text" id="voice-inspiration" placeholder="e.g. Minimalist design, high-end magazines">
-            <button class="generate-btn" onclick="runTool('voice')"><span>Define Voice</span></button>
-        </div>
-
-        <!-- 4. Signal Interpreter -->
-        <div id="interpreter" class="tool-panel">
-            <h2>Signal Interpreter</h2>
-            <p class="subtitle">Understand your data in simple, layman's terms.</p>
-            <label>Post Data / Insights</label> <textarea id="signal-data" rows="5" placeholder="Paste your likes, comments, and saves here..."></textarea>
-            <button class="generate-btn" onclick="runTool('signal')"><span>Interpret Signals</span></button>
-        </div>
-
-        <!-- 5. Content Planner -->
-        <div id="planner" class="tool-panel">
-            <h2>Content Planner</h2>
-            <p class="subtitle">A genius roadmap for the next 7 days.</p>
-            <label>Current Goal</label> <input type="text" id="plan-goal" placeholder="e.g. Sell more coaching calls">
-            <label>Niche</label> <input type="text" id="plan-niche" placeholder="e.g. Holistic Wellness">
-            <label>Timeframe</label> <select id="plan-time"><option value="7days">7 Day Sprint</option></select>
-            <button class="generate-btn" onclick="runTool('planner')"><span>Generate Plan</span></button>
-        </div>
-
-        <!-- 6. Carousel Mapper -->
-        <div id="carousel" class="tool-panel">
-            <h2>Carousel Mapper</h2>
-            <p class="subtitle">Map out a high-saving 6-slide carousel strategy.</p>
-            <label>Main Topic / Idea</label> <input type="text" id="carousel-topic" placeholder="e.g. 5 steps to better sleep">
-            <label>Content Goal</label>
-            <select id="carousel-goal">
-                <option value="educational">Education / Value</option>
-                <option value="relatability">Connection / Relatability</option>
-                <option value="showcase">Product / Service Showcase</option>
-            </select>
-            <button class="generate-btn" onclick="runTool('carousel')"><span>Map Slide Deck</span></button>
-        </div>
-
-        <!-- 7. Reel Script Master -->
-        <div id="reel" class="tool-panel">
-            <h2>Reel Script Master</h2>
-            <p class="subtitle">Convert a messy idea into a high-retention 30s script.</p>
-            <label>Core Idea</label> <textarea id="reel-idea" rows="3" placeholder="e.g. Why people fail at habits..."></textarea>
-            <label>Visual Tone</label>
-            <select id="reel-tone">
-                <option value="calm">Calm & Minimalist</option>
-                <option value="energetic">High-Energy & Fast-Cut</option>
-                <option value="vlog">Vlog Style / Relatable</option>
-            </select>
-            <button class="generate-btn" onclick="runTool('reel')"><span>Generate Script</span></button>
-        </div>
-
-        <!-- 8. Caption Optimizer -->
-        <div id="seo" class="tool-panel">
-            <h2>Caption SEO Optimizer</h2>
-            <p class="subtitle">Weave keywords into your caption for maximum searchability.</p>
-            <label>Your Current Caption</label> <textarea id="seo-caption" rows="4" placeholder="Paste your draft here..."></textarea>
-            <label>Target Search Terms</label> <input type="text" id="seo-keywords" placeholder="e.g. Yoga for back pain, wellness tips">
-            <button class="generate-btn" onclick="runTool('seo')"><span>Optimize SEO</span></button>
-        </div>
-
-        <!-- 9. Story Arc Gen -->
-        <div id="story" class="tool-panel">
-            <h2>Story Arc Generator</h2>
-            <p class="subtitle">Create a 3-part daily story sequence to boost views.</p>
-            <label>Today's Main Focus</label> <input type="text" id="story-focus" placeholder="e.g. Behind the scenes of my morning">
-            <label>Desired Outcome</label>
-            <select id="story-outcome">
-                <option value="engagement">Engagement / Conversation</option>
-                <option value="sale">Selling / Awareness</option>
-                <option value="vulnerability">Deep Connection / Sharing</option>
-            </select>
-            <button class="generate-btn" onclick="runTool('story')"><span>Generate Story Arc</span></button>
-        </div>
-
-        <!-- 10. Reply Assistant -->
-        <div id="reply" class="tool-panel">
-            <h2>Reply Assistant</h2>
-            <p class="subtitle">Thoughtful, non-generic replies to boost comment depth.</p>
-            <label>Comment Received</label> <textarea id="reply-input" rows="3" placeholder="Paste the comment you want to reply to..."></textarea>
-            <label>Your Desired Vibe</label>
-            <select id="reply-vibe">
-                <option value="gratitude">Warm & Grateful</option>
-                <option value="expert">Thought Leader / Expert</option>
-                <option value="witty">Witty & Playful</option>
-            </select>
-            <button class="generate-btn" onclick="runTool('reply')"><span>Generate Reply</span></button>
-        </div>
-
-        <!-- Static Output Box -->
-        <div class="result-box">
-            <button class="copy-btn" onclick="copyResult()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span id="copy-label">Copy</span>
-            </button>
-            <label style="color: var(--text-heading); margin-top: 0;">AI Suggestions:</label>
-            <div id="output-text"></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    let runsRemaining = 0;
-    let maxRuns = 10;
-    let currentUserId = null;
-
-    // 1. Wix Messaging Logic
-    window.onmessage = (event) => {
-        if (event.data.type === 'SET_USER_DATA') {
-            currentUserId = event.data.userId;
-            runsRemaining = event.data.runs;
-            maxRuns = event.data.max || 10;
-            updateRunsUI();
-        }
-    };
-
-    function updateRunsUI() {
-        document.getElementById('runs-left').innerText = runsRemaining;
-        const progress = maxRuns > 0 ? (runsRemaining / maxRuns) * 100 : 0;
-        document.getElementById('credit-progress').style.width = progress + "%";
-        
-        const buttons = document.querySelectorAll('.generate-btn');
-        buttons.forEach(btn => {
-            if (runsRemaining <= 0) {
-                btn.disabled = true;
-                btn.querySelector('span').innerText = "Upgrade to Continue";
-            } else {
-                btn.disabled = false;
-            }
-        });
-    }
-
-    // Nav Switchers
-    function switchTool(navEl, toolId) {
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        navEl.classList.add('active');
-        document.querySelectorAll('.tool-panel').forEach(el => el.classList.remove('active'));
-        document.getElementById(toolId).classList.add('active');
-        document.querySelector('.mobile-dropdown').value = toolId;
-    }
-
-    function handleMobileSwitch(toolId) {
-        document.querySelectorAll('.nav-item').forEach(el => {
-            el.classList.remove('active');
-            if (el.getAttribute('data-tool') === toolId) el.classList.add('active');
-        });
-        document.querySelectorAll('.tool-panel').forEach(el => el.classList.remove('active'));
-        document.getElementById(toolId).classList.add('active');
-    }
-
-    // Typing & Sanitization
-    async function typeEffect(element, text) {
-        element.innerHTML = "";
-        let i = 0;
-        return new Promise((res) => {
-            function t() {
-                if (i < text.length) { 
-                    element.innerHTML += text.charAt(i); 
-                    i++; 
-                    setTimeout(t, 12); 
-                } else res();
-            }
-            t();
-        });
-    }
-
-    function sanitize(text) {
-        if (!text) return "";
-        let clean = text.replace(/#\w+/g, '');
-        const brands = [/The Calm Content Method/gi, /The Calm Content Companion/gi, /itscandicemajors/gi];
-        brands.forEach(r => clean = clean.replace(r, ''));
-        return clean.trim();
-    }
-
-    // Main API Logic
-    async function runTool(type) {
-        if (runsRemaining <= 0) return;
-        if (!currentUserId) {
-            document.getElementById('output-text').innerHTML = "<em>Error: Please login to your account.</em>";
-            return;
-        }
-
-        const btn = document.querySelector(`.active .generate-btn`);
-        const output = document.getElementById('output-text');
-        const originalBtnText = btn.querySelector('span').innerText;
-        
-        btn.disabled = true;
-        btn.querySelector('span').innerText = "Computing...";
-        output.innerHTML = "<em>Analyzing your request...</em>";
-
-        try {
-            let endpoint = '';
-            let payload = { userId: currentUserId };
-
-            switch(type) {
-                case 'bio':
-                    endpoint = '/generate-bio';
-                    payload = { ...payload, niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value, mission: document.getElementById('bio-mission').value, personal: document.getElementById('bio-personal').value, tone: document.getElementById('bio-tone').value };
-                    break;
-                case 'hook':
-                    endpoint = '/generate-hook';
-                    payload = { ...payload, idea: document.getElementById('hook-idea').value, audience: document.getElementById('hook-audience').value, painPoint: document.getElementById('hook-pain').value, transformation: document.getElementById('hook-transformation').value, strategy: document.getElementById('hook-strategy').value };
-                    break;
-                case 'voice':
-                    endpoint = '/generate-voice';
-                    payload = { ...payload, values: document.getElementById('voice-values').value, personality: document.getElementById('voice-personality').value, inspiration: document.getElementById('voice-inspiration').value };
-                    break;
-                case 'signal':
-                    endpoint = '/interpret-signals';
-                    payload = { ...payload, data: document.getElementById('signal-data').value, depth: 'quick' };
-                    break;
-                case 'planner':
-                    endpoint = '/generate-plan';
-                    payload = { ...payload, goal: document.getElementById('plan-goal').value, niche: document.getElementById('plan-niche').value, timeframe: '7days' };
-                    break;
-                case 'carousel':
-                    endpoint = '/generate-carousel';
-                    payload = { ...payload, topic: document.getElementById('carousel-topic').value, goal: document.getElementById('carousel-goal').value };
-                    break;
-                case 'reel':
-                    endpoint = '/generate-reel';
-                    payload = { ...payload, idea: document.getElementById('reel-idea').value, tone: document.getElementById('reel-tone').value };
-                    break;
-                case 'seo':
-                    endpoint = '/generate-seo';
-                    payload = { ...payload, caption: document.getElementById('seo-caption').value, keywords: document.getElementById('seo-keywords').value };
-                    break;
-                case 'story':
-                    endpoint = '/generate-story';
-                    payload = { ...payload, focus: document.getElementById('story-focus').value, outcome: document.getElementById('story-outcome').value };
-                    break;
-                case 'reply':
-                    endpoint = '/generate-reply';
-                    payload = { ...payload, comment: document.getElementById('reply-input').value, vibe: document.getElementById('reply-vibe').value };
-                    break;
-            }
-
-            const response = await fetch(`https://the-calm-content-companion.onrender.com${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) throw new Error("Server error");
-
-            const data = await response.json();
-            if (data.status === "success") {
-                runsRemaining--;
+        // 1. Wix Messaging Logic
+        window.onmessage = (event) => {
+            if (event.data.type === 'SET_USER_DATA') {
+                currentUserId = event.data.userId;
+                runsRemaining = event.data.runs;
+                maxRuns = event.data.max || 10;
                 updateRunsUI();
-                
-                // Signal Wix to Update Database
-                window.parent.postMessage({ type: 'RUN_SUCCESS', userId: currentUserId }, "*");
-                
-                const polished = sanitize(data.bio || data.hooks || data.analysis || data.result || "");
-                await typeEffect(output, polished);
             }
-        } catch (e) {
-            output.innerHTML = "<em>Connection timeout. Try again in 60 seconds (server is waking up).</em>";
-        } finally {
-            if (runsRemaining > 0) {
-                btn.disabled = false;
-                btn.querySelector('span').innerText = originalBtnText;
+        };
+
+        function updateRunsUI() {
+            document.getElementById('runs-left').innerText = runsRemaining;
+            const progress = maxRuns > 0 ? (runsRemaining / maxRuns) * 100 : 0;
+            document.getElementById('credit-progress').style.width = progress + "%";
+
+            const buttons = document.querySelectorAll('.generate-btn');
+            buttons.forEach(btn => {
+                if (runsRemaining <= 0) {
+                    btn.disabled = true;
+                    btn.querySelector('span').innerText = "Upgrade to Continue";
+                } else {
+                    btn.disabled = false;
+                }
+            });
+        }
+
+        // Nav Switchers
+        function switchTool(navEl, toolId) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            navEl.classList.add('active');
+            document.querySelectorAll('.tool-panel').forEach(el => el.classList.remove('active'));
+            document.getElementById(toolId).classList.add('active');
+            document.querySelector('.mobile-dropdown').value = toolId;
+        }
+
+        function handleMobileSwitch(toolId) {
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active');
+                if (el.getAttribute('data-tool') === toolId) el.classList.add('active');
+            });
+            document.querySelectorAll('.tool-panel').forEach(el => el.classList.remove('active'));
+            document.getElementById(toolId).classList.add('active');
+        }
+
+        // Typing & Sanitization
+        async function typeEffect(element, text) {
+            element.innerHTML = "";
+            let i = 0;
+            return new Promise((res) => {
+                function t() {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(t, 12);
+                    } else res();
+                }
+                t();
+            });
+        }
+
+        function sanitize(text) {
+            if (!text) return "";
+            let clean = text.replace(/#\w+/g, '');
+            const brands = [/The Calm Content Method/gi, /The Calm Content Companion/gi, /itscandicemajors/gi];
+            brands.forEach(r => clean = clean.replace(r, ''));
+            return clean.trim();
+        }
+
+        // Main API Logic
+        async function runTool(type) {
+            if (runsRemaining <= 0) return;
+            if (!currentUserId) {
+                document.getElementById('output-text').innerHTML = "<em>Error: Please login to your account.</em>";
+                return;
+            }
+
+            const btn = document.querySelector(`.active .generate-btn`);
+            const output = document.getElementById('output-text');
+            const originalBtnText = btn.querySelector('span').innerText;
+
+            btn.disabled = true;
+            btn.querySelector('span').innerText = "Computing...";
+            output.innerHTML = "<em>Analyzing your request...</em>";
+
+            try {
+                let endpoint = '';
+                let payload = { userId: currentUserId };
+
+                switch (type) {
+                    case 'bio':
+                        endpoint = '/generate-bio';
+                        payload = { ...payload, niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value, mission: document.getElementById('bio-mission').value, personal: document.getElementById('bio-personal').value, tone: document.getElementById('bio-tone').value };
+                        break;
+                    case 'hook':
+                        endpoint = '/generate-hook';
+                        payload = { ...payload, idea: document.getElementById('hook-idea').value, audience: document.getElementById('hook-audience').value, painPoint: document.getElementById('hook-pain').value, transformation: document.getElementById('hook-transformation').value, strategy: document.getElementById('hook-strategy').value };
+                        break;
+                    case 'voice':
+                        endpoint = '/generate-voice';
+                        payload = { ...payload, values: document.getElementById('voice-values').value, personality: document.getElementById('voice-personality').value, inspiration: document.getElementById('voice-inspiration').value };
+                        break;
+                    case 'signal':
+                        endpoint = '/interpret-signals';
+                        payload = { ...payload, data: document.getElementById('signal-data').value, depth: 'quick' };
+                        break;
+                    case 'planner':
+                        endpoint = '/api/tools/generate-plan';
+                        payload = {
+                            ...payload,
+                            audienceStruggle: document.getElementById('plan-struggle').value,
+                            vibe: document.getElementById('plan-vibe').value,
+                            platform: document.getElementById('plan-platform').value,
+                            goal: document.getElementById('plan-goal').value
+                        };
+                        break;
+                    case 'carousel':
+                        endpoint = '/generate-carousel';
+                        payload = { ...payload, topic: document.getElementById('carousel-topic').value, goal: document.getElementById('carousel-goal').value };
+                        break;
+                    case 'reel':
+                        endpoint = '/generate-reel';
+                        payload = { ...payload, idea: document.getElementById('reel-idea').value, tone: document.getElementById('reel-tone').value };
+                        break;
+                    case 'seo':
+                        endpoint = '/generate-seo';
+                        payload = { ...payload, caption: document.getElementById('seo-caption').value, keywords: document.getElementById('seo-keywords').value };
+                        break;
+                    case 'story':
+                        endpoint = '/generate-story';
+                        payload = { ...payload, focus: document.getElementById('story-focus').value, outcome: document.getElementById('story-outcome').value };
+                        break;
+                    case 'reply':
+                        endpoint = '/generate-reply';
+                        payload = { ...payload, comment: document.getElementById('reply-input').value, vibe: document.getElementById('reply-vibe').value };
+                        break;
+                }
+
+                const response = await fetch(`https://the-calm-content-companion.onrender.com${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Server error");
+
+                const data = await response.json();
+                if (data.status === "success") {
+                    runsRemaining--;
+                    updateRunsUI();
+
+                    // Signal Wix to Update Database
+                    window.parent.postMessage({ type: 'RUN_SUCCESS', userId: currentUserId }, "*");
+
+                    const polished = sanitize(data.bio || data.hooks || data.analysis || data.result || "");
+                    await typeEffect(output, polished);
+                }
+            } catch (e) {
+                output.innerHTML = "<em>Connection timeout. Try again in 60 seconds (server is waking up).</em>";
+            } finally {
+                if (runsRemaining > 0) {
+                    btn.disabled = false;
+                    btn.querySelector('span').innerText = originalBtnText;
+                }
             }
         }
-    }
 
-    function copyResult() {
-        const text = document.getElementById('output-text').innerText;
-        if (!text) return;
-        const el = document.createElement('textarea');
-        el.value = text;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        const label = document.getElementById('copy-label');
-        label.innerText = "Copied!";
-        setTimeout(() => label.innerText = "Copy", 2000);
-    }
-</script>
+        function copyResult() {
+            const text = document.getElementById('output-text').innerText;
+            if (!text) return;
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const label = document.getElementById('copy-label');
+            label.innerText = "Copied!";
+            setTimeout(() => label.innerText = "Copy", 2000);
+        }
+    </script>
 </body>
+
 </html>
