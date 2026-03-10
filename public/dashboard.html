@@ -651,10 +651,12 @@
             // 1. CHECK THE LIMIT
             if (userStats.runsUsed >= userStats.dailyLimit) {
                 resultDiv.innerHTML = `
-                    <div style="text-align: center; padding: 30px; border: 1px dashed #7d8a70; border-radius: 20px; background: #fdfcf6;">
-                        <h4 style="font-family: 'Playfair Display', serif; margin-bottom: 10px;">Your Energy is Spent 🌿</h4>
-                        <p style="font-size: 0.85rem; color: #636e72; line-height: 1.5;">You've used your 2 free daily runs. Upgrade to <b>Elite</b> for 20 runs/day and advanced SEO strategies.</p>
-                        <button onclick="window.top.location.href='/plans'" style="margin-top: 15px; width: auto; padding: 12px 25px;">Unlock Elite Access</button>
+                    <div class="limit-box" style="text-align: center; padding: 25px; border: 2px solid #f1f3ef; border-radius: 20px;">
+                        <h4 style="font-family: 'Playfair Display', serif; color: #2d3436;">Ready for the Next Level? 🌿</h4>
+                        <p style="font-size: 0.85rem; color: #636e72;">You've used your 2 free daily runs. Upgrade to <b>Pro</b> for 10 daily runs and consistent growth.</p>
+                        <button class="btn-generate" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">
+                            Explore Pro Access
+                        </button>
                     </div>
                 `;
                 return;
