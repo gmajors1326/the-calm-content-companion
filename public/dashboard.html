@@ -58,20 +58,22 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            /* Sits behind text, in front of white background */
             pointer-events: none;
 
-            /* THE MAGIC LINE: Sets video to 50% transparency */
-            opacity: 0.5;
+            /* THE MAGIC LINE: 25% Transparency */
+            opacity: 0.25;
+
+            /* PRO TOUCH: Fades the video out at the very top and bottom */
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
         }
 
         #growth-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Center video in narrow space */
-            transform: scale(1.1);
-            /* Optional: slight scale to fill corners */
+            /* Keeps the green soft and luxury-grade */
+            filter: saturate(0.7) brightness(1.1);
         }
 
         .sidebar-content {
@@ -524,17 +526,20 @@
 
     <script>
         // --- GAMIFICATION & TIERS ---
-        let userTier = 'Free';
-        let userRuns = 0;
-        let tierLimit = 2; // Default for Free
+        // Mock data - In the future, this will come from your Wix/Memberstack login
+        let userStats = {
+            tier: 'Free', // Options: 'Free', 'Starter', 'Pro', 'Elite'
+            runsUsed: 0,
+            dailyLimit: 2 // Free starts at 2
+        };
 
         function updateEnergyMeter() {
             const energyText = document.getElementById('energy-text');
             const energyFill = document.getElementById('energy-fill');
             if (energyText && energyFill) {
-                const runsLeft = Math.max(0, tierLimit - userRuns);
+                const runsLeft = Math.max(0, userStats.dailyLimit - userStats.runsUsed);
                 energyText.innerText = `You have ${runsLeft} run${runsLeft !== 1 ? 's' : ''} left today.`;
-                const fillPercent = (runsLeft / tierLimit) * 100;
+                const fillPercent = (runsLeft / userStats.dailyLimit) * 100;
                 energyFill.style.width = `${fillPercent}%`;
             }
         }
@@ -565,13 +570,16 @@
         async function runTool(type) {
             const resultDiv = document.getElementById(`${type}-result`);
 
-            // 0. THE "PAYWALL" TEASE
-            if (userRuns >= tierLimit) {
+            // --- THE TIER GATEKEEPER ---
+            if (userStats.runsUsed >= userStats.dailyLimit) {
                 resultDiv.innerHTML = `
-                    <div class="upgrade-teaser">
-                        <h4>You've hit your daily soulful limit!</h4>
-                        <p>Your creative energy is flowing. Don't stop now—upgrade to <b>Elite</b> to unlock 20 runs per day and advanced SEO deep-dives.</p>
-                        <button onclick="window.top.location.href='/upgrade'">Upgrade to Elite</button>
+                    <div style="padding: 20px; background: #fff5f5; border-radius: 15px; border: 1px solid #feb2b2; text-align: center;">
+                        <h4 style="margin-top:0; color: #c53030;">Daily Energy Depleted 🌿</h4>
+                        <p style="font-size: 0.85rem; color: #718096;">You've used your <b>${userStats.tier}</b> daily runs. Upgrade to <b>Elite</b> for 20 runs and deep SEO insights.</p>
+                        <button onclick="window.top.location.href='https://www.itscandicemajors.com/plans-pricing'" 
+                                style="background: #c53030; padding: 10px; font-size: 0.8rem;">
+                            Unlock Unlimited Flow
+                        </button>
                     </div>
                 `;
                 return;
@@ -607,11 +615,11 @@
                 const result = await response.json();
 
                 // Increment Runs
-                userRuns++;
+                userStats.runsUsed++;
                 updateEnergyMeter();
 
                 // BLURRED REALITY TEASE (Planner Only)
-                if (type === 'plan' && userTier !== 'Elite' && userTier !== 'Pro') {
+                if (type === 'plan' && userStats.tier !== 'Elite' && userStats.tier !== 'Pro') {
                     const responseData = result.data || "Error processing your request.";
                     const posts = responseData.split('---');
 
