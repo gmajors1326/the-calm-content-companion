@@ -49,46 +49,30 @@ Option 1
     }
 }
 
-// --- TOOL 2: FIND YOUR VOICE ---
-async function humanizeText(boringText, tone, spice) {
-    const systemPrompt = `You are an expert copywriter and personal brand voice director.
-The user will provide a stiff, robotic, corporate, or AI-generated piece of text.
-Your job is to rewrite it to sound like a real, authentic human being.
-
-You MUST adopt this Core Tone: "${tone}"
-You MUST format it using this "Spice": "${spice}"
-
-Rules:
-- Remove all corporate jargon (synergy, leverage, utilize, delve, overarching, testament).
-- Make it flow naturally, as if someone is speaking to a friend over coffee.
-- If the spice is "Story-driven", add a brief relatable opening.
-- If the spice is "Punchy & Actionable", use short sentences and bullet points.
-- If the spice is "Heavy Metaphors", rely on a creative analogy.
-
-Format the output EXACTLY like this:
-
-✨ Your Authentic Rewrite:
-[The rewritten text goes here. Make it beautiful.]
-
--------------------------
-
-💡 Why this sounds like you:
-[1 short sentence explaining the specific tonal shifts you made to match the requested tone/spice.]
-
-🚫 Cringe Check:
-[List 1 or 2 robotic/corporate words you removed from their original text and explain why they sounded bad, e.g., "Removed the word 'delve' because real people don't say that."]
-`;
+// 1. FIND YOUR VOICE (The Humanizer - Active Tool)
+async function generateVoice(userInput, tone, spice) {
+    const prompt = `
+    Act as a soulful communication expert and copywriter. I am providing you with rough, messy, or AI-generated text. 
+    Rewrite this text using the following user inputs:
+    
+    Original Text: "${userInput}"
+    Niche/Tone: ${tone}
+    "Spice" (Relatability/Storytelling Level): ${spice}
+    
+    STRICT RULES FOR AUTHENTICITY:
+    - Use the original user's ideas, stories, and context.
+    - DO NOT make up generic advice or clichés.
+    - Ensure it is SEO optimized for the specific niche.
+    - No JSON, no brackets. NO "guru-speak."
+    - Formatting: Single block of warm, readable text.
+    `;
 
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: boringText }
-            ],
-            temperature: 0.8, // Slightly higher temperature for more personality
+            model: "gpt-4-turbo-preview",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7, // Balanced authenticity and creativity
         });
-
         return response.choices[0].message.content;
     } catch (error) {
         console.error("OpenAI API Error (Voice):", error);
@@ -210,7 +194,7 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
 
 module.exports = {
     generateHook,
-    humanizeText,
+    generateVoice,
     generateContentPlan,
     generateBio,
     interpretSignal

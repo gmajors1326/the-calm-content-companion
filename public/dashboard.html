@@ -17,7 +17,7 @@
             --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- LOCK SCREEN (NO SCROLL) --- */
+        /* --- GLOBAL APP LOCK (NO SCROLL) --- */
         body,
         html {
             margin: 0;
@@ -36,8 +36,10 @@
             width: 100%;
         }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR (VIDEO BACKGROUND) --- */
         .sidebar {
+            position: relative;
+            /* Container for video */
             width: 280px;
             background: #fff;
             border-right: 1px solid var(--border-light);
@@ -45,10 +47,39 @@
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            position: relative;
             overflow: hidden;
-            /* Keeps the vine from spilling out of the sidebar */
+            /* Keeps video from spilling */
         }
+
+        .video-sidebar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            /* Sits behind text, in front of white background */
+            pointer-events: none;
+
+            /* THE MAGIC LINE: Sets video to 50% transparency */
+            opacity: 0.5;
+        }
+
+        #growth-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Center video in narrow space */
+            transform: scale(1.1);
+            /* Optional: slight scale to fill corners */
+        }
+
+        .sidebar-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Keeps text visible over video */
 
         .sidebar h2 {
             font-family: 'Playfair Display', serif;
@@ -65,9 +96,6 @@
             font-weight: 500;
             transition: all 0.2s ease;
             color: #636e72;
-            position: relative;
-            z-index: 2;
-            /* Keeps buttons clickable and visible over the video */
         }
 
         .nav-item:hover {
@@ -81,7 +109,7 @@
             box-shadow: 0 4px 12px rgba(125, 138, 112, 0.3);
         }
 
-        /* --- MOBILE NAV --- */
+        /* --- MOBILE NAV (DROPDOWN) --- */
         .mobile-nav {
             display: none;
         }
@@ -107,7 +135,6 @@
             flex-direction: column;
             animation: fadeIn 0.4s ease forwards;
             margin-top: 20px;
-            /* Aligns card top with first nav button */
         }
 
         .tool-card.active {
@@ -127,7 +154,7 @@
             line-height: 1.4;
         }
 
-        /* --- FORM ELEMENTS --- */
+        /* --- FORM ELEMENTS & CTA --- */
         label {
             font-size: 0.75rem;
             font-weight: 600;
@@ -159,25 +186,6 @@
             background: #fff;
         }
 
-        button {
-            width: 100%;
-            padding: 18px;
-            border-radius: 15px;
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        /* The spinning animation */
         @keyframes spin {
             from {
                 transform: rotate(0deg);
@@ -196,29 +204,44 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Optional: Subtle pulse for the button while generating */
-        button.loading {
-            background: var(--primary-hover);
-            cursor: wait;
-            opacity: 0.8;
+        button {
+            width: 100%;
+            padding: 18px;
+            border-radius: 15px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        /* --- OUTPUT BOX (INTERNAL SCROLL ONLY) --- */
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: #dfe6e9;
+            cursor: not-allowed;
+        }
+
+        /* --- OUTPUT BOX (PRO/SEO READY) --- */
         .output-container {
             margin-top: 25px;
             padding: 20px;
             background: #fdfcf6;
             border-radius: 15px;
             border: 1px dashed #d1d8e0;
-            min-height: 120px;
+            min-height: 150px;
             max-height: 400px;
             overflow-y: auto;
             font-size: 1rem;
             line-height: 1.6;
             color: #4b5563;
-
-            /* THE MAGIC LINE: This makes it look like a real bio */
             white-space: pre-wrap;
+            /* MAGIC LINE: Handles AI line breaks */
             text-align: left;
         }
 
@@ -234,7 +257,7 @@
             }
         }
 
-        /* --- RESPONSIVE DROPDOWN --- */
+        /* --- RESPONSIVE DROPDOWN LOGIC --- */
         @media (max-width: 768px) {
             .dashboard-container {
                 flex-direction: column;
@@ -270,31 +293,6 @@
                 margin-top: 0;
             }
         }
-
-        /* --- VINE & BLOOM ANIMATION --- */
-        .video-sidebar-container {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            /* Behind the text */
-            pointer-events: none;
-            /* User clicks go THROUGH to the buttons */
-            overflow: hidden;
-        }
-
-        #growth-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Crops the video to fill the sidebar perfectly */
-            opacity: 0.5;
-            /* Makes it a subtle, soulful background element */
-            filter: saturate(0.8);
-            /* Pulls back the green slightly for a luxury feel */
-        }
     </style>
 </head>
 
@@ -308,15 +306,18 @@
                 </video>
             </div>
 
-            <h2 style="position: relative; z-index: 2;">Companion Tools</h2>
-
-            <div class="nav-item active" onclick="switchTool('bio-builder', this)">Bio Builder</div>
-            <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
-            <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
+            <div class="sidebar-content">
+                <h2>Companion Tools</h2>
+                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
+                <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
+                <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
+                <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
+            </div>
         </nav>
 
         <div class="mobile-nav">
             <select id="mobile-select" onchange="switchTool(this.value)">
+                <option value="find-your-voice">Find Your Voice</option>
                 <option value="bio-builder">Bio Builder</option>
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
@@ -324,13 +325,41 @@
         </div>
 
         <main class="main-content">
-            <section id="bio-builder" class="tool-card active">
+
+            <section id="find-your-voice" class="tool-card active">
+                <h3>Find Your Voice</h3>
+                <p>Paste your rough text, and we'll "soulfully humanize" it while optimizing for search.</p>
+                <label>Rough Text / Main Points</label>
+                <textarea id="voice-input" rows="4"
+                    placeholder="Paste your ideas or AI-generated draft here..."></textarea>
+
+                <label>Your Niche/Tone</label>
+                <select id="voice-tone">
+                    <option>Wellness Coach</option>
+                    <option>Yoga Teacher</option>
+                    <option>Intuitive Eating Guide</option>
+                    <option>Mindfulness Mentor</option>
+                    <option>Other / Mixed</option>
+                </select>
+
+                <label>The "Spice" (Relatability)</label>
+                <select id="voice-spice">
+                    <option value="gentle">Gentle Guidance (Low Story, High Teaching)</option>
+                    <option value="warm" selected>Warm & Story-Led (Balanced)</option>
+                    <option value="spicy">Vulnerable & Strong (High Story, Bold Opinion)</option>
+                </select>
+
+                <button onclick="runTool('voice')">Find My Voice</button>
+                <div id="voice-result" class="output-container">Results will appear here...</div>
+            </section>
+
+            <section id="bio-builder" class="tool-card">
                 <h3>Bio Builder</h3>
                 <p>Craft a soulful, high-converting bio in seconds.</p>
                 <label>Niche</label>
                 <input type="text" id="bio-niche" placeholder="e.g. Wellness Coaching">
                 <label>Target Audience</label>
-                <input type="text" id="bio-audience" placeholder="e.g. Stressed Moms">
+                <input type="text" id="bio-audience" placeholder="e.g. Stressed Moms over 50">
                 <button onclick="runTool('bio')">Generate Bio</button>
                 <div id="bio-result" class="output-container">Results will appear here...</div>
             </section>
@@ -358,8 +387,8 @@
     </div>
 
     <script>
+        // --- TOOL SWITCHING & VINE GROWTH ---
         function switchTool(toolId, element) {
-            // 1. Standard Tool Switching Logic
             document.querySelectorAll('.tool-card').forEach(card => card.classList.remove('active'));
             document.getElementById(toolId).classList.add('active');
 
@@ -367,66 +396,57 @@
                 document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
                 element.classList.add('active');
             }
+            document.getElementById('mobile-select').value = toolId;
 
-            // 3. TRIGGER THE VINE GROWTH
+            // VEO TRIGGER (Restart vine on click)
             const video = document.getElementById('growth-video');
             if (video) {
-                video.pause(); // Stop current playback
-                video.currentTime = 0; // Rewind to the seed
-
-                // Use a small delay to ensure the browser registers the reset
-                setTimeout(() => {
-                    video.play().catch(e => console.log("Auto-play blocked or loading: ", e));
-                }, 50);
+                video.pause();
+                video.currentTime = 0; // Back to the seed
+                setTimeout(() => { video.play(); }, 50);
             }
-
-            // Sync Mobile UI
-            document.getElementById('mobile-select').value = toolId;
         }
 
+        // --- THE "SENIOR DEV" RUNTOOL LOGIC ---
         async function runTool(type) {
             const resultDiv = document.getElementById(`${type}-result`);
-            // Find the button inside the active section
-            const activeSection = document.getElementById(`${type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : 'content-planner'}`);
+            const activeSection = document.getElementById(`${type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : 'content-planner'}`);
             const btn = activeSection.querySelector('button');
             const originalText = btn.innerText;
 
-            // 1. Start Loading State
+            // 1. Loading State (Prevents double clicks)
             resultDiv.innerHTML = "Gathering insights... ✨";
             btn.disabled = true;
             btn.classList.add('loading');
             btn.innerHTML = `Thinking... <span class="spinner-icon">↻</span>`;
 
+            // 2. Map Payload (All contextual data passed here)
             let payload = {};
             let endpoint = `/api/tools/generate-${type}`;
 
-            if (type === 'bio') {
-                payload = {
-                    niche: document.getElementById('bio-niche').value,
-                    audience: document.getElementById('bio-audience').value
-                };
+            if (type === 'voice') {
+                payload = { userInput: document.getElementById('voice-input').value, tone: document.getElementById('voice-tone').value, spice: document.getElementById('voice-spice').value };
+            } else if (type === 'bio') {
+                payload = { niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value };
             } else if (type === 'hook') {
                 payload = { idea: document.getElementById('hook-idea').value };
             } else if (type === 'plan') {
-                payload = {
-                    goal: document.getElementById('plan-goal').value,
-                    audienceStruggle: document.getElementById('plan-struggle').value
-                };
+                payload = { goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
             }
 
+            // 3. API Call
             try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const result = await response.json();
 
-                resultDiv.innerText = result.data || "Error processing request.";
+                // USE INNERTEXT (Respects AI line breaks)
+                resultDiv.innerText = result.data || "Error processing your request.";
+
             } catch (error) {
                 resultDiv.innerText = "Connection error. Please try again.";
+                console.error(error);
             } finally {
-                // 2. Reset Button State
+                // 4. Reset Button
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 btn.innerText = originalText;

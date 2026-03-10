@@ -23,6 +23,17 @@ app.use((req, res, next) => {
 
 // --- TOOL ROUTES ---
 
+// FIND YOUR VOICE
+app.post('/api/tools/generate-voice', async (req, res) => {
+    try {
+        const { userInput, tone, spice } = req.body;
+        const result = await openaiService.generateVoice(userInput, tone, spice);
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 // BIO BUILDER
 app.post('/api/tools/generate-bio', async (req, res) => {
     try {
