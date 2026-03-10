@@ -493,6 +493,11 @@
                 <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
+
+                <div class="nav-item upcoming"
+                    style="opacity: 0.5; cursor: help; border: 1px dashed #d1d8e0; margin-top: 20px;">
+                    <span style="font-size: 0.8rem;">✨ Coming Soon...</span>
+                </div>
             </div>
         </nav>
 
@@ -652,10 +657,13 @@
             if (userStats.runsUsed >= userStats.dailyLimit) {
                 resultDiv.innerHTML = `
                     <div class="limit-box" style="text-align: center; padding: 25px; border: 2px solid #f1f3ef; border-radius: 20px;">
-                        <h4 style="font-family: 'Playfair Display', serif; color: #2d3436;">Ready for the Next Level? 🌿</h4>
-                        <p style="font-size: 0.85rem; color: #636e72;">You've used your 2 free daily runs. Upgrade to <b>Pro</b> for 10 daily runs and consistent growth.</p>
+                        <h4 style="font-family: 'Playfair Display', serif;">Expand Your Toolkit 🌿</h4>
+                        <p style="font-size: 0.85rem; color: #636e72;">
+                            You've used your 2 free daily runs. Upgrade to <b>Pro</b> for 10 daily runs and 
+                            <b>automatic access to all future tools</b> we release this year.
+                        </p>
                         <button class="btn-generate" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">
-                            Explore Pro Access
+                            Secure Pro Access
                         </button>
                     </div>
                 `;
