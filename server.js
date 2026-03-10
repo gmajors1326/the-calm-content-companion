@@ -1,12 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
+const path = require('path');
 const app = express();
 
 // 1. MIDDLEWARE CONFIGURATION
 // Essential for Wix Studio / Velo to communicate with your Render server
 app.use(cors());
 app.use(express.json());
+// This tells Express to serve everything in the 'public' folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // 2. INITIALIZE OPENAI
 const openai = new OpenAI({
@@ -194,7 +197,7 @@ app.post('/generate-reply', async (req, res) => {
 });
 
 // 3. SERVER START
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`The 10-Tool Dashboard is LIVE on Port ${PORT}`);
+const PORT = process.env.PORT || 10000; // Render provides the PORT dynamically
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
 });
