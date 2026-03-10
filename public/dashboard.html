@@ -269,64 +269,25 @@
         }
 
         /* --- VINE & BLOOM ANIMATION --- */
-        .vine-container {
+        .video-sidebar-container {
             position: absolute;
             left: 0;
             top: 0;
-            width: 80px;
-            /* Wider to see the leaves */
+            width: 100%;
             height: 100%;
-            z-index: 1;
-            /* Moves it in FRONT of the background but BEHIND text */
+            z-index: -1;
+            /* Sits behind the nav text */
             pointer-events: none;
+            overflow: hidden;
         }
 
-        #vine-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            transition: stroke-dashoffset 2s ease-in-out;
-        }
-
-        #vine-path.grow {
-            stroke-dashoffset: 0;
-        }
-
-        /* The basic hidden state of a leaf */
-        .leaf {
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* The blooming state (Popping open) */
-        .leaf.bloom {
+        #growth-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures the vine fills the sidebar area */
             opacity: 0.6;
-            transform: scale(1);
-        }
-
-        /* Sequenced Delays (Makes them bloom bottom-to-top) */
-        .leaf-1.bloom {
-            transition-delay: 0.3s;
-        }
-
-        .leaf-2.bloom {
-            transition-delay: 0.5s;
-        }
-
-        .leaf-3.bloom {
-            transition-delay: 0.7s;
-        }
-
-        .leaf-4.bloom {
-            transition-delay: 0.9s;
-        }
-
-        .leaf-5.bloom {
-            transition-delay: 1.1s;
-        }
-
-        .leaf-6.bloom {
-            transition-delay: 1.3s;
+            /* Keeps it subtle so text is readable */
         }
     </style>
 </head>
@@ -335,17 +296,10 @@
 
     <div class="dashboard-container">
         <nav class="sidebar">
-            <div class="vine-container">
-                <svg viewBox="0 0 100 800" preserveAspectRatio="none">
-                    <path id="vine-path" d="M50,800 C30,700 70,600 50,500 C30,400 70,300 50,200 C30,100 70,0 50,-100"
-                        fill="none" stroke="#7d8a70" stroke-width="4" stroke-linecap="round" />
-
-                    <circle class="leaf leaf-1" cx="35" cy="700" r="6" fill="#a4b09c" />
-                    <circle class="leaf leaf-2" cx="65" cy="600" r="6" fill="#a4b09c" />
-                    <circle class="leaf leaf-3" cx="35" cy="500" r="6" fill="#a4b09c" />
-                    <circle class="leaf leaf-4" cx="65" cy="400" r="6" fill="#a4b09c" />
-                    <circle class="leaf leaf-5" cx="35" cy="300" r="6" fill="#a4b09c" />
-                </svg>
+            <div class="video-sidebar-container">
+                <video id="growth-video" preload="auto" muted playsinline>
+                    <source src="your-veo-video-url.mp4" type="video/mp4">
+                </video>
             </div>
 
             <h2>Companion Tools</h2>
@@ -408,22 +362,12 @@
                 element.classList.add('active');
             }
 
-            // 2. STEM & LEAF ANIMATION TRIGGER
-            const vine = document.getElementById('vine-path');
-            const leaves = document.querySelectorAll('.leaf');
-
-            // 1. Reset
-            vine.classList.remove('grow');
-            leaves.forEach(l => l.classList.remove('bloom'));
-
-            // Trigger reflow to apply the reset
-            void vine.offsetWidth;
-
-            // 2. The "Magic" delay to trigger the grow animation
-            setTimeout(() => {
-                vine.classList.add('grow');
-                leaves.forEach(l => l.classList.add('bloom'));
-            }, 100);
+            // 2. VIDEO TRIGGER
+            const video = document.getElementById('growth-video');
+            if (video) {
+                video.currentTime = 0; // Restart growth
+                video.play();
+            }
 
             // Sync Mobile UI
             document.getElementById('mobile-select').value = toolId;
