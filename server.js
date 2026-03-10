@@ -8,6 +8,11 @@ const app = express();
 // Essential for Wix Studio / Velo to communicate with your Render server
 app.use(cors());
 app.use(express.json());
+// Add CSP to allow framing from allowed domains
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://*.wix.com https://*.editorx.com https://www.freespiritmarketer.com;");
+    next();
+});
 // This tells Express to serve everything in the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
