@@ -65,6 +65,9 @@
             font-weight: 500;
             transition: all 0.2s ease;
             color: #636e72;
+            position: relative;
+            z-index: 2;
+            /* Keeps buttons clickable and visible over the video */
         }
 
         .nav-item:hover {
@@ -275,9 +278,10 @@
             top: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            /* Sits behind the nav text */
+            z-index: 0;
+            /* Behind the text */
             pointer-events: none;
+            /* User clicks go THROUGH to the buttons */
             overflow: hidden;
         }
 
@@ -285,9 +289,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Ensures the vine fills the sidebar area */
-            opacity: 0.6;
-            /* Keeps it subtle so text is readable */
+            /* Crops the video to fill the sidebar perfectly */
+            opacity: 0.5;
+            /* Makes it a subtle, soulful background element */
+            filter: saturate(0.8);
+            /* Pulls back the green slightly for a luxury feel */
         }
     </style>
 </head>
@@ -297,12 +303,13 @@
     <div class="dashboard-container">
         <nav class="sidebar">
             <div class="video-sidebar-container">
-                <video id="growth-video" preload="auto" muted playsinline>
-                    <source src="your-veo-video-url.mp4" type="video/mp4">
+                <video id="growth-video" playsinline muted preload="auto">
+                    <source src="http://googleusercontent.com/generated_video_content/13828648413816428913"
+                        type="video/mp4">
                 </video>
             </div>
 
-            <h2>Companion Tools</h2>
+            <h2 style="position: relative; z-index: 2;">Companion Tools</h2>
 
             <div class="nav-item active" onclick="switchTool('bio-builder', this)">Bio Builder</div>
             <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
@@ -362,11 +369,16 @@
                 element.classList.add('active');
             }
 
-            // 2. VIDEO TRIGGER
+            // 3. TRIGGER THE VINE GROWTH
             const video = document.getElementById('growth-video');
             if (video) {
-                video.currentTime = 0; // Restart growth
-                video.play();
+                video.pause(); // Stop current playback
+                video.currentTime = 0; // Rewind to the seed
+
+                // Use a small delay to ensure the browser registers the reset
+                setTimeout(() => {
+                    video.play().catch(e => console.log("Auto-play blocked or loading: ", e));
+                }, 50);
             }
 
             // Sync Mobile UI
