@@ -612,16 +612,22 @@
     </div>
 
     <script>
-        // --- GAMIFICATION & TIERS ---
-        // Mock data - In the future, this will come from your Wix/Memberstack login
+        // Catch the signals from Wix
+        const params = new URLSearchParams(window.location.search);
+
         let userStats = {
-            tier: 'Free', // Options: 'Free', 'Starter', 'Pro', 'Elite'
-            runsUsed: 0,
-            dailyLimit: 2 // Free starts at 2
+            tier: params.get('tier') || 'Free',
+            runsUsed: parseInt(params.get('used')) || 0,
+            dailyLimit: parseInt(params.get('limit')) || 2
         };
 
+        // Update the Energy Meter UI immediately
+        document.addEventListener('DOMContentLoaded', () => {
+            updateEnergyMeter();
+        });
+
         function updateEnergyMeter() {
-            const remaining = Math.max(0, userStats.dailyLimit - userStats.runsUsed);
+            const remaining = userStats.dailyLimit - userStats.runsUsed;
             document.querySelectorAll('#runs-display').forEach(el => {
                 el.innerText = `${remaining}/${userStats.dailyLimit} RUNS LEFT`;
                 if (remaining === 0) {
@@ -631,8 +637,6 @@
                 }
             });
         }
-
-        document.addEventListener("DOMContentLoaded", updateEnergyMeter);
 
         // --- TOOL SWITCHING & VINE GROWTH ---
         function switchTool(toolId, element) {
@@ -707,6 +711,12 @@
                 // Increment Runs
                 userStats.runsUsed++;
                 updateEnergyMeter();
+
+                // Shout back to Wix to update the Database
+                window.parent.postMessage({
+                    type: 'UPDATE_USAGE',
+                    newCount: userStats.runsUsed
+                }, "https://www.freespiritmarketer.com");
 
                 // BLURRED REALITY TEASE (Planner Only)
                 if (type === 'plan' && userStats.tier !== 'Elite' && userStats.tier !== 'Pro') {
