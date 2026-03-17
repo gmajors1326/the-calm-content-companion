@@ -1,8 +1,12 @@
 const OpenAI = require('openai');
 
 // Initialize OpenAI using the key from your .env file
+if (!process.env.OPENAI_API_KEY) {
+    console.warn("WARNING: OPENAI_API_KEY is missing from the environment variables.");
+}
+
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY || 'sk-placeholder',
 });
 
 // --- TOOL 1: FIND YOUR HOOK ---
@@ -195,7 +199,9 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
 module.exports = {
     generateHook,
     generateVoice,
+    humanizeText: generateVoice, // Alias for routes/tools.js
     generateContentPlan,
+    planContentDirection: generateContentPlan, // Alias for routes/tools.js
     generateBio,
     interpretSignal
 };

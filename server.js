@@ -1,13 +1,18 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const openaiService = require('./services/openai'); // Ensure this file exists
+const openaiService = require('./services/openai.js');
 
 const app = express();
+console.log("Companion Server starting...");
+console.log("Environment PORT:", process.env.PORT);
+console.log("API KEY LOADED:", process.env.OPENAI_API_KEY ? "YES" : "NO");
+
 app.use(express.json());
 app.use(cors());
 
-// 1. SERVE STATIC FILES (This fixes the blank screen issue)
+// 1. SERVE STATIC FILES
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Root Route: Serve the dashboard immediately on load
