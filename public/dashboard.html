@@ -726,7 +726,17 @@
 
             // 3. API Call
             try {
-                const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(endpoint, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload) 
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Server responded with ${response.status}`);
+                }
+
                 const result = await response.json();
 
                 // Increment Runs
@@ -825,8 +835,8 @@
                 }
 
             } catch (error) {
-                resultDiv.innerText = "Connection error. Please try again.";
-                console.error(error);
+                resultDiv.innerText = `Error: ${error.message}. Please check your connection or API key.`;
+                console.error("Dashboard Error:", error);
             } finally {
                 // 4. Reset Button
                 btn.disabled = false;
