@@ -493,6 +493,7 @@
                 <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
+                <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
 
                 <div class="nav-item upcoming"
                     style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
@@ -512,6 +513,7 @@
                 <option value="bio-builder">Bio Builder</option>
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
+                <option value="the-multiplier">The Multiplier</option>
             </select>
         </div>
 
@@ -608,6 +610,23 @@
                 <button class="btn-generate" onclick="runTool('plan')">Map Strategy</button>
                 <div id="plan-result" class="output-container">Results will appear here...</div>
             </section>
+
+            <section id="the-multiplier" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-display">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
+                <h3>The Multiplier</h3>
+                <p>Take one idea and multiply its value across every platform.</p>
+                <label>Your Content / Draft</label>
+                <textarea id="multiplier-input" rows="5" placeholder="Paste your idea, draft, or published post here..."></textarea>
+
+                <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
+                <div id="multiplier-result" class="output-container">Results will appear here...</div>
+            </section>
         </main>
     </div>
 
@@ -679,7 +698,7 @@
                 return;
             }
 
-            const activeSection = document.getElementById(`${type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : 'content-planner'}`);
+            const activeSection = document.getElementById(`${type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : type === 'plan' ? 'content-planner' : 'the-multiplier'}`);
             const btn = activeSection.querySelector('.btn-generate');
             const originalText = btn.innerText;
 
@@ -701,6 +720,8 @@
                 payload = { idea: document.getElementById('hook-idea').value };
             } else if (type === 'plan') {
                 payload = { goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
+            } else if (type === 'multiplier') {
+                payload = { userInput: document.getElementById('multiplier-input').value };
             }
 
             // 3. API Call
@@ -752,6 +773,52 @@
                     } else {
                         resultDiv.innerText = responseData;
                     }
+                } else if (type === 'multiplier') {
+                    const data = result.data;
+                    resultDiv.innerHTML = `
+                        <div style="margin-bottom: 25px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Core Truth</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${data.core_truth}</div>
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The "So What?" Stress Test</strong>
+                            <div style="margin-top: 10px;">${data.stress_test}</div>
+                        </div>
+                        <div style="margin-bottom: 25px; border-top: 1px solid var(--border-light); padding-top: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Triple-Angle Remix</strong>
+                            <div style="margin-top: 15px;">
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="font-size: 0.9rem;">Tactical:</strong>
+                                    <div style="margin-top: 5px; font-size: 0.95rem;">${data.angles.tactical}</div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="font-size: 0.9rem;">Emotional:</strong>
+                                    <div style="margin-top: 5px; font-size: 0.95rem;">${data.angles.emotional}</div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="font-size: 0.9rem;">Contrarian:</strong>
+                                    <div style="margin-top: 5px; font-size: 0.95rem;">${data.angles.contrarian}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Platform Recipes</strong>
+                            <div style="margin-top: 15px;">
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="font-size: 0.9rem;">X Thread:</strong>
+                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${data.remix_recipes.x_thread}</div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="font-size: 0.9rem;">Visual Carousel:</strong>
+                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${data.remix_recipes.visual_carousel}</div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="font-size: 0.9rem;">60-Second Script:</strong>
+                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${data.remix_recipes.short_form_video}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 } else {
                     // USE INNERTEXT (Respects AI line breaks)
                     resultDiv.innerText = result.data || "Error processing your request.";

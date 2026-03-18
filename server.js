@@ -72,6 +72,18 @@ app.post('/api/tools/generate-plan', async (req, res) => {
     }
 });
 
+// THE MULTIPLIER
+app.post('/api/tools/generate-multiplier', async (req, res) => {
+    try {
+        const { userInput } = req.body;
+        const result = await openaiService.multiplyContent(userInput);
+        const resultJSON = JSON.parse(result);
+        res.json({ success: true, data: resultJSON });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 // 3. DYNAMIC PORT FOR RENDER
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, '0.0.0.0', () => {
