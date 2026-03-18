@@ -243,6 +243,57 @@ Please provide the following in the JSON response (ALL values must be single str
     }
 }
 
+// --- TOOL 7: THE PATTERN INTERRUPT ---
+async function generatePatternInterrupt(topic) {
+    const systemPrompt = `You are a high-performance Instagram Growth Strategist specializing in the 2026 "Share-First" algorithm. 
+Your mission is to transform a standard content idea into a "Pattern Interrupt" that stops the scroll and forces a "Send" (DM).
+
+CRITICAL CONSTRAINTS:
+1. NO HASHTAGS: Use SEO-rich keywords within the hook instead.
+2. NO AI-GLOSS: Avoid generic corporate speak. Use raw, human, and direct language.
+3. FOCUS ON "THE SEND": Every hook must promise a high-utility takeaway that makes the user want to share it with a friend immediately.
+4. Use a sophisticated, "Calm" tone—minimalist but powerful.
+5. Return the response strictly in JSON format.`;
+
+    const userPrompt = `Generate 3 distinct Hook Categories for the topic: "${topic}"
+
+Provide the output in JSON with this structure:
+{
+  "pattern_interrupt": {
+    "title": "The Disruptor",
+    "hook": "Contrarian statement or command",
+    "retention_point": "1-sentence debunking/insight"
+  },
+  "high_utility": {
+    "title": "The Resource",
+    "hook": "Steal my process/vault framing",
+    "retention_point": "1-sentence promise of value"
+  },
+  "relatable_struggle": {
+    "title": "The Real Talk",
+    "hook": "POV or fail-to-win framing",
+    "retention_point": "1-sentence emotional tension/pivot"
+  }
+}`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: 0.8,
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenAI API Error (Pattern Interrupt):", error);
+        throw new Error("Failed to generate pattern interrupt hooks.");
+    }
+}
+
 module.exports = {
     generateHook,
     generateVoice,
@@ -251,5 +302,6 @@ module.exports = {
     planContentDirection: generateContentPlan, // Alias for routes/tools.js
     generateBio,
     interpretSignal,
-    multiplyContent
+    multiplyContent,
+    generatePatternInterrupt
 };

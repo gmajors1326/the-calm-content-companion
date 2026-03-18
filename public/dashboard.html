@@ -494,6 +494,7 @@
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
                 <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
+                <div class="nav-item" onclick="switchTool('pattern-interrupt', this)">The Pattern Interrupt</div>
 
                 <div class="nav-item upcoming"
                     style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
@@ -514,6 +515,7 @@
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
                 <option value="the-multiplier">The Multiplier</option>
+                <option value="pattern-interrupt">The Pattern Interrupt</option>
             </select>
         </div>
 
@@ -633,6 +635,23 @@
                 <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
                 <div id="multiplier-result" class="output-container">Results will appear here...</div>
             </section>
+
+            <section id="pattern-interrupt" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-display">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
+                <h3>The Pattern Interrupt</h3>
+                <p>Generate high-performance, shareable hooks for the 2026 algorithm.</p>
+                <label>Your Topic</label>
+                <input type="text" id="pattern-topic" placeholder="e.g. Staying consistent with content creation">
+
+                <button class="btn-generate" onclick="runTool('pattern-interrupt')">Generate Pattern Interrupts</button>
+                <div id="pattern-interrupt-result" class="output-container">Results will appear here...</div>
+            </section>
         </main>
     </div>
 
@@ -704,7 +723,7 @@
                 return;
             }
 
-            const activeSection = document.getElementById(`${type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : type === 'plan' ? 'content-planner' : 'the-multiplier'}`);
+            const activeSection = document.getElementById(type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : type === 'plan' ? 'content-planner' : type === 'multiplier' ? 'the-multiplier' : 'pattern-interrupt');
             const btn = activeSection.querySelector('.btn-generate');
             const originalText = btn.innerText;
 
@@ -728,6 +747,8 @@
                 payload = { goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
             } else if (type === 'multiplier') {
                 payload = { userInput: document.getElementById('multiplier-input').value };
+            } else if (type === 'pattern-interrupt') {
+                payload = { topic: document.getElementById('pattern-topic').value };
             }
 
             // 3. API Call
@@ -843,6 +864,23 @@
                                 </div>
                             </div>
                         </div>
+                    `;
+                } else if (type === 'pattern-interrupt') {
+                    const data = result.data;
+                    const renderCard = (cardData) => `
+                        <div style="margin-bottom: 25px; background: #fff; border: 1px solid var(--border-light); border-radius: 15px; padding: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">${cardData.title}</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif; color: var(--text-dark);">${cardData.hook}</div>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-size: 0.9rem; color: #636e72;">
+                                <strong>Retention Point:</strong> ${cardData.retention_point}
+                            </div>
+                        </div>
+                    `;
+                    
+                    resultDiv.innerHTML = `
+                        ${renderCard(data.pattern_interrupt)}
+                        ${renderCard(data.high_utility)}
+                        ${renderCard(data.relatable_struggle)}
                     `;
                 } else {
                     // USE INNERTEXT (Respects AI line breaks)
