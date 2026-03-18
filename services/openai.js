@@ -213,17 +213,17 @@ RULES:
 USER CONTENT: 
 "${userInput}"
 
-Please provide the following in the JSON response:
+Please provide the following in the JSON response (ALL values must be single strings):
 1. core_truth: The single most powerful "Aha!" moment in one punchy sentence.
 2. stress_test: Evaluate this content's value. Why would a stranger care at 11:00 PM? If weak, provide a "Value Pivot".
 3. angles: Rewrite into three styles:
-    - tactical: A "How-to" or step-by-step breakdown.
-    - emotional: Focus on the struggle, the "why," or the human connection.
-    - contrarian: A "Hot Take" that challenges the status quo.
+    - tactical: A "How-to" or step-by-step breakdown string.
+    - emotional: A "why/human connection" rewrite string.
+    - contrarian: A "Hot Take" rewrite string.
 4. remix_recipes:
-    - instagram_post: A soulful Instagram caption (Hook, Value Body, soft CTA).
-    - visual_carousel: A 5-slide outline (Headlines only).
-    - short_form_video: A script (Hook, Retention Point, Call to Action).`;
+    - instagram_post: A soulful Instagram caption string (Hook, Value Body, soft CTA).
+    - visual_carousel: A single string containing a 5-slide outline (Headlines only, separated by newlines).
+    - short_form_video: A single script string (Hook, Retention Point, Call to Action).`;
 
     try {
         const response = await openai.chat.completions.create({

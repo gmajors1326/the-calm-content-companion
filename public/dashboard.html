@@ -791,29 +791,38 @@
                     }
                 } else if (type === 'multiplier') {
                     const data = result.data;
+                    
+                    // Helper to handle object/array values from AI
+                    const formatVal = (val) => {
+                        if (typeof val === 'string') return val;
+                        if (Array.isArray(val)) return val.join('\n');
+                        if (typeof val === 'object' && val !== null) return JSON.stringify(val, null, 2);
+                        return val;
+                    };
+
                     resultDiv.innerHTML = `
                         <div style="margin-bottom: 25px;">
                             <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Core Truth</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${data.core_truth}</div>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${formatVal(data.core_truth)}</div>
                         </div>
                         <div style="margin-bottom: 25px;">
                             <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The "So What?" Stress Test</strong>
-                            <div style="margin-top: 10px;">${data.stress_test}</div>
+                            <div style="margin-top: 10px;">${formatVal(data.stress_test)}</div>
                         </div>
                         <div style="margin-bottom: 25px; border-top: 1px solid var(--border-light); padding-top: 20px;">
                             <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Triple-Angle Remix</strong>
                             <div style="margin-top: 15px;">
                                 <div style="margin-bottom: 15px;">
                                     <strong style="font-size: 0.9rem;">Tactical:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem;">${data.angles.tactical}</div>
+                                    <div style="margin-top: 5px; font-size: 0.95rem;">${formatVal(data.angles.tactical)}</div>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <strong style="font-size: 0.9rem;">Emotional:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem;">${data.angles.emotional}</div>
+                                    <div style="margin-top: 5px; font-size: 0.95rem;">${formatVal(data.angles.emotional)}</div>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <strong style="font-size: 0.9rem;">Contrarian:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem;">${data.angles.contrarian}</div>
+                                    <div style="margin-top: 5px; font-size: 0.95rem;">${formatVal(data.angles.contrarian)}</div>
                                 </div>
                             </div>
                         </div>
@@ -822,15 +831,15 @@
                             <div style="margin-top: 15px;">
                                 <div style="margin-bottom: 15px;">
                                     <strong style="font-size: 0.9rem;">Instagram Post:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${data.remix_recipes.instagram_post}</div>
+                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${formatVal(data.remix_recipes.instagram_post)}</div>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <strong style="font-size: 0.9rem;">Visual Carousel:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${data.remix_recipes.visual_carousel}</div>
+                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${formatVal(data.remix_recipes.visual_carousel)}</div>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <strong style="font-size: 0.9rem;">60-Second Script:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${data.remix_recipes.short_form_video}</div>
+                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${formatVal(data.remix_recipes.short_form_video)}</div>
                                 </div>
                             </div>
                         </div>
