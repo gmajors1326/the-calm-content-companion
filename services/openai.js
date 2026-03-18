@@ -221,7 +221,7 @@ Please provide the following in the JSON response:
     - emotional: Focus on the struggle, the "why," or the human connection.
     - contrarian: A "Hot Take" that challenges the status quo.
 4. remix_recipes:
-    - x_thread: A hook and 3 body bullets.
+    - instagram_post: A soulful Instagram caption (Hook, Value Body, soft CTA).
     - visual_carousel: A 5-slide outline (Headlines only).
     - short_form_video: A script (Hook, Retention Point, Call to Action).`;
 
