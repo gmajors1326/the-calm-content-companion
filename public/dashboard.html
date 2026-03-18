@@ -494,7 +494,6 @@
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
                 <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
-                <div class="nav-item" onclick="switchTool('pattern-interrupt', this)">The Pattern Interrupt</div>
 
                 <div class="nav-item upcoming"
                     style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
@@ -515,7 +514,6 @@
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
                 <option value="the-multiplier">The Multiplier</option>
-                <option value="pattern-interrupt">The Pattern Interrupt</option>
             </select>
         </div>
 
@@ -588,9 +586,19 @@
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
                 <h3>Find Your Hook</h3>
-                <p>Turn any content idea into 3 magnetic openings designed to stop the scroll. Choose from Agitator, Contrarian, Storyteller, or Statistic-led frameworks.</p>
+                <p>Turn any content idea into magnetic openings designed to stop the scroll. Choose from the high-performance 2026 'Share-First' framework or our classic soulful styles.</p>
                 <label>Your Idea</label>
                 <textarea id="hook-idea" rows="3" placeholder="What is your post about?"></textarea>
+                
+                <label>Hook Framework</label>
+                <select id="hook-framework">
+                    <option value="pattern-interrupt">2026 Share-First (Pattern Interrupt)</option>
+                    <option value="The Agitator">The Agitator (Poke the pain point)</option>
+                    <option value="The Contrarian">The Contrarian (Unpopular opinion)</option>
+                    <option value="The Storyteller">The Storyteller (Start in the middle)</option>
+                    <option value="Statistic/Shock">Statistic/Shock (Surprising fact)</option>
+                </select>
+
                 <button class="btn-generate" onclick="runTool('hook')">Create Hook</button>
                 <div id="hook-result" class="output-container">Results will appear here...</div>
             </section>
@@ -635,24 +643,8 @@
                 <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
                 <div id="multiplier-result" class="output-container">Results will appear here...</div>
             </section>
-
-            <section id="pattern-interrupt" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">2/2 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
-                </div>
-                <h3>The Pattern Interrupt</h3>
-                <p>Leverage the 2026 'Share-First' algorithm. Generate high-performance hooks designed to disrupt the scroll and force a direct share (DM) by promising immediate, high-utility value.</p>
-                <label>Your Topic</label>
-                <input type="text" id="pattern-topic" placeholder="e.g. Staying consistent with content creation">
-
-                <button class="btn-generate" onclick="runTool('pattern-interrupt')">Generate Pattern Interrupts</button>
-                <div id="pattern-interrupt-result" class="output-container">Results will appear here...</div>
-            </section>
         </main>
+
     </div>
 
     <script>
@@ -723,7 +715,7 @@
                 return;
             }
 
-            const activeSection = document.getElementById(type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : type === 'plan' ? 'content-planner' : type === 'multiplier' ? 'the-multiplier' : 'pattern-interrupt');
+            const activeSection = document.getElementById(type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : type === 'plan' ? 'content-planner' : 'the-multiplier');
             const btn = activeSection.querySelector('.btn-generate');
             const originalText = btn.innerText;
 
@@ -742,13 +734,11 @@
             } else if (type === 'bio') {
                 payload = { niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value };
             } else if (type === 'hook') {
-                payload = { idea: document.getElementById('hook-idea').value };
+                payload = { idea: document.getElementById('hook-idea').value, framework: document.getElementById('hook-framework').value };
             } else if (type === 'plan') {
                 payload = { goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
             } else if (type === 'multiplier') {
                 payload = { userInput: document.getElementById('multiplier-input').value };
-            } else if (type === 'pattern-interrupt') {
-                payload = { topic: document.getElementById('pattern-topic').value };
             }
 
             // 3. API Call
@@ -865,7 +855,7 @@
                             </div>
                         </div>
                     `;
-                } else if (type === 'pattern-interrupt') {
+                } else if (type === 'hook' && document.getElementById('hook-framework').value === 'pattern-interrupt') {
                     const data = result.data;
                     const renderCard = (cardData) => `
                         <div style="margin-bottom: 25px; background: #fff; border: 1px solid var(--border-light); border-radius: 15px; padding: 20px;">

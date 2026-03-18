@@ -53,8 +53,15 @@ app.post('/api/tools/generate-bio', async (req, res) => {
 // FIND YOUR HOOK
 app.post('/api/tools/generate-hook', async (req, res) => {
     try {
-        const { idea } = req.body;
-        const result = await openaiService.generateHook(idea);
+        const { idea, framework } = req.body;
+        
+        if (framework === 'pattern-interrupt') {
+            const result = await openaiService.generatePatternInterrupt(idea);
+            const resultJSON = JSON.parse(result);
+            return res.json({ success: true, data: resultJSON });
+        }
+
+        const result = await openaiService.generateHook(idea, framework);
         res.json({ success: true, data: result });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -77,18 +84,6 @@ app.post('/api/tools/generate-multiplier', async (req, res) => {
     try {
         const { userInput } = req.body;
         const result = await openaiService.multiplyContent(userInput);
-        const resultJSON = JSON.parse(result);
-        res.json({ success: true, data: resultJSON });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-// THE PATTERN INTERRUPT
-app.post('/api/tools/generate-pattern-interrupt', async (req, res) => {
-    try {
-        const { topic } = req.body;
-        const result = await openaiService.generatePatternInterrupt(topic);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
     } catch (err) {
