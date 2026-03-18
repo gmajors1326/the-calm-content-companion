@@ -196,6 +196,53 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
     }
 }
 
+// --- TOOL 6: THE MULTIPLIER ---
+async function multiplyContent(userInput) {
+    const systemPrompt = `You are the engine for "The Multiplier," a high-leverage content strategy tool. 
+Your goal is to take a single content idea and multiply its value across different angles and platforms.
+
+RULES:
+- Be blunt and high-signal. No fluff.
+- Do not use hashtags.
+- Focus on the "So What?" factor—why does this matter to a stranger?
+- Use a sophisticated, "Calm" tone—minimalist but powerful.
+- Return the response strictly in JSON format with keys: core_truth, stress_test, angles, and remix_recipes.`;
+
+    const userPrompt = `I have a content idea or draft I need you to process through "The Multiplier."
+
+USER CONTENT: 
+"${userInput}"
+
+Please provide the following in the JSON response:
+1. core_truth: The single most powerful "Aha!" moment in one punchy sentence.
+2. stress_test: Evaluate this content's value. Why would a stranger care at 11:00 PM? If weak, provide a "Value Pivot".
+3. angles: Rewrite into three styles:
+    - tactical: A "How-to" or step-by-step breakdown.
+    - emotional: Focus on the struggle, the "why," or the human connection.
+    - contrarian: A "Hot Take" that challenges the status quo.
+4. remix_recipes:
+    - x_thread: A hook and 3 body bullets.
+    - visual_carousel: A 5-slide outline (Headlines only).
+    - short_form_video: A script (Hook, Retention Point, Call to Action).`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7,
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenAI API Error (The Multiplier):", error);
+        throw new Error("Failed to multiply content.");
+    }
+}
+
 module.exports = {
     generateHook,
     generateVoice,
@@ -203,5 +250,6 @@ module.exports = {
     generateContentPlan,
     planContentDirection: generateContentPlan, // Alias for routes/tools.js
     generateBio,
-    interpretSignal
+    interpretSignal,
+    multiplyContent
 };

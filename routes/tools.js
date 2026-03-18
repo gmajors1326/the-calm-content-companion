@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateHook, humanizeText, planContentDirection, generateBio, interpretSignal } = require('../services/openai');
+const { generateHook, humanizeText, planContentDirection, generateBio, interpretSignal, multiplyContent } = require('../services/openai');
 
 // --- TOOL 1: FIND YOUR HOOK ROUTE ---
 router.post('/generate-hook', async (req, res) => {
@@ -115,6 +115,26 @@ router.post('/interpret-signal', async (req, res) => {
 
     } catch (error) {
         console.error("Route Error (Signal Interpreter):", error);
+        res.status(500).json({ success: false, error: "Internal server error." });
+    }
+});
+
+// --- TOOL 6: THE MULTIPLIER ROUTE ---
+router.post('/multiply-content', async (req, res) => {
+    try {
+        const { userInput } = req.body;
+
+        if (!userInput) {
+            return res.status(400).json({ success: false, error: "Please provide content to multiply." });
+        }
+
+        const multiplicationDataString = await multiplyContent(userInput);
+        const multiplicationDataJSON = JSON.parse(multiplicationDataString);
+
+        res.json({ success: true, data: multiplicationDataJSON });
+
+    } catch (error) {
+        console.error("Route Error (The Multiplier):", error);
         res.status(500).json({ success: false, error: "Internal server error." });
     }
 });
