@@ -85,7 +85,9 @@ async function generateVoice(userInput, tone, spice) {
 }
 
 // --- TOOL 3: CONTENT DIRECTION PLANNER (UPGRADED JSON VERSION) ---
-async function generateContentPlan(audienceStruggle, vibe, platform, goal) {
+async function generateContentPlan(audienceStruggle, vibe, platform, goal, tier = 'Free') {
+    const hasPremiumFeatures = tier === 'Pro' || tier === 'Elite';
+    
     const prompt = `
     Act as a Professional Content Strategist. Create a 3-post SEO-optimized content plan for the following:
     
@@ -99,6 +101,7 @@ async function generateContentPlan(audienceStruggle, vibe, platform, goal) {
         1. A Searchable Title (SEO Optimized)
         2. A Scroll-Stopping Hook
         3. The Core Value/Message
+        ${hasPremiumFeatures ? '4. High-Value SEO Keywords (Secondary and LSI)' : ''}
     - Use simple line breaks and dashes for bullet points.
     - Separate each post with a horizontal line like this: ---
     `;
@@ -294,6 +297,50 @@ Provide the output in JSON with this structure:
     }
 }
 
+// --- TOOL 8: IMAGE GENERATION (ELITE ONLY) ---
+async function generateImage(prompt, size = "1024x1024") {
+    const systemPrompt = `You are an aesthetic visual prompt engineer for the "Calm Content Companion." 
+The user wants an image for their Instagram (Reels, Carousel, or Stories). 
+Your goal is to take their simple idea and turn it into a high-end, aesthetic, calm, and soulful DALL-E 3 prompt.
+
+RULES:
+- Focus on natural light, soft textures, and earthy tones.
+- Avoid cluttered or messy backgrounds.
+- Include specific details about lighting (e.g., "golden hour," "soft morning light") and composition.
+- The style should be "Professional Photography" or "Minimalist Digital Art," depending on the user's vibe.
+- No text in the image.`;
+
+    try {
+        // First, let's use GPT to "calm-ify" the user's prompt
+        const gptResponse = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: `Transform this into a calm, aesthetic image prompt: "${prompt}"` }
+            ],
+            temperature: 0.7,
+        });
+
+        const enhancedPrompt = gptResponse.choices[0].message.content;
+
+        const response = await openai.images.generate({
+            model: "dall-e-3",
+            prompt: enhancedPrompt,
+            n: 1,
+            size: size,
+            quality: "standard",
+        });
+
+        return {
+            url: response.data[0].url,
+            revised_prompt: enhancedPrompt
+        };
+    } catch (error) {
+        console.error("OpenAI API Error (Image Generation):", error);
+        throw new Error("Failed to generate image.");
+    }
+}
+
 module.exports = {
     generateHook,
     generateVoice,
@@ -303,5 +350,6 @@ module.exports = {
     generateBio,
     interpretSignal,
     multiplyContent,
-    generatePatternInterrupt
+    generatePatternInterrupt,
+    generateImage
 };

@@ -494,6 +494,7 @@
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
                 <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
+                <div id="nav-image-gen" class="nav-item" onclick="switchTool('image-generator', this)">Aesthetic Visuals</div>
 
                 <div class="nav-item upcoming"
                     style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
@@ -619,8 +620,8 @@
                 <textarea id="plan-struggle" rows="2" placeholder="What is their biggest pain point?"></textarea>
 
                 <div class="premium-toggle" onclick="window.top.location.href='/upgrade'">
-                    <p>Advanced SEO Keywords (Elite Only)</p>
-                    <span>🔒</span>
+                    <p id="planner-premium-text">Advanced SEO Keywords (Pro & Elite Only)</p>
+                    <span id="planner-premium-lock">🔒</span>
                 </div>
 
                 <button class="btn-generate" onclick="runTool('plan')">Map Strategy</button>
@@ -643,6 +644,30 @@
                 <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
                 <div id="multiplier-result" class="output-container">Results will appear here...</div>
             </section>
+
+            <section id="image-generator" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-display">10/10 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" style="background: linear-gradient(to right, #7d8a70, #2d3436) !important;">Elite Member</button>
+                </div>
+                <h3>Aesthetic Visuals</h3>
+                <p>Generate high-end, soulful imagery for your IG Reels, Carousels, and Stories. Our AI is trained to avoid the 'neon' and 'noisy' look, delivering calm, aesthetic results.</p>
+                <label>Visual Concept</label>
+                <textarea id="image-prompt" rows="3" placeholder="e.g. A woman pouring matcha into a handmade ceramic cup, morning light..."></textarea>
+                
+                <label>Format</label>
+                <select id="image-size">
+                    <option value="1024x1792">9:16 (Reels/Stories)</option>
+                    <option value="1024x1024" selected>1:1 (Square Feed)</option>
+                    <option value="1024x1024">4:5 (Portrait Feed)</option>
+                </select>
+
+                <button class="btn-generate" onclick="runTool('image')">Generate Aesthetic Image</button>
+                <div id="image-result" class="output-container" style="text-align: center;">Results will appear here...</div>
+            </section>
         </main>
 
     </div>
@@ -650,26 +675,120 @@
     <script>
         // Catch the signals from Wix
         const params = new URLSearchParams(window.location.search);
-
-        let userStats = {
-            tier: params.get('tier') || 'Free',
-            runsUsed: parseInt(params.get('used')) || 0,
-            dailyLimit: parseInt(params.get('limit')) || 2
+        
+        const tierLimits = {
+            'Free': 2,
+            'Starter': 3,
+            'Pro': 5,
+            'Elite': 10
         };
+
+        const tier = params.get('tier') || 'Free';
+
+        // Initialize usage per tool
+        let userStats = {
+            tier: tier,
+            dailyLimit: tierLimits[tier] || 2,
+            usage: {
+                voice: 0,
+                bio: 0,
+                hook: 0,
+                plan: 0,
+                multiplier: 0,
+                image: 0
+            }
+        };
+
+        // --- THE HANDSHAKE: Listen for Wix Data ---
+        window.addEventListener('message', (event) => {
+            // Security: Only trust signals from your domain
+            if (event.origin !== "https://www.freespiritmarketer.com") return;
+
+            if (event.data.type === 'USER_DATA') {
+                console.log("Handshake Received:", event.data);
+                userStats.tier = event.data.tier || userStats.tier;
+                userStats.dailyLimit = tierLimits[userStats.tier] || 2;
+                
+                if (event.data.usage) {
+                    userStats.usage = event.data.usage;
+                }
+                
+                // Update UI based on new data
+                updateEnergyMeter();
+                updateTierRestrictions();
+            }
+        });
+
+        function updateTierRestrictions() {
+            const hasPremiumFeatures = userStats.tier === 'Pro' || userStats.tier === 'Elite';
+            
+            // Planner SEO Toggle
+            const plannerText = document.getElementById('planner-premium-text');
+            const plannerLock = document.getElementById('planner-premium-lock');
+            if (hasPremiumFeatures) {
+                if (plannerText) plannerText.innerText = "Advanced SEO Keywords (UNLOCKED)";
+                if (plannerLock) plannerLock.innerText = "✨";
+            } else {
+                if (plannerText) plannerText.innerText = "Advanced SEO Keywords (Pro & Elite Only)";
+                if (plannerLock) plannerLock.innerText = "🔒";
+            }
+
+            // Hide/Disable Image Gen for non-elite
+            const navImgGen = document.getElementById('nav-image-gen');
+            if (userStats.tier === 'Elite') {
+                if (navImgGen) {
+                    navImgGen.style.opacity = "1";
+                    navImgGen.style.cursor = "pointer";
+                    navImgGen.onclick = (e) => switchTool('image-generator', navImgGen);
+                }
+            } else {
+                if (navImgGen) {
+                    navImgGen.style.opacity = "0.5";
+                    navImgGen.style.cursor = "not-allowed";
+                    navImgGen.onclick = () => alert("Image Generation is an Elite Feature. ✨ Upgrade to unlock!");
+                }
+            }
+        }
 
         // Update the Energy Meter UI immediately
         document.addEventListener('DOMContentLoaded', () => {
             updateEnergyMeter();
+            updateTierRestrictions();
+            
+            // Initial call to Wix to get latest usage/tier
+            window.parent.postMessage({ type: 'GET_USER_DATA' }, "https://www.freespiritmarketer.com");
         });
 
-        function updateEnergyMeter() {
-            const remaining = userStats.dailyLimit - userStats.runsUsed;
-            document.querySelectorAll('#runs-display').forEach(el => {
-                el.innerText = `${remaining}/${userStats.dailyLimit} RUNS LEFT`;
+        function updateEnergyMeter(type) {
+            // If no type provided, update all displays (initial load)
+            const types = type ? [type] : ['voice', 'bio', 'hook', 'plan', 'multiplier', 'image'];
+            
+            types.forEach(t => {
+                const section = document.getElementById(
+                    t === 'voice' ? 'find-your-voice' : 
+                    t === 'bio' ? 'bio-builder' : 
+                    t === 'hook' ? 'find-your-hook' : 
+                    t === 'plan' ? 'content-planner' : 
+                    t === 'multiplier' ? 'the-multiplier' :
+                    'image-generator'
+                );
+                if (!section) return;
+
+                const display = section.querySelector('#runs-display');
+                if (!display) return;
+
+                const used = userStats.usage[t] || 0;
+                const remaining = userStats.dailyLimit - used;
+                
+                display.innerText = `${remaining}/${userStats.dailyLimit} RUNS LEFT`;
+                
                 if (remaining === 0) {
-                    el.parentElement.style.background = "#fff5f5";
-                    el.style.color = "#c53030";
-                    el.innerText = "ENERGY DEPLETED";
+                    display.parentElement.style.background = "#fff5f5";
+                    display.style.color = "#c53030";
+                    display.innerText = "TOOL DEPLETED";
+                } else {
+                    display.parentElement.style.background = "#f1f3ef";
+                    display.style.color = "var(--primary-green)";
                 }
             });
         }
@@ -697,25 +816,37 @@
         // --- THE "SENIOR DEV" RUNTOOL LOGIC ---
         async function runTool(type) {
             const resultDiv = document.getElementById(`${type}-result`);
+            
+            const used = userStats.usage[type] || 0;
 
             // 1. CHECK THE LIMIT
-            if (userStats.runsUsed >= userStats.dailyLimit) {
+            if (used >= userStats.dailyLimit) {
+                const nextTier = userStats.tier === 'Free' ? 'Starter' : userStats.tier === 'Starter' ? 'Pro' : 'Elite';
+                const nextLimit = tierLimits[nextTier] || 10;
+                
                 resultDiv.innerHTML = `
                     <div class="limit-box" style="text-align: center; padding: 25px; border: 2px solid #f1f3ef; border-radius: 20px;">
                         <h4 style="font-family: 'Playfair Display', serif;">Expand Your Toolkit 🌿</h4>
                         <p style="font-size: 0.85rem; color: #636e72;">
-                            You've used your 2 free daily runs. Upgrade to <b>Pro</b> for 10 daily runs and 
-                            <b>automatic access to all future tools</b> we release this year.
+                            You've used your ${userStats.dailyLimit} daily runs for this tool. 
+                            Upgrade to <b>${nextTier}</b> for ${nextLimit} daily runs per tool.
                         </p>
                         <button class="btn-generate" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">
-                            Secure Pro Access
+                            Explore Plans
                         </button>
                     </div>
                 `;
                 return;
             }
 
-            const activeSection = document.getElementById(type === 'voice' ? 'find-your-voice' : type === 'bio' ? 'bio-builder' : type === 'hook' ? 'find-your-hook' : type === 'plan' ? 'content-planner' : 'the-multiplier');
+            const activeSection = document.getElementById(
+                type === 'voice' ? 'find-your-voice' : 
+                type === 'bio' ? 'bio-builder' : 
+                type === 'hook' ? 'find-your-hook' : 
+                type === 'plan' ? 'content-planner' : 
+                type === 'multiplier' ? 'the-multiplier' :
+                'image-generator'
+            );
             const btn = activeSection.querySelector('.btn-generate');
             const originalText = btn.innerText;
 
@@ -726,19 +857,21 @@
             btn.innerHTML = `Thinking... <span class="spinner-icon">↻</span>`;
 
             // 2. Map Payload (All contextual data passed here)
-            let payload = {};
+            let payload = { tier: userStats.tier };
             let endpoint = `/api/tools/generate-${type}`;
 
             if (type === 'voice') {
-                payload = { userInput: document.getElementById('voice-input').value, tone: document.getElementById('voice-tone').value, spice: document.getElementById('voice-spice').value };
+                payload = { ...payload, userInput: document.getElementById('voice-input').value, tone: document.getElementById('voice-tone').value, spice: document.getElementById('voice-spice').value };
             } else if (type === 'bio') {
-                payload = { niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value };
+                payload = { ...payload, niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value };
             } else if (type === 'hook') {
-                payload = { idea: document.getElementById('hook-idea').value, framework: document.getElementById('hook-framework').value };
+                payload = { ...payload, idea: document.getElementById('hook-idea').value, framework: document.getElementById('hook-framework').value };
             } else if (type === 'plan') {
-                payload = { goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
+                payload = { ...payload, goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
             } else if (type === 'multiplier') {
-                payload = { userInput: document.getElementById('multiplier-input').value };
+                payload = { ...payload, userInput: document.getElementById('multiplier-input').value };
+            } else if (type === 'image') {
+                payload = { ...payload, prompt: document.getElementById('image-prompt').value, size: document.getElementById('image-size').value };
             }
 
             // 3. API Call
@@ -756,14 +889,19 @@
 
                 const result = await response.json();
 
-                // Increment Runs
-                userStats.runsUsed++;
-                updateEnergyMeter();
+                // Increment Runs for this specific tool
+                userStats.usage[type] = (userStats.usage[type] || 0) + 1;
+                updateEnergyMeter(type);
+
+                // Calculate total runs for Wix if they only track total
+                const totalRuns = Object.values(userStats.usage).reduce((a, b) => a + b, 0);
 
                 // Shout back to Wix to update the Database
                 window.parent.postMessage({
                     type: 'UPDATE_USAGE',
-                    newCount: userStats.runsUsed
+                    newCount: totalRuns,
+                    toolType: type,
+                    toolUsedCount: userStats.usage[type]
                 }, "https://www.freespiritmarketer.com");
 
                 // BLURRED REALITY TEASE (Planner Only)
@@ -871,6 +1009,20 @@
                         ${renderCard(data.pattern_interrupt)}
                         ${renderCard(data.high_utility)}
                         ${renderCard(data.relatable_struggle)}
+                    `;
+                } else if (type === 'image') {
+                    const data = result.data;
+                    resultDiv.innerHTML = `
+                        <div style="margin-top: 15px;">
+                            <img src="${data.url}" style="width: 100%; border-radius: 15px; box-shadow: var(--card-shadow);" alt="Generated Image">
+                            <p style="margin-top: 15px; font-size: 0.8rem; font-style: italic;">
+                                Prompt: "${data.revised_prompt}"
+                            </p>
+                            <a href="${data.url}" target="_blank" download="aesthetic-visual.png" 
+                               style="display: inline-block; margin-top: 10px; color: var(--primary-green); text-decoration: none; font-weight: 600;">
+                               Download High-Res ✨
+                            </a>
+                        </div>
                     `;
                 } else {
                     // USE INNERTEXT (Respects AI line breaks)

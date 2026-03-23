@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const openaiService = require('./services/openai.js');
+const PLANS = require('./constants/plans.js');
 
 const app = express();
 console.log("Companion Server starting...");
@@ -71,8 +72,8 @@ app.post('/api/tools/generate-hook', async (req, res) => {
 // CONTENT PLANNER
 app.post('/api/tools/generate-plan', async (req, res) => {
     try {
-        const { audienceStruggle, vibe, platform, goal } = req.body;
-        const result = await openaiService.generateContentPlan(audienceStruggle, vibe, platform, goal);
+        const { audienceStruggle, vibe, platform, goal, tier } = req.body;
+        const result = await openaiService.generateContentPlan(audienceStruggle, vibe, platform, goal, tier);
         res.json({ success: true, data: result });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -86,6 +87,30 @@ app.post('/api/tools/generate-multiplier', async (req, res) => {
         const result = await openaiService.multiplyContent(userInput);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// IMAGE GENERATION (Elite Only)
+app.post('/api/tools/generate-image', async (req, res) => {
+    try {
+        const { prompt, tier, size } = req.body;
+        
+        // Tier Check
+        if (tier !== 'Elite') {
+            return res.status(403).json({ 
+                success: false, 
+                error: "Image generation is only available for Elite members. Upgrade your plan to unlock this feature! ✨" 
+            });
+        }
+
+        if (!prompt) {
+            return res.status(400).json({ success: false, error: "Please provide a prompt for the image." });
+        }
+
+        const result = await openaiService.generateImage(prompt, size || "1024x1024");
+        res.json({ success: true, data: result });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
