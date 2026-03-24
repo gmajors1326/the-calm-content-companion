@@ -33,6 +33,15 @@ app.use((req, res, next) => {
 app.post('/api/tools/generate-voice', async (req, res) => {
     try {
         const { userInput, tone, spice } = req.body;
+        
+        // Input Validation
+        if (!userInput || userInput.trim().length < 10) {
+            return res.status(400).json({ 
+                success: false, 
+                error: "Please share at least 10 characters so we can humanize your message. ✨" 
+            });
+        }
+
         const result = await openaiService.generateVoice(userInput, tone, spice);
         res.json({ success: true, data: result });
     } catch (err) {
@@ -44,6 +53,15 @@ app.post('/api/tools/generate-voice', async (req, res) => {
 app.post('/api/tools/generate-bio', async (req, res) => {
     try {
         const { niche, audience, tone } = req.body;
+        
+        // Input Validation
+        if (!niche || niche.trim().length < 3) {
+            return res.status(400).json({ success: false, error: "Please provide a valid niche. ✨" });
+        }
+        if (!audience || audience.trim().length < 3) {
+            return res.status(400).json({ success: false, error: "Please provide a valid target audience. ✨" });
+        }
+
         const result = await openaiService.generateBio(niche, audience, tone || 'Warm & Soulful');
         res.json({ success: true, data: result });
     } catch (err) {
@@ -55,6 +73,14 @@ app.post('/api/tools/generate-bio', async (req, res) => {
 app.post('/api/tools/generate-hook', async (req, res) => {
     try {
         const { idea, framework } = req.body;
+
+        // Input Validation
+        if (!idea || idea.trim().length < 5) {
+            return res.status(400).json({ 
+                success: false, 
+                error: "Please share a bit more detail about your idea so we can create a strong hook. ✨" 
+            });
+        }
         
         if (framework === 'pattern-interrupt') {
             const result = await openaiService.generatePatternInterrupt(idea);
@@ -73,6 +99,15 @@ app.post('/api/tools/generate-hook', async (req, res) => {
 app.post('/api/tools/generate-plan', async (req, res) => {
     try {
         const { audienceStruggle, vibe, platform, goal, tier } = req.body;
+        
+        // Input Validation
+        if (!audienceStruggle || audienceStruggle.trim().length < 5) {
+            return res.status(400).json({ success: false, error: "Please share a bit more about your audience's struggle. ✨" });
+        }
+        if (!goal || goal.trim().length < 5) {
+            return res.status(400).json({ success: false, error: "Please provide a clearer goal for your content. ✨" });
+        }
+
         const result = await openaiService.generateContentPlan(audienceStruggle, vibe, platform, goal, tier);
         res.json({ success: true, data: result });
     } catch (err) {
@@ -84,6 +119,15 @@ app.post('/api/tools/generate-plan', async (req, res) => {
 app.post('/api/tools/generate-multiplier', async (req, res) => {
     try {
         const { userInput } = req.body;
+        
+        // Input Validation
+        if (!userInput || userInput.trim().length < 10) {
+            return res.status(400).json({ 
+                success: false, 
+                error: "Please share a bit more detail (at least 10 characters) so we can multiply your idea. ✨" 
+            });
+        }
+
         const result = await openaiService.multiplyContent(userInput);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });

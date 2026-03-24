@@ -11,6 +11,9 @@ const openai = new OpenAI({
 
 // --- TOOL 1: FIND YOUR HOOK ---
 async function generateHook(userIdea, vibe, platform) {
+    if (!userIdea || userIdea.trim().length < 5) {
+        throw new Error("Please provide a bit more detail about your idea so we can create a strong hook. ✨");
+    }
     const systemPrompt = `You are an expert ${platform} content strategist for calm, authentic creators. 
 The user will give you a messy idea. Your job is to turn it into 3 scroll-stopping hooks.
 
@@ -55,6 +58,9 @@ Option 1
 
 // 1. FIND YOUR VOICE (The Humanizer - Active Tool)
 async function generateVoice(userInput, tone, spice) {
+    if (!userInput || userInput.trim().length < 10) {
+        throw new Error("Please provide at least 10 characters for the text you'd like to humanize. ✨");
+    }
     const prompt = `
     Act as a soulful communication expert and copywriter. I am providing you with rough, messy, or AI-generated text. 
     Rewrite this text using the following user inputs:
@@ -201,6 +207,11 @@ IMPORTANT: You MUST respond in pure JSON format matching exactly this structure:
 
 // --- TOOL 6: THE MULTIPLIER ---
 async function multiplyContent(userInput) {
+    // 1. Validation to prevent hallucinations and save API credits
+    if (!userInput || userInput.trim().length < 10) {
+        throw new Error("Please provide a bit more detail (at least 10 characters) so the Multiplier can find your core truth. ✨");
+    }
+
     const systemPrompt = `You are the engine for "The Multiplier," a high-leverage content strategy tool. 
 Your goal is to take a single content idea and multiply its value across different angles and platforms.
 
@@ -225,7 +236,7 @@ Please provide the following in the JSON response (ALL values must be single str
     - contrarian: A "Hot Take" rewrite string.
 4. remix_recipes:
     - instagram_post: A soulful Instagram caption string (Hook, Value Body, soft CTA).
-    - visual_carousel: A single string containing a 5-slide outline (Headlines only, separated by newlines).
+    - visual_carousel: A single string containing a 5-slide outline (Headlines only, EXPLICITLY separated by \\n for easy parsing).
     - short_form_video: A single script string (Hook, Retention Point, Call to Action).`;
 
     try {
@@ -248,6 +259,9 @@ Please provide the following in the JSON response (ALL values must be single str
 
 // --- TOOL 7: THE PATTERN INTERRUPT ---
 async function generatePatternInterrupt(topic) {
+    if (!topic || topic.trim().length < 5) {
+        throw new Error("Please provide a bit more detail about your topic so we can create a pattern interrupt. ✨");
+    }
     const systemPrompt = `You are a high-performance Instagram Growth Strategist specializing in the 2026 "Share-First" algorithm. 
 Your mission is to transform a standard content idea into a "Pattern Interrupt" that stops the scroll and forces a "Send" (DM).
 
