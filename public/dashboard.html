@@ -489,14 +489,11 @@
 
             <div class="sidebar-content">
                 <h2>Companion Tools</h2>
-                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">The Humanizer</div>
-                <div class="nav-item" onclick="switchTool('voice-architect', this)">Voice Architect</div>
+                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
                 <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
-                <div class="nav-item" onclick="switchTool('weekly-strategist', this)">Weekly Strategist</div>
                 <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
-                <div id="nav-image-gen" class="nav-item" onclick="switchTool('image-generator', this)">Aesthetic Visuals</div>
 
                 <div class="nav-item upcoming"
                     style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
@@ -512,12 +509,10 @@
 
         <div class="mobile-nav">
             <select id="mobile-select" onchange="switchTool(this.value)">
-                <option value="find-your-voice">The Humanizer</option>
-                <option value="voice-architect">Voice Architect</option>
+                <option value="find-your-voice">Find Your Voice</option>
                 <option value="bio-builder">Bio Builder</option>
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
-                <option value="weekly-strategist">Weekly Strategist</option>
                 <option value="the-multiplier">The Multiplier</option>
             </select>
         </div>
@@ -532,52 +527,14 @@
                     </div>
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
-                <h3>The Humanizer</h3>
-                <p>Transform rough drafts, messy notes, or generic AI text into a soulful, human-centered message that resonates with your specific audience while staying search-optimized.</p>
-                <label>Rough Text / Main Points</label>
-                <textarea id="voice-input" rows="4"
-                    placeholder="Paste your ideas or AI-generated draft here..."></textarea>
-
-                <label>Your Niche/Tone</label>
-                <select id="voice-tone">
-                    <option>Wellness Coach</option>
-                    <option>Yoga Teacher</option>
-                    <option>Holistic Nutritionist</option>
-                    <option>Intuitive Eating Guide</option>
-                    <option>Mindfulness Mentor</option>
-                    <option>Spiritual Mentor</option>
-                    <option>Somatic Practitioner</option>
-                    <option>Creative Entrepreneur</option>
-                    <option>Eco-conscious Brand</option>
-                    <option>Mindful Parent</option>
-                    <option>Other / Mixed</option>
-                </select>
-
-                <label>The "Spice" (Relatability)</label>
-                <select id="voice-spice">
-                    <option value="gentle">Gentle Guidance (Low Story, High Teaching)</option>
-                    <option value="warm" selected>Warm & Story-Led (Balanced)</option>
-                    <option value="spicy">Vulnerable & Strong (High Story, Bold Opinion)</option>
-                </select>
-
-                <button class="btn-generate" onclick="runTool('voice')">Humanize My Text</button>
-                <div id="voice-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="voice-architect" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">2/2 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
-                </div>
-                <h3>Voice Architect</h3>
-                <p>Analyze a writing sample to extract its unique DNA. Identify hidden patterns, cadence, and emotional resonance to replicate your soulful voice everywhere.</p>
+                <h3>Find Your Voice</h3>
+                <p>Stop guessing how you sound. This tool analyzes your writing to tell you exactly what makes your style unique so you can repeat it every time.</p>
                 <label>Writing Sample</label>
-                <textarea id="architect-input" rows="5" placeholder="Paste a sample of your best writing here (emails, captions, blog posts)..."></textarea>
-                <button class="btn-generate" onclick="runTool('architect')">Analyze My Voice</button>
-                <div id="architect-result" class="output-container">Results will appear here...</div>
+                <textarea id="voice-sample" rows="6"
+                    placeholder="Paste a sample of your best writing here (emails, captions, blog posts)..."></textarea>
+
+                <button class="btn-generate" onclick="runTool('voice')">Analyze My Voice</button>
+                <div id="voice-result" class="output-container">Results will appear here...</div>
             </section>
 
             <section id="bio-builder" class="tool-card">
@@ -588,8 +545,8 @@
                     </div>
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
-                <h3>Bio Builder</h3>
-                <p>Turn messy personal details into a minimalist, high-authority social media bio that clearly communicates your value without the clichés.</p>
+                <h3>Expert status, instantly articulated.</h3>
+                <p>Finally, a professional bio that doesn't sound like everyone else. We turn your random bullet points into a clean, high-authority profile.</p>
                 <label>About You / Your Value</label>
                 <textarea id="bio-input" rows="4" placeholder="Share your niche, experience, results, and a bit of your personality..."></textarea>
                 <button class="btn-generate" onclick="runTool('bio')">Generate Bio</button>
@@ -605,19 +562,10 @@
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
                 <h3>Find Your Hook</h3>
-                <p>Turn any content idea into magnetic openings designed to stop the scroll. Choose from the high-performance 2026 'Share-First' framework or our classic soulful styles.</p>
-                <label>Your Idea</label>
-                <textarea id="hook-idea" rows="3" placeholder="What is your post about?"></textarea>
+                <p>Stop getting scrolled past. We take your boring topics and turn them into "must-read" opening lines that grab attention without the hype.</p>
+                <label>Your Topic</label>
+                <textarea id="hook-topic" rows="3" placeholder="e.g. Why most wellness routines fail..."></textarea>
                 
-                <label>Hook Framework</label>
-                <select id="hook-framework">
-                    <option value="pattern-interrupt">2026 Share-First (Pattern Interrupt)</option>
-                    <option value="The Agitator">The Agitator (Poke the pain point)</option>
-                    <option value="The Contrarian">The Contrarian (Unpopular opinion)</option>
-                    <option value="The Storyteller">The Storyteller (Start in the middle)</option>
-                    <option value="Statistic/Shock">Statistic/Shock (Surprising fact)</option>
-                </select>
-
                 <button class="btn-generate" onclick="runTool('hook')">Create Hook</button>
                 <div id="hook-result" class="output-container">Results will appear here...</div>
             </section>
@@ -631,35 +579,12 @@
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
                 <h3>Content Planner</h3>
-                <p>Map out a strategic 3-post sequence based on your audience's deepest struggles and your specific growth goals. Get searchable titles and scroll-stopping hooks for every post.</p>
-                <label>Weekly Goal</label>
-                <input type="text" id="plan-goal" placeholder="e.g. Grow my newsletter">
-                <label>Audience Struggle</label>
-                <textarea id="plan-struggle" rows="2" placeholder="What is their biggest pain point?"></textarea>
-
-                <div class="premium-toggle" onclick="window.top.location.href='/upgrade'">
-                    <p id="planner-premium-text">Advanced SEO Keywords (Pro & Elite Only)</p>
-                    <span id="planner-premium-lock">🔒</span>
-                </div>
-
-                <button class="btn-generate" onclick="runTool('plan')">Map Strategy</button>
-                <div id="plan-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="weekly-strategist" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">2/2 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
-                </div>
-                <h3>Weekly Strategist</h3>
-                <p>Turn a single theme into a high-signal 3-post weekly rhythm. No fluff. Just high-leverage, calm strategy for your social presence.</p>
+                <p>Quit the daily posting grind. We turn one simple idea into a 3-post weekly plan that builds real trust with your audience—no fluff required.</p>
                 <label>Weekly Theme / Goal</label>
-                <input type="text" id="strategist-theme" placeholder="e.g. Launching my meditation course">
-                <button class="btn-generate" onclick="runTool('strategist')">Plan My Week</button>
-                <div id="strategist-result" class="output-container">Results will appear here...</div>
+                <input type="text" id="plan-theme" placeholder="e.g. Launching my meditation course">
+
+                <button class="btn-generate" onclick="runTool('plan')">Plan My Week</button>
+                <div id="plan-result" class="output-container">Results will appear here...</div>
             </section>
 
             <section id="the-multiplier" class="tool-card">
@@ -670,37 +595,13 @@
                     </div>
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
-                <h3>The Multiplier</h3>
-                <p>Paste a single draft or thought and watch it multiply. Get a Core Truth, a 'So What?' stress test, three distinct rewrite angles, and ready-to-use recipes for Instagram posts, carousels, and video scripts.</p>
+                <h3>One idea. Five assets. Zero wasted time.</h3>
+                <p>Our powerhouse tool. Give it one idea, and it instantly gives you an Instagram caption, a video script, and a carousel outline all at once.</p>
                 <label>Your Content / Draft</label>
                 <textarea id="multiplier-input" rows="5" placeholder="Paste your idea, draft, or published post here..."></textarea>
 
                 <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
                 <div id="multiplier-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="image-generator" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">10/10 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" style="background: linear-gradient(to right, #7d8a70, #2d3436) !important;">Elite Member</button>
-                </div>
-                <h3>Aesthetic Visuals</h3>
-                <p>Generate high-end, soulful imagery for your IG Reels, Carousels, and Stories. Our AI is trained to avoid the 'neon' and 'noisy' look, delivering calm, aesthetic results.</p>
-                <label>Visual Concept</label>
-                <textarea id="image-prompt" rows="3" placeholder="e.g. A woman pouring matcha into a handmade ceramic cup, morning light..."></textarea>
-                
-                <label>Format</label>
-                <select id="image-size">
-                    <option value="1024x1792">9:16 (Reels/Stories)</option>
-                    <option value="1024x1024" selected>1:1 (Square Feed)</option>
-                    <option value="1024x1024">4:5 (Portrait Feed)</option>
-                </select>
-
-                <button class="btn-generate" onclick="runTool('image')">Generate Aesthetic Image</button>
-                <div id="image-result" class="output-container" style="text-align: center;">Results will appear here...</div>
             </section>
         </main>
 
@@ -725,13 +626,10 @@
             dailyLimit: tierLimits[tier] || 2,
             usage: {
                 voice: 0,
-                architect: 0,
                 bio: 0,
                 hook: 0,
                 plan: 0,
-                strategist: 0,
-                multiplier: 0,
-                image: 0
+                multiplier: 0
             }
         };
 
@@ -797,18 +695,15 @@
 
         function updateEnergyMeter(type) {
             // If no type provided, update all displays (initial load)
-            const types = type ? [type] : ['voice', 'architect', 'bio', 'hook', 'plan', 'strategist', 'multiplier', 'image'];
+            const types = type ? [type] : ['voice', 'bio', 'hook', 'plan', 'multiplier'];
             
             types.forEach(t => {
                 const section = document.getElementById(
                     t === 'voice' ? 'find-your-voice' : 
-                    t === 'architect' ? 'voice-architect' :
                     t === 'bio' ? 'bio-builder' : 
                     t === 'hook' ? 'find-your-hook' : 
                     t === 'plan' ? 'content-planner' : 
-                    t === 'strategist' ? 'weekly-strategist' :
-                    t === 'multiplier' ? 'the-multiplier' :
-                    'image-generator'
+                    'the-multiplier'
                 );
                 if (!section) return;
 
@@ -879,13 +774,10 @@
 
             const activeSection = document.getElementById(
                 type === 'voice' ? 'find-your-voice' : 
-                type === 'architect' ? 'voice-architect' :
                 type === 'bio' ? 'bio-builder' : 
                 type === 'hook' ? 'find-your-hook' : 
                 type === 'plan' ? 'content-planner' : 
-                type === 'strategist' ? 'weekly-strategist' :
-                type === 'multiplier' ? 'the-multiplier' :
-                'image-generator'
+                'the-multiplier'
             );
             const btn = activeSection.querySelector('.btn-generate');
             const originalText = btn.innerText;
@@ -901,23 +793,17 @@
             let endpoint = `/api/tools/generate-${type}`;
 
             if (type === 'voice') {
-                payload = { ...payload, userInput: document.getElementById('voice-input').value, tone: document.getElementById('voice-tone').value, spice: document.getElementById('voice-spice').value };
-            } else if (type === 'architect') {
-                payload = { ...payload, userInput: document.getElementById('architect-input').value };
+                payload = { userInput: document.getElementById('voice-sample').value };
                 endpoint = '/api/tools/analyze-voice';
             } else if (type === 'bio') {
-                payload = { ...payload, userInput: document.getElementById('bio-input').value };
+                payload = { userInput: document.getElementById('bio-input').value };
             } else if (type === 'hook') {
-                payload = { ...payload, idea: document.getElementById('hook-idea').value, framework: document.getElementById('hook-framework').value };
+                payload = { idea: document.getElementById('hook-topic').value };
             } else if (type === 'plan') {
-                payload = { ...payload, goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
-            } else if (type === 'strategist') {
-                payload = { ...payload, themeInput: document.getElementById('strategist-theme').value };
+                payload = { themeInput: document.getElementById('plan-theme').value };
                 endpoint = '/api/tools/plan-weekly';
             } else if (type === 'multiplier') {
-                payload = { ...payload, userInput: document.getElementById('multiplier-input').value };
-            } else if (type === 'image') {
-                payload = { ...payload, prompt: document.getElementById('image-prompt').value, size: document.getElementById('image-size').value };
+                payload = { userInput: document.getElementById('multiplier-input').value };
             }
 
             // 3. API Call
@@ -950,50 +836,10 @@
                     toolUsedCount: userStats.usage[type]
                 }, "https://www.freespiritmarketer.com");
 
-                // BLURRED REALITY TEASE (Planner Only)
-                if (type === 'plan' && userStats.tier !== 'Elite' && userStats.tier !== 'Pro') {
-                    const responseData = result.data || "Error processing your request.";
-                    const posts = responseData.split('---');
-
-                    if (posts.length >= 3) {
-                        const visibleText = posts.slice(0, 2).join('---');
-                        const blurredText = posts.slice(2).join('---');
-
-                        resultDiv.innerHTML = "";
-                        const textNode = document.createTextNode(visibleText);
-                        resultDiv.appendChild(textNode);
-
-                        const blurredContainer = document.createElement('div');
-                        blurredContainer.className = 'blurred-post-container';
-
-                        const blurredContent = document.createElement('div');
-                        blurredContent.className = 'blurred-content';
-                        blurredContent.innerText = "---" + blurredText;
-
-                        const overlay = document.createElement('div');
-                        overlay.className = 'unlock-overlay';
-                        overlay.innerHTML = `
-                            <h4>Unlock Post 3</h4>
-                            <p>Upgrade to Pro to see the rest of your strategy.</p>
-                            <button onclick="window.top.location.href='/upgrade'">Unlock with Pro</button>
-                        `;
-
-                        blurredContainer.appendChild(blurredContent);
-                        blurredContainer.appendChild(overlay);
-                        resultDiv.appendChild(blurredContainer);
-                    } else {
-                        resultDiv.innerText = responseData;
-                    }
-                } else if (type === 'multiplier') {
+                // --- RENDER LOGIC ---
+                if (type === 'multiplier') {
                     const data = result.data;
-                    
-                    // Helper to handle object/array values from AI
-                    const formatVal = (val) => {
-                        if (typeof val === 'string') return val;
-                        if (Array.isArray(val)) return val.join('\n');
-                        if (typeof val === 'object' && val !== null) return JSON.stringify(val, null, 2);
-                        return val;
-                    };
+                    const formatVal = (val) => typeof val === 'string' ? val : JSON.stringify(val, null, 2);
 
                     resultDiv.innerHTML = `
                         <div style="margin-bottom: 25px;">
@@ -1005,56 +851,43 @@
                             <div style="margin-top: 10px;">${formatVal(data.stress_test)}</div>
                         </div>
                         <div style="margin-bottom: 25px; border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Triple-Angle Remix</strong>
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Triple-Angle Remix</strong>
                             <div style="margin-top: 15px;">
-                                <div style="margin-bottom: 15px;">
-                                    <strong style="font-size: 0.9rem;">Tactical:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem;">${formatVal(data.angles.tactical)}</div>
-                                </div>
-                                <div style="margin-bottom: 15px;">
-                                    <strong style="font-size: 0.9rem;">Emotional:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem;">${formatVal(data.angles.emotional)}</div>
-                                </div>
-                                <div style="margin-bottom: 15px;">
-                                    <strong style="font-size: 0.9rem;">Contrarian:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem;">${formatVal(data.angles.contrarian)}</div>
-                                </div>
+                                <div style="margin-bottom: 10px;"><strong>Tactical:</strong> ${formatVal(data.angles.tactical)}</div>
+                                <div style="margin-bottom: 10px;"><strong>Emotional:</strong> ${formatVal(data.angles.emotional)}</div>
+                                <div style="margin-bottom: 10px;"><strong>Contrarian:</strong> ${formatVal(data.angles.contrarian)}</div>
                             </div>
                         </div>
                         <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Platform Recipes</strong>
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Recipes</strong>
                             <div style="margin-top: 15px;">
-                                <div style="margin-bottom: 15px;">
-                                    <strong style="font-size: 0.9rem;">Instagram Post:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${formatVal(data.remix_recipes.instagram_post)}</div>
+                                <div style="margin-bottom: 10px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                                    <strong>IG Post:</strong> ${formatVal(data.remix_recipes.instagram_post)}
                                 </div>
-                                <div style="margin-bottom: 15px;">
-                                    <strong style="font-size: 0.9rem;">Visual Carousel:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${formatVal(data.remix_recipes.visual_carousel)}</div>
+                                <div style="margin-bottom: 10px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                                    <strong>Carousel:</strong> ${formatVal(data.remix_recipes.visual_carousel)}
                                 </div>
-                                <div style="margin-bottom: 15px;">
-                                    <strong style="font-size: 0.9rem;">60-Second Script:</strong>
-                                    <div style="margin-top: 5px; font-size: 0.95rem; background: #f8f9fa; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${formatVal(data.remix_recipes.short_form_video)}</div>
+                                <div style="margin-bottom: 10px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                                    <strong>Video Script:</strong> ${formatVal(data.remix_recipes.short_form_video)}
                                 </div>
                             </div>
                         </div>
                     `;
-                } else if (type === 'hook' && document.getElementById('hook-framework').value === 'pattern-interrupt') {
+                } else if (type === 'voice') {
                     const data = result.data;
-                    const renderCard = (cardData) => `
-                        <div style="margin-bottom: 25px; background: #fff; border: 1px solid var(--border-light); border-radius: 15px; padding: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">${cardData.title}</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif; color: var(--text-dark);">${cardData.hook}</div>
-                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-size: 0.9rem; color: #636e72;">
-                                <strong>Retention Point:</strong> ${cardData.retention_point}
-                            </div>
-                        </div>
-                    `;
-                    
                     resultDiv.innerHTML = `
-                        ${renderCard(data.pattern_interrupt)}
-                        ${renderCard(data.high_utility)}
-                        ${renderCard(data.relatable_struggle)}
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Tone Profile</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${data.tone_profile}</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Sentence DNA</strong>
+                            <div style="margin-top: 10px;">${data.sentence_dna}</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Power Words</strong>
+                            <div style="margin-top: 10px;">${data.power_words}</div>
+                        </div>
                     `;
                 } else if (type === 'bio') {
                     const data = result.data;
@@ -1071,72 +904,35 @@
                             <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Human</strong>
                             <div style="margin-top: 10px;">${data.the_human}</div>
                         </div>
-                        <div style="border-top: 1px dashed var(--border-light); padding-top: 15px; margin-top: 15px;">
-                            <strong style="font-size: 0.9rem;">Full Bio Preview:</strong>
-                            <div style="margin-top: 10px; background: #f8f9fa; padding: 15px; border-radius: 10px; font-size: 0.95rem;">
-                                ${data.the_hook}<br>${data.the_authority}<br>${data.the_human}
-                            </div>
-                        </div>
                     `;
-                } else if (type === 'architect') {
+                } else if (type === 'hook') {
                     const data = result.data;
                     resultDiv.innerHTML = `
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Tone Profile</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${data.tone_profile}</div>
+                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
+                            <strong>Negative Constraint:</strong><br>${data.negative_hook}
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Sentence DNA</strong>
-                            <div style="margin-top: 10px;">${data.sentence_dna}</div>
+                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
+                            <strong>Curiosity Loop:</strong><br>${data.curiosity_hook}
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Power Words</strong>
-                            <div style="margin-top: 10px;">${data.power_words}</div>
+                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
+                            <strong>Authority Hook:</strong><br>${data.authority_hook}
                         </div>
                     `;
-                } else if (type === 'strategist') {
-                    const data = result.data;
-                    const renderPostCard = (title, content) => `
-                        <div style="margin-bottom: 20px; background: #fff; border: 1px solid var(--border-light); border-radius: 12px; padding: 15px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">${title}</strong>
-                            <div style="margin-top: 10px; font-size: 0.95rem; color: var(--text-dark);">${content}</div>
-                        </div>
-                    `;
-                    resultDiv.innerHTML = `
-                        ${renderPostCard('Post 1: The Hook (Challenge)', data.the_hook_post)}
-                        ${renderPostCard('Post 2: The Value (Dive)', data.the_value_post)}
-                        ${renderPostCard('Post 3: The Bridge (Story/CTA)', data.the_bridge_post)}
-                    `;
-                } else if (type === 'hook' && document.getElementById('hook-framework').value !== 'pattern-interrupt') {
-                    const data = result.data;
-                    const renderHookCard = (title, hook) => `
-                        <div style="margin-bottom: 20px; background: #fff; border: 1px solid var(--border-light); border-radius: 12px; padding: 15px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">${title}</strong>
-                            <div style="margin-top: 10px; font-size: 1.05rem; color: var(--text-dark);">${hook}</div>
-                        </div>
-                    `;
-                    resultDiv.innerHTML = `
-                        ${renderHookCard('Curiosity Hook', data.curiosity_hook)}
-                        ${renderHookCard('Negative Constraint', data.negative_hook)}
-                        ${renderHookCard('Authority Hook', data.authority_hook)}
-                    `;
-                } else if (type === 'image') {
+                } else if (type === 'plan') {
                     const data = result.data;
                     resultDiv.innerHTML = `
-                        <div style="margin-top: 15px;">
-                            <img src="${data.url}" style="width: 100%; border-radius: 15px; box-shadow: var(--card-shadow);" alt="Generated Image">
-                            <p style="margin-top: 15px; font-size: 0.8rem; font-style: italic;">
-                                Prompt: "${data.revised_prompt}"
-                            </p>
-                            <a href="${data.url}" target="_blank" download="aesthetic-visual.png" 
-                               style="display: inline-block; margin-top: 10px; color: var(--primary-green); text-decoration: none; font-weight: 600;">
-                               Download High-Res ✨
-                            </a>
+                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
+                            <strong>Post 1: The Hook</strong><br>${data.the_hook_post}
+                        </div>
+                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
+                            <strong>Post 2: The Value</strong><br>${data.the_value_post}
+                        </div>
+                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
+                            <strong>Post 3: The Bridge</strong><br>${data.the_bridge_post}
                         </div>
                     `;
                 } else {
-                    // USE INNERTEXT (Respects AI line breaks)
-                    resultDiv.innerText = result.data || "Error processing your request.";
+                    resultDiv.innerText = result.data || "Success!";
                 }
 
             } catch (error) {

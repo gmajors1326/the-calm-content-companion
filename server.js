@@ -27,29 +27,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// --- TOOL ROUTES ---
+// --- THE CORE 5 TOOL ROUTES ---
 
-// FIND YOUR VOICE (Humanizer)
-app.post('/api/tools/generate-voice', async (req, res) => {
-    try {
-        const { userInput, tone, spice } = req.body;
-        
-        // Input Validation
-        if (!userInput || userInput.trim().length < 10) {
-            return res.status(400).json({ 
-                success: false, 
-                error: "Please share at least 10 characters so we can humanize your message. ✨" 
-            });
-        }
-
-        const result = await openaiService.generateVoice(userInput, tone, spice);
-        res.json({ success: true, data: result });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-// VOICE ARCHITECT (Tone Analyzer)
+// 1. FIND YOUR VOICE (Tone Analyzer)
 app.post('/api/tools/analyze-voice', async (req, res) => {
     try {
         const { userInput } = req.body;
@@ -64,16 +44,13 @@ app.post('/api/tools/analyze-voice', async (req, res) => {
     }
 });
 
-// BIO BUILDER
+// 2. BIO BUILDER
 app.post('/api/tools/generate-bio', async (req, res) => {
     try {
         const { userInput } = req.body;
-        
-        // Input Validation
         if (!userInput || userInput.trim().length < 10) {
             return res.status(400).json({ success: false, error: "Please share a bit more about yourself so we can build your bio. ✨" });
         }
-
         const result = await openaiService.buildBio(userInput);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
@@ -82,25 +59,13 @@ app.post('/api/tools/generate-bio', async (req, res) => {
     }
 });
 
-// FIND YOUR HOOK
+// 3. FIND YOUR HOOK
 app.post('/api/tools/generate-hook', async (req, res) => {
     try {
-        const { idea, framework } = req.body;
-
-        // Input Validation
+        const { idea } = req.body; // Topic/Idea
         if (!idea || idea.trim().length < 5) {
-            return res.status(400).json({ 
-                success: false, 
-                error: "Please share a bit more detail about your idea so we can create a strong hook. ✨" 
-            });
+            return res.status(400).json({ success: false, error: "Please share a bit more detail about your topic. ✨" });
         }
-        
-        if (framework === 'pattern-interrupt') {
-            const result = await openaiService.generatePatternInterrupt(idea);
-            const resultJSON = JSON.parse(result);
-            return res.json({ success: true, data: resultJSON });
-        }
-
         const result = await openaiService.findYourHook(idea);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
@@ -109,72 +74,7 @@ app.post('/api/tools/generate-hook', async (req, res) => {
     }
 });
 
-// CONTENT PLANNER
-app.post('/api/tools/generate-plan', async (req, res) => {
-    try {
-        const { audienceStruggle, vibe, platform, goal, tier } = req.body;
-        
-        // Input Validation
-        if (!audienceStruggle || audienceStruggle.trim().length < 5) {
-            return res.status(400).json({ success: false, error: "Please share a bit more about your audience's struggle. ✨" });
-        }
-        if (!goal || goal.trim().length < 5) {
-            return res.status(400).json({ success: false, error: "Please provide a clearer goal for your content. ✨" });
-        }
-
-        const result = await openaiService.generateContentPlan(audienceStruggle, vibe, platform, goal, tier);
-        res.json({ success: true, data: result });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-// THE MULTIPLIER
-app.post('/api/tools/generate-multiplier', async (req, res) => {
-    try {
-        const { userInput } = req.body;
-        
-        // Input Validation
-        if (!userInput || userInput.trim().length < 10) {
-            return res.status(400).json({ 
-                success: false, 
-                error: "Please share a bit more detail (at least 10 characters) so we can multiply your idea. ✨" 
-            });
-        }
-
-        const result = await openaiService.multiplyContent(userInput);
-        const resultJSON = JSON.parse(result);
-        res.json({ success: true, data: resultJSON });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-// IMAGE GENERATION (Elite Only)
-app.post('/api/tools/generate-image', async (req, res) => {
-    try {
-        const { prompt, tier, size } = req.body;
-        
-        // Tier Check
-        if (tier !== 'Elite') {
-            return res.status(403).json({ 
-                success: false, 
-                error: "Image generation is only available for Elite members. Upgrade your plan to unlock this feature! ✨" 
-            });
-        }
-
-        if (!prompt) {
-            return res.status(400).json({ success: false, error: "Please provide a prompt for the image." });
-        }
-
-        const result = await openaiService.generateImage(prompt, size || "1024x1024");
-        res.json({ success: true, data: result });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-// WEEKLY STRATEGIST
+// 4. CONTENT PLANNER (Weekly Strategist)
 app.post('/api/tools/plan-weekly', async (req, res) => {
     try {
         const { themeInput } = req.body;
@@ -189,9 +89,23 @@ app.post('/api/tools/plan-weekly', async (req, res) => {
     }
 });
 
+// 5. THE MULTIPLIER
+app.post('/api/tools/generate-multiplier', async (req, res) => {
+    try {
+        const { userInput } = req.body;
+        if (!userInput || userInput.trim().length < 10) {
+            return res.status(400).json({ success: false, error: "Please share a bit more detail (at least 10 characters). ✨" });
+        }
+        const result = await openaiService.multiplyContent(userInput);
+        const resultJSON = JSON.parse(result);
+        res.json({ success: true, data: resultJSON });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 // 3. DYNAMIC PORT FOR RENDER
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`The Companion is live on port ${PORT}`);
 });
-
