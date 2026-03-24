@@ -489,10 +489,12 @@
 
             <div class="sidebar-content">
                 <h2>Companion Tools</h2>
-                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
+                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">The Humanizer</div>
+                <div class="nav-item" onclick="switchTool('voice-architect', this)">Voice Architect</div>
                 <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
+                <div class="nav-item" onclick="switchTool('weekly-strategist', this)">Weekly Strategist</div>
                 <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
                 <div id="nav-image-gen" class="nav-item" onclick="switchTool('image-generator', this)">Aesthetic Visuals</div>
 
@@ -510,10 +512,12 @@
 
         <div class="mobile-nav">
             <select id="mobile-select" onchange="switchTool(this.value)">
-                <option value="find-your-voice">Find Your Voice</option>
+                <option value="find-your-voice">The Humanizer</option>
+                <option value="voice-architect">Voice Architect</option>
                 <option value="bio-builder">Bio Builder</option>
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
+                <option value="weekly-strategist">Weekly Strategist</option>
                 <option value="the-multiplier">The Multiplier</option>
             </select>
         </div>
@@ -528,7 +532,7 @@
                     </div>
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
-                <h3>Find Your Voice</h3>
+                <h3>The Humanizer</h3>
                 <p>Transform rough drafts, messy notes, or generic AI text into a soulful, human-centered message that resonates with your specific audience while staying search-optimized.</p>
                 <label>Rough Text / Main Points</label>
                 <textarea id="voice-input" rows="4"
@@ -556,8 +560,24 @@
                     <option value="spicy">Vulnerable & Strong (High Story, Bold Opinion)</option>
                 </select>
 
-                <button class="btn-generate" onclick="runTool('voice')">Find My Voice</button>
+                <button class="btn-generate" onclick="runTool('voice')">Humanize My Text</button>
                 <div id="voice-result" class="output-container">Results will appear here...</div>
+            </section>
+
+            <section id="voice-architect" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-display">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
+                <h3>Voice Architect</h3>
+                <p>Analyze a writing sample to extract its unique DNA. Identify hidden patterns, cadence, and emotional resonance to replicate your soulful voice everywhere.</p>
+                <label>Writing Sample</label>
+                <textarea id="architect-input" rows="5" placeholder="Paste a sample of your best writing here (emails, captions, blog posts)..."></textarea>
+                <button class="btn-generate" onclick="runTool('architect')">Analyze My Voice</button>
+                <div id="architect-result" class="output-container">Results will appear here...</div>
             </section>
 
             <section id="bio-builder" class="tool-card">
@@ -626,6 +646,22 @@
                 <div id="plan-result" class="output-container">Results will appear here...</div>
             </section>
 
+            <section id="weekly-strategist" class="tool-card">
+                <div class="tool-header">
+                    <div class="energy-status">
+                        <span class="energy-icon">🌿</span>
+                        <span id="runs-display">2/2 Runs Left</span>
+                    </div>
+                    <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
+                </div>
+                <h3>Weekly Strategist</h3>
+                <p>Turn a single theme into a high-signal 3-post weekly rhythm. No fluff. Just high-leverage, calm strategy for your social presence.</p>
+                <label>Weekly Theme / Goal</label>
+                <input type="text" id="strategist-theme" placeholder="e.g. Launching my meditation course">
+                <button class="btn-generate" onclick="runTool('strategist')">Plan My Week</button>
+                <div id="strategist-result" class="output-container">Results will appear here...</div>
+            </section>
+
             <section id="the-multiplier" class="tool-card">
                 <div class="tool-header">
                     <div class="energy-status">
@@ -689,9 +725,11 @@
             dailyLimit: tierLimits[tier] || 2,
             usage: {
                 voice: 0,
+                architect: 0,
                 bio: 0,
                 hook: 0,
                 plan: 0,
+                strategist: 0,
                 multiplier: 0,
                 image: 0
             }
@@ -759,14 +797,16 @@
 
         function updateEnergyMeter(type) {
             // If no type provided, update all displays (initial load)
-            const types = type ? [type] : ['voice', 'bio', 'hook', 'plan', 'multiplier', 'image'];
+            const types = type ? [type] : ['voice', 'architect', 'bio', 'hook', 'plan', 'strategist', 'multiplier', 'image'];
             
             types.forEach(t => {
                 const section = document.getElementById(
                     t === 'voice' ? 'find-your-voice' : 
+                    t === 'architect' ? 'voice-architect' :
                     t === 'bio' ? 'bio-builder' : 
                     t === 'hook' ? 'find-your-hook' : 
                     t === 'plan' ? 'content-planner' : 
+                    t === 'strategist' ? 'weekly-strategist' :
                     t === 'multiplier' ? 'the-multiplier' :
                     'image-generator'
                 );
@@ -839,9 +879,11 @@
 
             const activeSection = document.getElementById(
                 type === 'voice' ? 'find-your-voice' : 
+                type === 'architect' ? 'voice-architect' :
                 type === 'bio' ? 'bio-builder' : 
                 type === 'hook' ? 'find-your-hook' : 
                 type === 'plan' ? 'content-planner' : 
+                type === 'strategist' ? 'weekly-strategist' :
                 type === 'multiplier' ? 'the-multiplier' :
                 'image-generator'
             );
@@ -860,12 +902,18 @@
 
             if (type === 'voice') {
                 payload = { ...payload, userInput: document.getElementById('voice-input').value, tone: document.getElementById('voice-tone').value, spice: document.getElementById('voice-spice').value };
+            } else if (type === 'architect') {
+                payload = { ...payload, userInput: document.getElementById('architect-input').value };
+                endpoint = '/api/tools/analyze-voice';
             } else if (type === 'bio') {
                 payload = { ...payload, userInput: document.getElementById('bio-input').value };
             } else if (type === 'hook') {
                 payload = { ...payload, idea: document.getElementById('hook-idea').value, framework: document.getElementById('hook-framework').value };
             } else if (type === 'plan') {
                 payload = { ...payload, goal: document.getElementById('plan-goal').value, audienceStruggle: document.getElementById('plan-struggle').value };
+            } else if (type === 'strategist') {
+                payload = { ...payload, themeInput: document.getElementById('strategist-theme').value };
+                endpoint = '/api/tools/plan-weekly';
             } else if (type === 'multiplier') {
                 payload = { ...payload, userInput: document.getElementById('multiplier-input').value };
             } else if (type === 'image') {
@@ -1029,6 +1077,35 @@
                                 ${data.the_hook}<br>${data.the_authority}<br>${data.the_human}
                             </div>
                         </div>
+                    `;
+                } else if (type === 'architect') {
+                    const data = result.data;
+                    resultDiv.innerHTML = `
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Tone Profile</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${data.tone_profile}</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Sentence DNA</strong>
+                            <div style="margin-top: 10px;">${data.sentence_dna}</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Power Words</strong>
+                            <div style="margin-top: 10px;">${data.power_words}</div>
+                        </div>
+                    `;
+                } else if (type === 'strategist') {
+                    const data = result.data;
+                    const renderPostCard = (title, content) => `
+                        <div style="margin-bottom: 20px; background: #fff; border: 1px solid var(--border-light); border-radius: 12px; padding: 15px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">${title}</strong>
+                            <div style="margin-top: 10px; font-size: 0.95rem; color: var(--text-dark);">${content}</div>
+                        </div>
+                    `;
+                    resultDiv.innerHTML = `
+                        ${renderPostCard('Post 1: The Hook (Challenge)', data.the_hook_post)}
+                        ${renderPostCard('Post 2: The Value (Dive)', data.the_value_post)}
+                        ${renderPostCard('Post 3: The Bridge (Story/CTA)', data.the_bridge_post)}
                     `;
                 } else if (type === 'hook' && document.getElementById('hook-framework').value !== 'pattern-interrupt') {
                     const data = result.data;

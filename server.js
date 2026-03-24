@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 
 // --- TOOL ROUTES ---
 
-// FIND YOUR VOICE
+// FIND YOUR VOICE (Humanizer)
 app.post('/api/tools/generate-voice', async (req, res) => {
     try {
         const { userInput, tone, spice } = req.body;
@@ -44,6 +44,21 @@ app.post('/api/tools/generate-voice', async (req, res) => {
 
         const result = await openaiService.generateVoice(userInput, tone, spice);
         res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// VOICE ARCHITECT (Tone Analyzer)
+app.post('/api/tools/analyze-voice', async (req, res) => {
+    try {
+        const { userInput } = req.body;
+        if (!userInput || userInput.trim().length < 20) {
+            return res.status(400).json({ success: false, error: "Please share a longer sample (at least 20 characters). ✨" });
+        }
+        const result = await openaiService.analyzeVoice(userInput);
+        const resultJSON = JSON.parse(result);
+        res.json({ success: true, data: resultJSON });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
@@ -154,6 +169,21 @@ app.post('/api/tools/generate-image', async (req, res) => {
 
         const result = await openaiService.generateImage(prompt, size || "1024x1024");
         res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// WEEKLY STRATEGIST
+app.post('/api/tools/plan-weekly', async (req, res) => {
+    try {
+        const { themeInput } = req.body;
+        if (!themeInput || themeInput.trim().length < 5) {
+            return res.status(400).json({ success: false, error: "Please share a theme or goal (at least 5 characters). ✨" });
+        }
+        const result = await openaiService.planWeeklyStrategy(themeInput);
+        const resultJSON = JSON.parse(result);
+        res.json({ success: true, data: resultJSON });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }

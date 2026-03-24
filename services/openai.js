@@ -48,6 +48,46 @@ Please provide the following in the JSON response (ALL values must be single str
     }
 }
 
+// --- TOOL 1: VOICE ARCHITECT (TONE ANALYZER) ---
+async function analyzeVoice(writingSample) {
+    if (!writingSample || writingSample.trim().length < 20) {
+        throw new Error("Please provide a longer writing sample (at least 20 characters) so we can analyze your unique DNA. ✨");
+    }
+
+    const systemPrompt = `You are the "Voice Architect." 
+Your goal is to analyze a writing sample and extract its DNA. 
+Identify the hidden patterns, sentence structures, and emotional resonance.
+
+RULES:
+- Avoid generic adjectives like "professional" or "friendly." 
+- Be specific (e.g., "staccato rhythm," "low-register vocabulary," "question-led transitions").
+- Return strictly in JSON format with keys: tone_profile, sentence_dna, and power_words.`;
+
+    const userPrompt = `SAMPLE CONTENT: "${writingSample}"
+
+Please provide the following in the JSON response (ALL values must be single strings):
+1. tone_profile: A 3-word sophisticated label for this voice (e.g., "The Reluctant Expert").
+2. sentence_dna: Describe the cadence and structure (e.g., "Short, punchy fragments followed by long, flowing explanations").
+3. power_words: A list of 5 specific words or types of words that appear or would fit this voice perfectly.`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7,
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenAI API Error (Voice Architect):", error);
+        throw new Error("Failed to analyze voice.");
+    }
+}
+
 // 1. FIND YOUR VOICE (The Humanizer - Active Tool)
 async function generateVoice(userInput, tone, spice) {
     if (!userInput || userInput.trim().length < 10) {
@@ -79,6 +119,45 @@ async function generateVoice(userInput, tone, spice) {
     } catch (error) {
         console.error("OpenAI API Error (Voice):", error);
         throw new Error("Failed to humanize text.");
+    }
+}
+
+// --- TOOL 4: WEEKLY STRATEGIST (CONTENT PLANNER) ---
+async function planWeeklyStrategy(themeInput) {
+    if (!themeInput || themeInput.trim().length < 5) {
+        throw new Error("Please provide a theme or goal for your week (at least 5 characters). ✨");
+    }
+
+    const systemPrompt = `You are the "Content Planner" for a high-leverage creator. 
+Your goal is to turn one single theme into a 3-post weekly "Calm Strategy." 
+
+RULES:
+- No "fluff" posts. Every post must have a clear objective.
+- Avoid the 7-day-a-week grind; focus on 3 high-impact pieces.
+- Return strictly in JSON format with keys: the_hook_post, the_value_post, and the_bridge_post.`;
+
+    const userPrompt = `WEEKLY THEME: "${themeInput}"
+
+Please provide the following in the JSON response (ALL values must be single strings):
+1. the_hook_post: A "Top of Funnel" post to challenge a common belief or share a "Hot Take" related to the theme.
+2. the_value_post: A "Middle of Funnel" post that provides a deep-dive tactical breakdown or "How-to."
+3. the_bridge_post: A "Bottom of Funnel" post that connects the theme to a personal story or a soft call-to-action.`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7,
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenAI API Error (Weekly Strategist):", error);
+        throw new Error("Failed to plan content.");
     }
 }
 
@@ -359,8 +438,10 @@ RULES:
 
 module.exports = {
     findYourHook,
+    analyzeVoice,
     generateVoice,
     humanizeText: generateVoice, // Alias for routes/tools.js
+    planWeeklyStrategy,
     generateContentPlan,
     planContentDirection: generateContentPlan, // Alias for routes/tools.js
     buildBio,
