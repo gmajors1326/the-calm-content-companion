@@ -201,13 +201,16 @@ async function generateContentPlan(audienceStruggle, vibe, platform, goal, tier 
 }
 
 // --- TOOL 2: BIO BUILDER (UPGRADED JSON VERSION) ---
-async function buildBio(userInput) {
+async function buildBio(userInput, platform = 'Instagram', vibe = 'Clear & Professional') {
     if (!userInput || userInput.trim().length < 10) {
         throw new Error("Please share a bit more about yourself (at least 10 characters) so we can build your bio. ✨");
     }
 
     const systemPrompt = `You are the "Bio Builder" for The Calm Content Companion. 
 Your goal is to turn messy personal details into a minimalist, high-authority social media bio.
+
+PLATFORM: ${platform}
+VIBE: ${vibe}
 
 RULES:
 - Eliminate "I help..." and "Helping..." clichés.
@@ -216,10 +219,12 @@ RULES:
 
     const userPrompt = `USER INPUT: "${userInput}"
 
-Please provide the following in the JSON response (ALL values must be single strings):
-1. the_hook: A 4-6 word opening statement that defines a unique worldview.
-2. the_authority: A brief sentence or phrase that proves why you should be listened to (results/experience).
-3. the_human: A single, non-business detail that adds texture without being "quirky."`;
+Please provide the following in a VALID JSON response. EVERY KEY IS REQUIRED.
+1. "the_hook": A 4-6 word opening statement that defines a unique worldview.
+2. "the_authority": A brief sentence or phrase that proves why you should be listened to (results/experience).
+3. "the_human": A single, non-business detail that adds texture without being "quirky."
+
+STRICT JSON ONLY. No other text.`;
 
     try {
         const response = await openai.chat.completions.create({
@@ -444,6 +449,7 @@ module.exports = {
     planWeeklyStrategy,
     generateContentPlan,
     planContentDirection: generateContentPlan, // Alias for routes/tools.js
+    generateBio: buildBio, // Alias for routes/tools.js
     buildBio,
     interpretSignal,
     multiplyContent,

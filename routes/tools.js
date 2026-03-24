@@ -60,7 +60,7 @@ router.post('/content-direction', async (req, res) => {
         const selectedVibe = vibe || "Educational & Calm";
 
         // Call the AI function
-        const contentPlanString = await planContentDirection(audiencePainPoint, goal, selectedPlatform, selectedVibe);
+        const contentPlanString = await planContentDirection(audiencePainPoint, selectedVibe, selectedPlatform, goal);
 
         // Parse the JSON string from OpenAI into an actual JavaScript object
         const contentPlanJSON = JSON.parse(contentPlanString);
@@ -77,16 +77,16 @@ router.post('/content-direction', async (req, res) => {
 // --- TOOL 5: BIO BUILDER ROUTE ---
 router.post('/generate-bio', async (req, res) => {
     try {
-        const { niche, offer, platform, vibe } = req.body;
+        const { userInput, platform, vibe } = req.body;
 
-        if (!niche || !offer) {
-            return res.status(400).json({ success: false, error: "Please provide your niche and offer." });
+        if (!userInput) {
+            return res.status(400).json({ success: false, error: "Please share a bit more about yourself (at least 10 characters) so we can build your bio. ✨" });
         }
 
         const selectedPlatform = platform || "Instagram";
         const selectedVibe = vibe || "Clear & Professional";
 
-        const bioDataString = await generateBio(niche, offer, selectedPlatform, selectedVibe);
+        const bioDataString = await generateBio(userInput, selectedPlatform, selectedVibe);
         const bioDataJSON = JSON.parse(bioDataString);
 
         res.json({ success: true, data: bioDataJSON });

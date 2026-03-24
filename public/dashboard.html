@@ -618,7 +618,8 @@
             'Elite': 10
         };
 
-        const tier = params.get('tier') || 'Free';
+        const rawTier = params.get('tier') || 'Free';
+        const tier = rawTier.charAt(0).toUpperCase() + rawTier.slice(1).toLowerCase();
 
         // Initialize usage per tool
         let userStats = {
@@ -635,12 +636,28 @@
 
         // --- THE HANDSHAKE: Listen for Wix Data ---
         window.addEventListener('message', (event) => {
-            // Security: Only trust signals from your domain
-            if (event.origin !== "https://www.freespiritmarketer.com") return;
+            // Security: Only trust signals from your domain (including Wix subdomains)
+            const allowedOrigins = [
+                "https://www.freespiritmarketer.com",
+                "https://freespiritmarketer.com",
+                "https://gmajors1326.wixsite.com"
+            ];
+            
+            if (!allowedOrigins.includes(event.origin) && !event.origin.endsWith(".wix.com")) {
+                console.warn("Unauthorized origin blocked:", event.origin);
+                return;
+            }
 
             if (event.data.type === 'USER_DATA') {
                 console.log("Handshake Received:", event.data);
-                userStats.tier = event.data.tier || userStats.tier;
+                
+                const rawIncoming = event.data.tier || userStats.tier;
+                // Normalize Tier Mapping
+                if (rawIncoming.toLowerCase().includes('elite')) userStats.tier = 'Elite';
+                else if (rawIncoming.toLowerCase().includes('pro')) userStats.tier = 'Pro';
+                else if (rawIncoming.toLowerCase().includes('starter')) userStats.tier = 'Starter';
+                else userStats.tier = 'Free';
+
                 userStats.dailyLimit = tierLimits[userStats.tier] || 2;
                 
                 if (event.data.usage) {
@@ -690,7 +707,8 @@
             updateTierRestrictions();
             
             // Initial call to Wix to get latest usage/tier
-            window.parent.postMessage({ type: 'GET_USER_DATA' }, "https://www.freespiritmarketer.com");
+            const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
+            window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
         });
 
         function updateEnergyMeter(type) {
@@ -829,12 +847,13 @@
                 const totalRuns = Object.values(userStats.usage).reduce((a, b) => a + b, 0);
 
                 // Shout back to Wix to update the Database
+                const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
                 window.parent.postMessage({
                     type: 'UPDATE_USAGE',
                     newCount: totalRuns,
                     toolType: type,
                     toolUsedCount: userStats.usage[type]
-                }, "https://www.freespiritmarketer.com");
+                }, targetOrigin);
 
                 // --- RENDER LOGIC ---
                 if (type === 'multiplier') {

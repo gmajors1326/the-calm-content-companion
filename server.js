@@ -47,14 +47,24 @@ app.post('/api/tools/analyze-voice', async (req, res) => {
 // 2. BIO BUILDER
 app.post('/api/tools/generate-bio', async (req, res) => {
     try {
-        const { userInput } = req.body;
+        const { userInput, platform, vibe } = req.body;
         if (!userInput || userInput.trim().length < 10) {
             return res.status(400).json({ success: false, error: "Please share a bit more about yourself so we can build your bio. ✨" });
         }
-        const result = await openaiService.buildBio(userInput);
-        const resultJSON = JSON.parse(result);
+        
+        const result = await openaiService.buildBio(userInput, platform, vibe);
+        let resultJSON;
+        try {
+            resultJSON = JSON.parse(result);
+        } catch (parseErr) {
+            console.error("JSON Parse Error in Bio Builder:", result);
+            // Fallback: Try to wrap it if it's not JSON
+            resultJSON = { the_hook: result, the_authority: "", the_human: "" };
+        }
+        
         res.json({ success: true, data: resultJSON });
     } catch (err) {
+        console.error("Bio Builder Route Error:", err);
         res.status(500).json({ success: false, error: err.message });
     }
 });
