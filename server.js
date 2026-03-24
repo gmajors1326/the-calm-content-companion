@@ -52,18 +52,16 @@ app.post('/api/tools/generate-voice', async (req, res) => {
 // BIO BUILDER
 app.post('/api/tools/generate-bio', async (req, res) => {
     try {
-        const { niche, audience, tone } = req.body;
+        const { userInput } = req.body;
         
         // Input Validation
-        if (!niche || niche.trim().length < 3) {
-            return res.status(400).json({ success: false, error: "Please provide a valid niche. ✨" });
-        }
-        if (!audience || audience.trim().length < 3) {
-            return res.status(400).json({ success: false, error: "Please provide a valid target audience. ✨" });
+        if (!userInput || userInput.trim().length < 10) {
+            return res.status(400).json({ success: false, error: "Please share a bit more about yourself so we can build your bio. ✨" });
         }
 
-        const result = await openaiService.generateBio(niche, audience, tone || 'Warm & Soulful');
-        res.json({ success: true, data: result });
+        const result = await openaiService.buildBio(userInput);
+        const resultJSON = JSON.parse(result);
+        res.json({ success: true, data: resultJSON });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
@@ -88,8 +86,9 @@ app.post('/api/tools/generate-hook', async (req, res) => {
             return res.json({ success: true, data: resultJSON });
         }
 
-        const result = await openaiService.generateHook(idea, framework);
-        res.json({ success: true, data: result });
+        const result = await openaiService.findYourHook(idea);
+        const resultJSON = JSON.parse(result);
+        res.json({ success: true, data: resultJSON });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }

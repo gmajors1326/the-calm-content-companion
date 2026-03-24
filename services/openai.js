@@ -9,49 +9,41 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY || 'sk-placeholder',
 });
 
-// --- TOOL 1: FIND YOUR HOOK ---
-async function generateHook(userIdea, vibe, platform) {
-    if (!userIdea || userIdea.trim().length < 5) {
-        throw new Error("Please provide a bit more detail about your idea so we can create a strong hook. ✨");
+// --- TOOL 3: FIND YOUR HOOK (UPGRADED JSON VERSION) ---
+async function findYourHook(topicInput) {
+    if (!topicInput || topicInput.trim().length < 5) {
+        throw new Error("Please provide a bit more detail about your topic so we can create a strong hook. ✨");
     }
-    const systemPrompt = `You are an expert ${platform} content strategist for calm, authentic creators. 
-The user will give you a messy idea. Your job is to turn it into 3 scroll-stopping hooks.
 
-You MUST use the "${vibe}" framework for these hooks:
-- If Agitator: Poke at a pain point before offering the solution gently.
-- If Contrarian: State an unpopular opinion that stops the scroll.
-- If Storyteller: Start in the middle of a personal, relatable story ("I used to... until...").
-- If Statistic/Shock: Lead with a surprising fact or harsh truth.
+    const systemPrompt = `You are the "Find Your Hook" engine. 
+You take a topic and generate high-conversion opening lines that don't sound like "bro-marketing."
 
-Rules:
-- Do NOT sound like a loud, hype-bro marketing guru. Keep it calm, relatable, premium, and authentic.
-- Keep the hooks under 2 sentences each.
-- Assign a realistic "Virality Score" (out of 100) based on how strong the psychological trigger is.
-- Suggest a B-Roll visual idea that perfectly matches the "Calm Content" aesthetic (e.g., pouring coffee, soft natural light, typing on a laptop, walking in nature).
+RULES:
+- No emojis. No "Wait until the end."
+- Use psychological triggers: Curiosity, Negative Constraint, or Counter-Intuition.
+- Return strictly in JSON format with keys: negative_hook, curiosity_hook, and authority_hook.`;
 
-Format the output EXACTLY like this for each of the 3 options:
+    const userPrompt = `TOPIC: "${topicInput}"
 
-Option 1
-🔥 Virality Score: [Score]/100
-🎣 The Hook: [Hook text here]
-💡 Why it works: [1 short sentence explaining the psychology]
-🎬 Suggested Visual: [1 short sentence describing an aesthetic, calm b-roll shot to play on screen]
-
-[Leave a blank line between options]`;
+Please provide the following in the JSON response (ALL values must be single strings):
+1. negative_hook: A hook based on what people are doing WRONG.
+2. curiosity_hook: A hook that opens a "loop" in the reader's mind.
+3. authority_hook: A hook that leads with a specific, undeniable result or observation.`;
 
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini", // Fast, cheap, and smart
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
             messages: [
                 { role: "system", content: systemPrompt },
-                { role: "user", content: userIdea }
+                { role: "user", content: userPrompt }
             ],
-            temperature: 0.75,
+            temperature: 0.7,
         });
 
         return response.choices[0].message.content;
     } catch (error) {
-        console.error("OpenAI API Error (Hooks):", error);
+        console.error("OpenAI API Error (Find Your Hook):", error);
         throw new Error("Failed to generate hooks.");
     }
 }
@@ -129,32 +121,42 @@ async function generateContentPlan(audienceStruggle, vibe, platform, goal, tier 
     }
 }
 
-// --- TOOL 5: BIO BUILDER ---
-async function generateBio(niche, audience, tone) {
-    const prompt = `
-    Create 3 distinct Instagram bio variations for a ${niche} targeting ${audience}. 
-    Tone: ${tone}.
+// --- TOOL 2: BIO BUILDER (UPGRADED JSON VERSION) ---
+async function buildBio(userInput) {
+    if (!userInput || userInput.trim().length < 10) {
+        throw new Error("Please share a bit more about yourself (at least 10 characters) so we can build your bio. ✨");
+    }
 
-    STRICT FORMATTING RULES:
-    - Provide 3 numbered options.
-    - Separate each option with a clear line.
-    - Use line breaks like a real Instagram bio.
-    - NO JSON, no brackets, no curly braces.
-    - NO hashtags.
-    - Include "Link in bio" or 👇 at the end of each.
-    `;
+    const systemPrompt = `You are the "Bio Builder" for The Calm Content Companion. 
+Your goal is to turn messy personal details into a minimalist, high-authority social media bio.
+
+RULES:
+- Eliminate "I help..." and "Helping..." clichés.
+- Focus on the "Calm" brand: sophisticated, direct, and rhythmic.
+- Return strictly in JSON format with keys: the_hook, the_authority, and the_human.`;
+
+    const userPrompt = `USER INPUT: "${userInput}"
+
+Please provide the following in the JSON response (ALL values must be single strings):
+1. the_hook: A 4-6 word opening statement that defines a unique worldview.
+2. the_authority: A brief sentence or phrase that proves why you should be listened to (results/experience).
+3. the_human: A single, non-business detail that adds texture without being "quirky."`;
 
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini", // Replaced gpt-4-turbo-preview with current model for speed
-            messages: [{ role: "user", content: prompt }],
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
             temperature: 0.7,
         });
 
         return response.choices[0].message.content;
     } catch (error) {
         console.error("OpenAI API Error (Bio Builder):", error);
-        throw new Error("Failed to generate bios.");
+        throw new Error("Failed to build bio.");
     }
 }
 
@@ -356,12 +358,12 @@ RULES:
 }
 
 module.exports = {
-    generateHook,
+    findYourHook,
     generateVoice,
     humanizeText: generateVoice, // Alias for routes/tools.js
     generateContentPlan,
     planContentDirection: generateContentPlan, // Alias for routes/tools.js
-    generateBio,
+    buildBio,
     interpretSignal,
     multiplyContent,
     generatePatternInterrupt,

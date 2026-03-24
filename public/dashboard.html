@@ -569,11 +569,9 @@
                     <button class="upgrade-pill" onclick="window.top.location.href='/plans'">Upgrade</button>
                 </div>
                 <h3>Bio Builder</h3>
-                <p>Create a high-converting, authentic Instagram bio that clearly communicates your niche, target audience, and unique vibe without the hype or 'guru' clichés.</p>
-                <label>Niche</label>
-                <input type="text" id="bio-niche" placeholder="e.g. Wellness Coaching">
-                <label>Target Audience</label>
-                <input type="text" id="bio-audience" placeholder="e.g. Stressed Moms over 50">
+                <p>Turn messy personal details into a minimalist, high-authority social media bio that clearly communicates your value without the clichés.</p>
+                <label>About You / Your Value</label>
+                <textarea id="bio-input" rows="4" placeholder="Share your niche, experience, results, and a bit of your personality..."></textarea>
                 <button class="btn-generate" onclick="runTool('bio')">Generate Bio</button>
                 <div id="bio-result" class="output-container">Results will appear here...</div>
             </section>
@@ -863,7 +861,7 @@
             if (type === 'voice') {
                 payload = { ...payload, userInput: document.getElementById('voice-input').value, tone: document.getElementById('voice-tone').value, spice: document.getElementById('voice-spice').value };
             } else if (type === 'bio') {
-                payload = { ...payload, niche: document.getElementById('bio-niche').value, audience: document.getElementById('bio-audience').value };
+                payload = { ...payload, userInput: document.getElementById('bio-input').value };
             } else if (type === 'hook') {
                 payload = { ...payload, idea: document.getElementById('hook-idea').value, framework: document.getElementById('hook-framework').value };
             } else if (type === 'plan') {
@@ -1009,6 +1007,41 @@
                         ${renderCard(data.pattern_interrupt)}
                         ${renderCard(data.high_utility)}
                         ${renderCard(data.relatable_struggle)}
+                    `;
+                } else if (type === 'bio') {
+                    const data = result.data;
+                    resultDiv.innerHTML = `
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Hook</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Playfair Display', serif;">${data.the_hook}</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Authority</strong>
+                            <div style="margin-top: 10px;">${data.the_authority}</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Human</strong>
+                            <div style="margin-top: 10px;">${data.the_human}</div>
+                        </div>
+                        <div style="border-top: 1px dashed var(--border-light); padding-top: 15px; margin-top: 15px;">
+                            <strong style="font-size: 0.9rem;">Full Bio Preview:</strong>
+                            <div style="margin-top: 10px; background: #f8f9fa; padding: 15px; border-radius: 10px; font-size: 0.95rem;">
+                                ${data.the_hook}<br>${data.the_authority}<br>${data.the_human}
+                            </div>
+                        </div>
+                    `;
+                } else if (type === 'hook' && document.getElementById('hook-framework').value !== 'pattern-interrupt') {
+                    const data = result.data;
+                    const renderHookCard = (title, hook) => `
+                        <div style="margin-bottom: 20px; background: #fff; border: 1px solid var(--border-light); border-radius: 12px; padding: 15px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">${title}</strong>
+                            <div style="margin-top: 10px; font-size: 1.05rem; color: var(--text-dark);">${hook}</div>
+                        </div>
+                    `;
+                    resultDiv.innerHTML = `
+                        ${renderHookCard('Curiosity Hook', data.curiosity_hook)}
+                        ${renderHookCard('Negative Constraint', data.negative_hook)}
+                        ${renderHookCard('Authority Hook', data.authority_hook)}
                     `;
                 } else if (type === 'image') {
                     const data = result.data;
