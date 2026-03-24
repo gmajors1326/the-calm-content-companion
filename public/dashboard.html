@@ -625,12 +625,16 @@
         };
 
         const rawTier = params.get('tier') || 'Free';
-        const tier = rawTier.charAt(0).toUpperCase() + rawTier.slice(1).toLowerCase();
+        let initialTier = 'Free';
+        const tierLower = rawTier.toLowerCase();
+        if (tierLower.includes('elite')) initialTier = 'Elite';
+        else if (tierLower.includes('pro')) initialTier = 'Pro';
+        else if (tierLower.includes('starter')) initialTier = 'Starter';
 
         // Initialize usage per tool
         let userStats = {
-            tier: tier,
-            dailyLimit: tierLimits[tier] || 2,
+            tier: initialTier,
+            dailyLimit: tierLimits[initialTier] || 2,
             usage: {
                 voice: 0,
                 bio: 0,
@@ -663,8 +667,9 @@
                     event.data.plan || 
                     event.data.planName || 
                     event.data.subscription || 
+                    event.data.planTitle ||
                     ""
-                ).toLowerCase();
+                ).toString().toLowerCase();
 
                 // Normalize Tier Mapping based on keywords
                 if (incomingData.includes('elite')) {
@@ -673,10 +678,10 @@
                     userStats.tier = 'Pro';
                 } else if (incomingData.includes('starter')) {
                     userStats.tier = 'Starter';
-                } else {
-                    // Only default to Free if we didn't get a valid match
-                    // This preserves the URL parameter if the Wix check is empty
-                    if (incomingData !== "") {
+                } else if (incomingData.includes('free') || incomingData === "") {
+                    // Only switch to Free if it explicitly says free or we have no data
+                    // If we have existing data from URL, we keep it unless Wix says otherwise
+                    if (incomingData.includes('free')) {
                         userStats.tier = 'Free';
                     }
                 }
