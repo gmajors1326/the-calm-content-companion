@@ -807,8 +807,17 @@
                     <!-- Pro Tip for Voice -->
                     <div style="margin-top: 20px; background: #fdfcfb; border: 1px solid var(--primary-green); padding: 20px; border-radius: 12px;">
                         <strong style="color: var(--primary-green); display: block; margin-bottom: 8px;">✨ Pro Tip for "Find Your Voice":</strong>
-                        <p style="margin-bottom: 0; font-size: 0.9rem; color: #4a4a4a;">
+                        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #4a4a4a;">
                             AI cannot "find" your voice if you only give it one sentence. For the best results, paste at least 300 words of your previous writing (emails, captions, or notes). The more "DNA" you provide, the more accurate your Voice Fingerprint will be.
+                        </p>
+                        
+                        <strong style="color: var(--primary-green); display: block; margin-bottom: 8px;">🪝 Mastering the Hook:</strong>
+                        <p style="margin-bottom: 0; font-size: 0.9rem; color: #4a4a4a;">
+                            The "Find Your Hook" tool is a brain-storming partner. If the results feel too aggressive, try giving it a more specific "Perspective." 
+                            <br><br>
+                            <strong>Bad Input:</strong> "Making coffee."
+                            <br>
+                            <strong>Great Input:</strong> "The ritual of making slow coffee to avoid morning anxiety."
                         </p>
                     </div>
 
@@ -1298,14 +1307,17 @@
                 } else if (type === 'hook') {
                     const data = result.data;
                     resultDiv.innerHTML = `
-                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
-                            <strong>Negative Constraint:</strong><br>${data.negative_hook}
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: #c53030; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">The Negative Hook (Hard Truth)</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626; line-height: 1.4;">"${data.the_negative}"</div>
                         </div>
-                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
-                            <strong>Curiosity Loop:</strong><br>${data.curiosity_hook}
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: #2b6cb0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">The Curiosity Gap (Open Loop)</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626; line-height: 1.4;">"${data.the_curiosity}"</div>
                         </div>
-                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
-                            <strong>Authority Hook:</strong><br>${data.authority_hook}
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">The Authority Shift (Counter-Intuitive)</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626; line-height: 1.4;">"${data.the_authority}"</div>
                         </div>
                     `;
                 } else if (type === 'plan') {

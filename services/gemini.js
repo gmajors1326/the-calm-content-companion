@@ -38,20 +38,26 @@ async function findYourHook(topicInput) {
         throw new Error("Please provide a bit more detail about your topic so we can create a strong hook. ✨");
     }
 
-    const systemPrompt = `You are the "Find Your Hook" engine. 
-You take a topic and generate high-conversion opening lines that don't sound like "bro-marketing."
+    const systemPrompt = `You are a Viral Content Strategist. 
+  Transform the input into 3 distinct, high-tension hooks for social media.
+  
+  Frameworks to use:
+  1. The Negative Hook: Address a common mistake or a "hard truth" that people ignore.
+  2. The Curiosity Gap: Start a story or a concept but leave a piece of information missing.
+  3. The Authority Shift: Challenge a popular belief with a counter-intuitive insight.
+  
+  Constraints:
+  - Max 15 words per hook.
+  - No "Are you tired of...?" or generic questions.
+  - Must feel human, punchy, and urgent.
+  
+  Return ONLY JSON in this format: { 
+    "the_negative": "Hook text here", 
+    "the_curiosity": "Hook text here", 
+    "the_authority": "Hook text here" 
+  }`;
 
-RULES:
-- No emojis. No "Wait until the end."
-- Use psychological triggers: Curiosity, Negative Constraint, or Counter-Intuition.
-- Return strictly in JSON format with keys: negative_hook, curiosity_hook, and authority_hook.
-- ALL values must be single strings.
-- Use simple, layman's terms. Avoid jargon or complex marketing language.`;
-
-    const userPrompt = `TOPIC: "${topicInput}"
-1. negative_hook: A hook based on what people are doing WRONG.
-2. curiosity_hook: A hook that opens a "loop" in the reader's mind.
-3. authority_hook: A hook that leads with a specific, undeniable result or observation.`;
+    const userPrompt = `TOPIC: "${topicInput}"`;
 
     return await runGemini(systemPrompt, userPrompt, true);
 }
