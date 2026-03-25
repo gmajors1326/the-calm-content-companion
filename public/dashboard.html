@@ -671,19 +671,19 @@
                     ""
                 ).toString().toLowerCase();
 
+                let detectedTier = "";
                 // Normalize Tier Mapping based on keywords
-                if (incomingData.includes('elite')) {
-                    userStats.tier = 'Elite';
-                } else if (incomingData.includes('pro')) {
-                    userStats.tier = 'Pro';
-                } else if (incomingData.includes('starter')) {
-                    userStats.tier = 'Starter';
-                } else if (incomingData.includes('free') || incomingData === "") {
-                    // Only switch to Free if it explicitly says free or we have no data
-                    // If we have existing data from URL, we keep it unless Wix says otherwise
-                    if (incomingData.includes('free')) {
-                        userStats.tier = 'Free';
-                    }
+                if (incomingData.includes('elite')) detectedTier = 'Elite';
+                else if (incomingData.includes('pro')) detectedTier = 'Pro';
+                else if (incomingData.includes('starter')) detectedTier = 'Starter';
+
+                // CRITICAL FIX: Only update userStats.tier if we actually found a paid tier.
+                // This prevents Wix from overwriting a valid URL parameter with "Free".
+                if (detectedTier !== "") {
+                    userStats.tier = detectedTier;
+                } else if (incomingData.includes('free')) {
+                    // Only drop to Free if Wix explicitly says so
+                    userStats.tier = 'Free';
                 }
 
                 userStats.dailyLimit = tierLimits[userStats.tier] || 2;
