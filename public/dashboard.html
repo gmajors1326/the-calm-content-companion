@@ -546,7 +546,7 @@
                         <span class="energy-icon">🌿</span>
                         <span id="runs-display">2/2 Runs Left</span>
                     </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">Upgrade</button>
+                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
                 </div>
                 <h3>Find Your Voice</h3>
                 <p>Stop guessing how you sound. This tool analyzes your writing to tell you exactly what makes your style unique so you can repeat it every time.</p>
@@ -564,7 +564,7 @@
                         <span class="energy-icon">🌿</span>
                         <span id="runs-display">2/2 Runs Left</span>
                     </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">Upgrade</button>
+                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
                 </div>
                 <h3>Expert status, instantly articulated.</h3>
                 <p>Finally, a professional bio that doesn't sound like everyone else. We turn your random bullet points into a clean, high-authority profile.</p>
@@ -580,7 +580,7 @@
                         <span class="energy-icon">🌿</span>
                         <span id="runs-display">2/2 Runs Left</span>
                     </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">Upgrade</button>
+                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
                 </div>
                 <h3>Find Your Hook</h3>
                 <p>Stop getting scrolled past. We take your boring topics and turn them into "must-read" opening lines that grab attention without the hype.</p>
@@ -597,7 +597,7 @@
                         <span class="energy-icon">🌿</span>
                         <span id="runs-display">2/2 Runs Left</span>
                     </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">Upgrade</button>
+                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
                 </div>
                 <h3>Content Planner</h3>
                 <p>Quit the daily posting grind. We turn one simple idea into a 3-post weekly plan that builds real trust with your audience—no fluff required.</p>
@@ -614,7 +614,7 @@
                         <span class="energy-icon">🌿</span>
                         <span id="runs-display">2/2 Runs Left</span>
                     </div>
-                    <button class="upgrade-pill" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">Upgrade</button>
+                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
                 </div>
                 <h3>One idea. Five assets. Zero wasted time.</h3>
                 <p>Our powerhouse tool. Give it one idea, and it instantly gives you an Instagram caption, a video script, and a carousel outline all at once.</p>
@@ -716,6 +716,11 @@
             }
         });
 
+        function goToUpgrade() {
+            const tier = userStats.tier || 'Free';
+            window.top.location.href = `https://www.freespiritmarketer.com/plans-pricing?currentTier=${tier}`;
+        }
+
         function updateTierRestrictions() {
             // Dynamic Header Title Update
             const kitTitle = document.getElementById('tier-kit-title');
@@ -750,7 +755,7 @@
                     navImgGen.style.cursor = "not-allowed";
                     navImgGen.onclick = () => {
                         if (confirm("Image Generation is an Elite Feature. ✨ Would you like to see our plans to unlock it?")) {
-                            window.top.location.href = 'https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion';
+                            goToUpgrade();
                         }
                     };
                 }
@@ -810,7 +815,7 @@
                     btn.classList.add('disabled-nudge');
                     btn.innerHTML = `Upgrade to Generate More ✨`;
                     btn.onclick = () => {
-                        window.top.location.href = 'https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion';
+                        goToUpgrade();
                     };
                 } else {
                     display.parentElement.style.background = "#f1f3ef";
@@ -862,7 +867,7 @@
                             You've used your ${userStats.dailyLimit} daily runs for this tool. 
                             Upgrade to <b>${nextTier}</b> for ${nextLimit} daily runs per tool.
                         </p>
-                        <button class="btn-generate" onclick="window.top.location.href='https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion'">
+                        <button class="btn-generate" onclick="goToUpgrade()">
                             Explore Plans
                         </button>
                     </div>
