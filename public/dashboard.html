@@ -603,11 +603,11 @@
 
             <div class="sidebar-content">
                 <h2>Companion Tools</h2>
-                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
+                <div class="nav-item active" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
+                <div class="nav-item" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
                 <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
                 <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
                 <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
-                <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
 
                 <div class="nav-item upcoming"
                     style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
@@ -631,11 +631,11 @@
 
         <div class="mobile-nav">
             <select id="mobile-select" onchange="switchTool(this.value)">
+                <option value="the-multiplier">The Multiplier</option>
                 <option value="find-your-voice">Find Your Voice</option>
                 <option value="bio-builder">Bio Builder</option>
                 <option value="find-your-hook">Find Your Hook</option>
                 <option value="content-planner">Content Planner</option>
-                <option value="the-multiplier">The Multiplier</option>
                 <option value="help-support">Help & Support</option>
             </select>
         </div>
@@ -674,7 +674,7 @@
                 </button>
             </div>
 
-            <section id="find-your-voice" class="tool-card active">
+            <section id="find-your-voice" class="tool-card">
                 <div class="tool-header">
                     <div class="energy-status">
                         <span class="energy-icon">🌿</span>
@@ -742,7 +742,7 @@
                 <div id="plan-result" class="output-container">Results will appear here...</div>
             </section>
 
-            <section id="the-multiplier" class="tool-card">
+            <section id="the-multiplier" class="tool-card active">
                 <div class="tool-header">
                     <div class="energy-status">
                         <span class="energy-icon">🌿</span>
@@ -750,10 +750,10 @@
                     </div>
                     <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
                 </div>
-                <h3>One idea. Five assets. Zero wasted time.</h3>
-                <p>Our powerhouse tool. Give it one idea, and it instantly gives you an Instagram caption, a video script, and a carousel outline all at once.</p>
-                <label>Your Content / Draft</label>
-                <textarea id="multiplier-input" rows="5" placeholder="Paste your idea, draft, or published post here..."></textarea>
+                <h3>The Multiplier</h3>
+                <p>Our powerhouse content engine. Give it one "Core Truth," and it instantly grows it into 3 distinct high-leverage assets for your week.</p>
+                <label>Your Core Truth / Idea</label>
+                <textarea id="multiplier-input" rows="5" placeholder="Paste your core truth, a draft, or a published post here..."></textarea>
 
                 <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
                 <div id="multiplier-result" class="output-container">Results will appear here...</div>
