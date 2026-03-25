@@ -942,12 +942,23 @@
                 detectedTier = matches(incomingData) || matches(JSON.stringify(event.data)) || "Free";
 
                 // TIER RANKING: Elite (3) > Pro (2) > Starter (1) > Free (0)
-                // We only update if the new tier is HIGHER than the current one.
-                // This prevents "Free" signals from downgrading a valid URL-based Elite tier.
                 const rank = (t) => t === 'Elite' ? 3 : t === 'Pro' ? 2 : t === 'Starter' ? 1 : 0;
                 
-                if (rank(detectedTier) >= rank(userStats.tier)) {
-                    console.log(`Tier updated from ${userStats.tier} to ${detectedTier}`);
+                const oldRank = rank(userStats.tier);
+                const newRank = rank(detectedTier);
+
+                if (newRank > oldRank) {
+                    console.log(`Tier upgraded from ${userStats.tier} to ${detectedTier}`);
+                    userStats.tier = detectedTier;
+                    
+                    // Trigger Upgrade Success Notification
+                    const banner = document.getElementById('success-banner');
+                    const message = document.getElementById('success-message');
+                    if (banner && message) {
+                        message.innerHTML = `Plan Updated! You are now on the <b>${detectedTier}</b> tier. 🌿✨`;
+                        banner.style.display = 'flex';
+                    }
+                } else if (newRank === oldRank) {
                     userStats.tier = detectedTier;
                 } else {
                     console.log(`Ignored lower tier signal (${detectedTier}) to preserve ${userStats.tier}`);
