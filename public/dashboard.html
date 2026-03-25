@@ -143,6 +143,8 @@
             flex-direction: column;
             animation: fadeIn 0.4s ease forwards;
             margin-top: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .tool-card.active {
@@ -582,6 +584,7 @@
                 padding: 25px;
                 border-radius: 20px;
                 max-height: 80vh;
+                overflow-y: auto;
                 margin-top: 0;
             }
         }
@@ -760,7 +763,7 @@
             <section id="help-support" class="tool-card">
                 <h3 style="font-family: 'Calistoga', serif; color: var(--primary-green); margin-bottom: 25px;">🧭 The Companion Suite: Member Guide</h3>
                 
-                <div class="support-content" style="line-height: 1.6; color: #4a4a4a;">
+                <div class="support-content" style="line-height: 1.6; color: #4a4a4a; padding-bottom: 40px;">
                     <p style="font-size: 1.1rem; color: #4b5563; margin-bottom: 30px;">
                         Welcome to your creative sanctuary. These tools are designed to remove the noise and help you build high-authority content with zero friction.
                     </p>
