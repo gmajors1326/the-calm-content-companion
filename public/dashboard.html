@@ -755,10 +755,10 @@
         const params = new URLSearchParams(window.location.search);
         
         const tierLimits = {
-            'Free': 2,
-            'Starter': 5,
-            'Pro': 10,
-            'Elite': 20
+            'Free': 60,
+            'Starter': 150,
+            'Pro': 300,
+            'Elite': 600
         };
 
         const rawTier = params.get('tier') || 'Free';
@@ -999,7 +999,7 @@
                 const used = userStats.usage[t] || 0;
                 const remaining = userStats.dailyLimit - used;
                 
-                display.innerText = `${remaining < 0 ? 0 : remaining}/${userStats.dailyLimit} RUNS LEFT`;
+                display.innerText = `${remaining < 0 ? 0 : remaining}/${userStats.dailyLimit} RUNS LEFT THIS MONTH`;
                 
                 const btn = section.querySelector('.btn-generate');
                 if (!btn) return;
@@ -1063,8 +1063,8 @@
                     <div class="limit-box" style="text-align: center; padding: 25px; border: 2px solid #f1f3ef; border-radius: 20px;">
                         <h4 style="font-family: 'Calistoga', serif;">Expand Your Toolkit 🌿</h4>
                         <p style="font-size: 0.85rem; color: #636e72;">
-                            You've used your ${userStats.dailyLimit} daily runs for this tool. 
-                            Upgrade to <b>${nextTier}</b> for ${nextLimit} daily runs per tool.
+                            You've used your ${userStats.dailyLimit} monthly runs for this tool. 
+                            Upgrade to <b>${nextTier}</b> for ${nextLimit} monthly runs per tool.
                         </p>
                         <button class="btn-generate" onclick="goToUpgrade()">
                             Explore Plans
