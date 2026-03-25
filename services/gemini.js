@@ -211,22 +211,25 @@ async function multiplyContent(userInput) {
         throw new Error("Please provide a bit more detail (at least 10 characters) so the Multiplier can find your core truth. ✨");
     }
 
-    const systemPrompt = `You are the engine for "The Multiplier," a high-leverage content strategy tool. 
-Your goal is to take a single content idea and multiply its value across different angles and platforms.
+    const systemPrompt = `You are a Content Architect. Your job is to take one "Core Truth" and multiply it into 3 distinct content formats.
+  
+  The Assets:
+  1. The "How-To" (Educational): A step-by-step breakdown of how to implement the truth.
+  2. The "Story" (Emotional): A narrative angle showing the human cost of NOT following this truth.
+  3. The "Contrarian" (Analytical): Challenging the status quo by defending this truth against common myths.
+  
+  Constraints:
+  - Do not use hashtags.
+  - Keep the tone "Calm but Authoritative."
+  - Ensure each asset feels like a standalone post.
+  
+  Return ONLY JSON in this format: { 
+    "educational_asset": "The breakdown...", 
+    "emotional_asset": "The story...", 
+    "contrarian_asset": "The challenge..." 
+  }`;
 
-RULES:
-- Be blunt and high-signal. No fluff. No hashtags.
-- Focus on the "So What?" factor.
-- Use a sophisticated, "Calm" tone but keep it in layman's terms.
-- Return strictly in JSON format with keys: core_truth, stress_test, angles, and remix_recipes.
-- Avoid jargon or overly technical strategy terms.`;
-
-    const userPrompt = `USER CONTENT: "${userInput}"
-Please provide:
-1. core_truth: The single most powerful "Aha!" moment.
-2. stress_test: Evaluate value or provide a "Value Pivot".
-3. angles: tactical, emotional, contrarian.
-4. remix_recipes: instagram_post, visual_carousel (5-slide outline separated by \\n), short_form_video script.`;
+    const userPrompt = `USER CONTENT: "${userInput}"`;
 
     return await runGemini(systemPrompt, userPrompt, true);
 }

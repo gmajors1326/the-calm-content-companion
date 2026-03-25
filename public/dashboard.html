@@ -806,6 +806,19 @@
                     
                     <!-- Pro Tip for Voice -->
                     <div style="margin-top: 20px; background: #fdfcfb; border: 1px solid var(--primary-green); padding: 20px; border-radius: 12px;">
+                        <strong style="color: var(--primary-green); display: block; margin-bottom: 12px; font-size: 1.1rem;">🔄 The "Companion" Workflow</strong>
+                        <p style="margin-bottom: 20px; font-size: 0.9rem; color: #4a4a4a; line-height: 1.6;">
+                            For maximum results, follow this 3-step sequence:
+                            <br><br>
+                            <strong>1. Find Your Voice:</strong> Paste your notes to make sure the AI knows how you talk.
+                            <br>
+                            <strong>2. Find Your Hook:</strong> Input your topic to get 3 scroll-stopping headlines.
+                            <br>
+                            <strong>3. The Multiplier:</strong> Take your favorite Hook and paste it here.
+                            <br><br>
+                            <em>Result: You now have 3 full posts ready for the week.</em>
+                        </p>
+
                         <strong style="color: var(--primary-green); display: block; margin-bottom: 8px;">✨ Pro Tip for "Find Your Voice":</strong>
                         <p style="margin-bottom: 15px; font-size: 0.9rem; color: #4a4a4a;">
                             AI cannot "find" your voice if you only give it one sentence. For the best results, paste at least 300 words of your previous writing (emails, captions, or notes). The more "DNA" you provide, the more accurate your Voice Fingerprint will be.
@@ -1244,38 +1257,18 @@
                 // --- RENDER LOGIC ---
                 if (type === 'multiplier') {
                     const data = result.data;
-                    const formatVal = (val) => typeof val === 'string' ? val : JSON.stringify(val, null, 2);
-
                     resultDiv.innerHTML = `
-                        <div style="margin-bottom: 25px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Core Truth</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif;">${formatVal(data.core_truth)}</div>
+                        <div style="margin-bottom: 30px;">
+                            <strong style="color: #2b6cb0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 12px;">1. The "How-To" (Educational)</strong>
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; line-height: 1.6; color: #2d3748; white-space: pre-wrap;">${data.educational_asset}</div>
                         </div>
-                        <div style="margin-bottom: 25px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The "So What?" Stress Test</strong>
-                            <div style="margin-top: 10px;">${formatVal(data.stress_test)}</div>
+                        <div style="margin-bottom: 30px;">
+                            <strong style="color: #c53030; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 12px;">2. The "Story" (Emotional)</strong>
+                            <div style="background: #fdfcfb; padding: 20px; border-radius: 12px; border: 1px solid #fed7d7; line-height: 1.6; color: #2d3748; white-space: pre-wrap;">${data.emotional_asset}</div>
                         </div>
-                        <div style="margin-bottom: 25px; border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Triple-Angle Remix</strong>
-                            <div style="margin-top: 15px;">
-                                <div style="margin-bottom: 10px;"><strong>Tactical:</strong> ${formatVal(data.angles.tactical)}</div>
-                                <div style="margin-bottom: 10px;"><strong>Emotional:</strong> ${formatVal(data.angles.emotional)}</div>
-                                <div style="margin-bottom: 10px;"><strong>Contrarian:</strong> ${formatVal(data.angles.contrarian)}</div>
-                            </div>
-                        </div>
-                        <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Recipes</strong>
-                            <div style="margin-top: 15px;">
-                                <div style="margin-bottom: 10px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
-                                    <strong>IG Post:</strong> ${formatVal(data.remix_recipes.instagram_post)}
-                                </div>
-                                <div style="margin-bottom: 10px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
-                                    <strong>Carousel:</strong> ${formatVal(data.remix_recipes.visual_carousel)}
-                                </div>
-                                <div style="margin-bottom: 10px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
-                                    <strong>Video Script:</strong> ${formatVal(data.remix_recipes.short_form_video)}
-                                </div>
-                            </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 12px;">3. The "Contrarian" (Analytical)</strong>
+                            <div style="background: #f1f3ef; padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); line-height: 1.6; color: #2d3748; white-space: pre-wrap;">${data.contrarian_asset}</div>
                         </div>
                     `;
                 } else if (type === 'voice') {
