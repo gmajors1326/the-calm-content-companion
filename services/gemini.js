@@ -45,7 +45,8 @@ RULES:
 - No emojis. No "Wait until the end."
 - Use psychological triggers: Curiosity, Negative Constraint, or Counter-Intuition.
 - Return strictly in JSON format with keys: negative_hook, curiosity_hook, and authority_hook.
-- ALL values must be single strings.`;
+- ALL values must be single strings.
+- Use simple, layman's terms. Avoid jargon or complex marketing language.`;
 
     const userPrompt = `TOPIC: "${topicInput}"
 1. negative_hook: A hook based on what people are doing WRONG.
@@ -67,9 +68,10 @@ Identify the hidden patterns, sentence structures, and emotional resonance.
 
 RULES:
 - Avoid generic adjectives like "professional" or "friendly." 
-- Be specific (e.g., "staccato rhythm," "low-register vocabulary," "question-led transitions").
+- Be specific but use simple, layman's terms (e.g., "short sentences," "uses many questions").
 - Return strictly in JSON format with keys: tone_profile, sentence_dna, and power_words.
-- ALL values must be single strings.`;
+- ALL values must be single strings.
+- Avoid academic or overly technical linguistics jargon.`;
 
     const userPrompt = `SAMPLE CONTENT: "${writingSample}"
 1. tone_profile: A 3-word sophisticated label for this voice (e.g., "The Reluctant Expert").
@@ -92,6 +94,7 @@ STRICT RULES FOR AUTHENTICITY:
 - DO NOT make up generic advice or clichés.
 - Ensure it is SEO optimized for the specific niche.
 - No JSON, no brackets. NO "guru-speak."
+- Use simple, layman's terms. Keep it natural and easy to read.
 - Formatting: Single block of warm, readable text.`;
 
     const userPrompt = `Original Text: "${userInput}"
@@ -114,7 +117,8 @@ RULES:
 - No "fluff" posts. Every post must have a clear objective.
 - Avoid the 7-day-a-week grind; focus on 3 high-impact pieces.
 - Return strictly in JSON format with keys: the_hook_post, the_value_post, and the_bridge_post.
-- ALL values must be single strings.`;
+- ALL values must be single strings.
+- Use simple, layman's terms. Avoid complex marketing concepts.`;
 
     const userPrompt = `WEEKLY THEME: "${themeInput}"
 1. the_hook_post: A "Top of Funnel" post to challenge a common belief or share a "Hot Take" related to the theme.
@@ -162,7 +166,8 @@ RULES:
 - Eliminate "I help..." and "Helping..." clichés.
 - Focus on the "Calm" brand: sophisticated, direct, and rhythmic.
 - Return strictly in JSON format with keys: the_hook, the_authority, and the_human.
-- ALL values must be single strings.`;
+- ALL values must be single strings.
+- Use simple, layman's terms. Avoid complex jargon.`;
 
     const userPrompt = `USER INPUT: "${userInput}"
 PLATFORM: ${platform}
@@ -209,8 +214,9 @@ Your goal is to take a single content idea and multiply its value across differe
 RULES:
 - Be blunt and high-signal. No fluff. No hashtags.
 - Focus on the "So What?" factor.
-- Use a sophisticated, "Calm" tone.
-- Return strictly in JSON format with keys: core_truth, stress_test, angles, and remix_recipes.`;
+- Use a sophisticated, "Calm" tone but keep it in layman's terms.
+- Return strictly in JSON format with keys: core_truth, stress_test, angles, and remix_recipes.
+- Avoid jargon or overly technical strategy terms.`;
 
     const userPrompt = `USER CONTENT: "${userInput}"
 Please provide:
