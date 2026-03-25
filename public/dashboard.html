@@ -803,6 +803,15 @@
                     </ul>
 
                     <h4 style="margin-top: 35px; color: var(--text-dark); font-size: 1.1rem;">3. Troubleshooting & FAQs</h4>
+                    
+                    <!-- Pro Tip for Voice -->
+                    <div style="margin-top: 20px; background: #fdfcfb; border: 1px solid var(--primary-green); padding: 20px; border-radius: 12px;">
+                        <strong style="color: var(--primary-green); display: block; margin-bottom: 8px;">✨ Pro Tip for "Find Your Voice":</strong>
+                        <p style="margin-bottom: 0; font-size: 0.9rem; color: #4a4a4a;">
+                            AI cannot "find" your voice if you only give it one sentence. For the best results, paste at least 300 words of your previous writing (emails, captions, or notes). The more "DNA" you provide, the more accurate your Voice Fingerprint will be.
+                        </p>
+                    </div>
+
                     <div style="overflow-x: auto; margin-top: 25px; border-radius: 12px; border: 1px solid #f1f3ef;">
                         <table style="width: 100%; border-collapse: collapse; min-width: 400px; text-align: left;">
                             <thead>
@@ -1263,17 +1272,21 @@
                 } else if (type === 'voice') {
                     const data = result.data;
                     resultDiv.innerHTML = `
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Tone Profile</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif;">${data.tone_profile}</div>
+                        <div style="margin-bottom: 25px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Your Voice DNA</strong>
+                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626;">${data.your_voice_dna}</div>
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Sentence DNA</strong>
-                            <div style="margin-top: 10px;">${data.sentence_dna}</div>
+                        <div style="margin-bottom: 25px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Signature Patterns</strong>
+                            <div style="margin-top: 10px; color: #4b5563; line-height: 1.6;">${data.signature_patterns.split('\n').map(p => `<div style="margin-bottom: 5px;">${p.startsWith('-') ? p : '• ' + p}</div>`).join('')}</div>
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Power Words</strong>
-                            <div style="margin-top: 10px;">${data.power_words}</div>
+                        <div style="margin-bottom: 25px; border-top: 1px solid var(--border-light); padding-top: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Filter (What to Avoid)</strong>
+                            <div style="margin-top: 10px; color: #c53030; font-weight: 500;">${data.the_filter}</div>
+                        </div>
+                        <div style="background: #fdfcf6; border: 1px dashed var(--primary-green); padding: 15px; border-radius: 12px; margin-top: 20px;">
+                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 10px;">Aha! Moment: Your Voice in Action</strong>
+                            <div style="font-style: italic; color: #262626;">"${data.voice_sample}"</div>
                         </div>
                     `;
                 } else if (type === 'bio') {

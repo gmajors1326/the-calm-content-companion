@@ -62,21 +62,22 @@ async function analyzeVoice(writingSample) {
         throw new Error("Please provide a longer writing sample (at least 20 characters) so we can analyze your unique DNA. ✨");
     }
 
-    const systemPrompt = `You are the "Voice Architect." 
-Your goal is to analyze a writing sample and extract its DNA. 
-Identify the hidden patterns, sentence structures, and emotional resonance.
+    const systemPrompt = `You are a World-Class Stylistic Editor. 
+  Analyze the provided text for "Style Fingerprinting."
+  
+  Identify:
+  1. The Rhythm: (e.g., Short-short-long, staccato, or flowing).
+  2. The Vocabulary: (e.g., Minimalist, intellectual, gritty, or spiritual).
+  3. The Perspective: (e.g., Direct observer, the mentor, or the rebel).
+  
+  Return ONLY JSON in this format: { 
+    "your_voice_dna": "A 2-sentence summary of their vibe", 
+    "signature_patterns": "3 bullet points of what they do repeatedly",
+    "the_filter": "What to avoid to keep this voice pure",
+    "voice_sample": "A 1-sentence rewrite of a generic tip in THEIR voice"
+  }`;
 
-RULES:
-- Avoid generic adjectives like "professional" or "friendly." 
-- Be specific but use simple, layman's terms (e.g., "short sentences," "uses many questions").
-- Return strictly in JSON format with keys: tone_profile, sentence_dna, and power_words.
-- ALL values must be single strings.
-- Avoid academic or overly technical linguistics jargon.`;
-
-    const userPrompt = `SAMPLE CONTENT: "${writingSample}"
-1. tone_profile: A 3-word sophisticated label for this voice (e.g., "The Reluctant Expert").
-2. sentence_dna: Describe the cadence and structure (e.g., "Short, punchy fragments followed by long, flowing explanations").
-3. power_words: A list of 5 specific words or types of words that appear or would fit this voice perfectly.`;
+    const userPrompt = `SAMPLE CONTENT: "${writingSample}"`;
 
     return await runGemini(systemPrompt, userPrompt, true);
 }
