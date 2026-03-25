@@ -159,24 +159,19 @@ async function buildBio(userInput, platform = 'Instagram', vibe = 'Clear & Profe
         throw new Error("Please share a bit more about yourself (at least 10 characters) so we can build your bio. ✨");
     }
 
-    const systemPrompt = `You are the "Bio Builder" for The Calm Content Companion. 
-Your goal is to turn messy personal details into a minimalist, high-authority Instagram bio.
+    const systemPrompt = `You are an Instagram Branding Expert. Transform the input into a high-converting Instagram Bio. 
+  Constraints: 
+  - Max 150 characters total.
+  - Use 3-4 distinct lines with line breaks.
+  - Use 1 relevant emoji per line.
+  - Line 1: The "Who" (Authority/Title).
+  - Line 2: The "What" (What you do for others).
+  - Line 3: The "Proof/Human" (A unique fact or achievement).
+  - Line 4: The "Action" (CTA to the link below).
+  
+  Return ONLY JSON in this format: { "insta_bio": "Line 1\\nLine 2\\nLine 3\\nLine 4" }`;
 
-RULES:
-- Eliminate "I help..." and "Helping..." clichés.
-- Focus on the "Calm" brand: sophisticated, direct, and rhythmic.
-- Return strictly in JSON format with keys: the_hook, the_authority, and the_human.
-- ALL values must be single strings.
-- Use simple, layman's terms. Avoid complex jargon.
-- MUST INCLUDE relevant emojis for each line to fit the Instagram aesthetic.`;
-
-    const userPrompt = `USER INPUT: "${userInput}"
-PLATFORM: Instagram
-VIBE: ${vibe}
-Provide:
-1. "the_hook": A 4-6 word opening statement with an emoji.
-2. "the_authority": A brief sentence proving results/experience with an emoji.
-3. "the_human": A single, non-business detail with an emoji.`;
+    const userPrompt = `USER INPUT: "${userInput}"`;
 
     return await runGemini(systemPrompt, userPrompt, true);
 }

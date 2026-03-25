@@ -1279,18 +1279,8 @@
                 } else if (type === 'bio') {
                     const data = result.data;
                     resultDiv.innerHTML = `
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Hook</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif;">${data.the_hook}</div>
-                        </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Authority</strong>
-                            <div style="margin-top: 10px;">${data.the_authority}</div>
-                        </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Human</strong>
-                            <div style="margin-top: 10px;">${data.the_human}</div>
-                        </div>
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border: 1px solid var(--border-light); white-space: pre-wrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 1.05rem; line-height: 1.5; color: #262626;">${data.insta_bio}</div>
+                        <button class="btn-generate" style="margin-top: 20px; background: #fff; color: var(--primary-green); border: 2px solid var(--primary-green);" onclick="navigator.clipboard.writeText(\`${data.insta_bio}\`).then(() => { this.innerText = 'Copied! ✨'; setTimeout(() => this.innerText = 'Copy Bio', 2000); })">Copy Bio</button>
                     `;
                 } else if (type === 'hook') {
                     const data = result.data;
