@@ -5,1351 +5,577 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Companion Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Calistoga&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Calistoga&display=swap');
 
         :root {
             --primary-green: #7d8a70;
             --primary-hover: #6a765f;
-            --bg-off-white: #fdfcf6;
-            --text-dark: #2d3436;
-            --border-light: #e9ecef;
-            --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            --bg-stone: #fcfcf9;
         }
 
-        /* --- GLOBAL APP LOCK (NO SCROLL) --- */
-        body,
-        html {
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-stone);
             margin: 0;
             padding: 0;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            background-color: var(--bg-off-white);
-            font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
-        .dashboard-container {
-            display: flex;
-            height: 100%;
-            width: 100%;
-        }
-
-        /* --- SIDEBAR (VIDEO BACKGROUND) --- */
-        .sidebar {
-            position: relative;
-            /* Container for video */
-            width: 280px;
-            background: #fff;
-            border-right: 1px solid var(--border-light);
-            padding: 60px 30px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            /* Keeps video from spilling */
-        }
-
-        .video-sidebar-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-
-            /* GHOST EFFECT: 15% is the sweet spot for videos */
-            opacity: 0.15;
-
-            /* This makes the green vine blend INTO the paper-white background */
-            mix-blend-mode: multiply;
-
-            /* Smooth fade at the top so it doesn't hit the 'Companion Tools' text too hard */
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-        }
-
-        #growth-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Soften the green so it's not a 'neon' distraction */
-            filter: saturate(0.5) contrast(0.9);
-        }
-
-        .sidebar-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Keeps text visible over video */
-
-        .sidebar h2 {
+        .font-serif {
             font-family: 'Calistoga', serif;
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            color: var(--text-dark);
         }
 
-        .nav-item {
-            padding: 16px 20px;
-            margin-bottom: 10px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            color: #636e72;
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .nav-item:hover {
-            background: #f8f9fa;
-            color: var(--text-dark);
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        .nav-item.active {
-            background: var(--primary-green);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(125, 138, 112, 0.3);
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
         }
 
-        /* --- MOBILE NAV (DROPDOWN) --- */
-        .mobile-nav {
-            display: none;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
         }
 
-        /* --- MAIN VIEWPORT (TOP ALIGNED) --- */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 60px 20px;
-            position: relative;
-        }
-
-        .tool-card {
-            width: 100%;
-            max-width: 600px;
-            background: #fff;
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: var(--card-shadow);
-            display: none;
-            flex-direction: column;
-            animation: fadeIn 0.4s ease forwards;
-            margin-top: 20px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .tool-card.active {
-            display: flex;
-        }
-
-        /* --- TOOL HEADER --- */
-        .tool-header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: -10px;
-            /* Pulls the header closer to the title */
-            padding-bottom: 20px;
-        }
-
-        .energy-status {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--primary-green);
-            background: #f1f3ef;
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .upgrade-pill {
-            background: var(--text-dark) !important;
-            color: #fff !important;
-            font-size: 0.7rem !important;
-            padding: 6px 14px !important;
-            width: auto !important;
-            /* Overrides the 100% width of main buttons */
-            margin: 0 !important;
-            border-radius: 20px !important;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .upgrade-pill:hover {
-            background: #000 !important;
-            transform: scale(1.05);
-        }
-
-        /* --- SYNC BUTTON --- */
-        .sync-btn {
-            background: transparent !important;
-            border: 1px solid var(--primary-green) !important;
-            color: var(--primary-green) !important;
-            font-size: 0.75rem !important;
-            padding: 6px 14px !important;
-            width: auto !important;
-            margin: 0 !important;
-            border-radius: 20px !important;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .sync-btn:hover {
-            background: #f1f3ef !important;
-            transform: translateY(-1px);
-        }
-
-        .sync-btn.syncing .sync-icon {
-            animation: spin 1s linear infinite;
-        }
-
-        .sync-icon {
-            font-size: 0.9rem;
-        }
-
-        h3 {
-            font-family: 'Calistoga', serif;
-            font-size: 1.8rem;
-            margin: 0 0 10px 0;
-        }
-
-        p {
-            color: #636e72;
-            font-size: 0.92rem;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
-
-        /* --- FORM ELEMENTS & CTA --- */
-        label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #b2bec3;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        input,
-        textarea,
-        select {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 18px;
-            border: 1px solid #dfe6e9;
-            border-radius: 12px;
-            background: #fcfcfc;
-            font-size: 1rem;
-            font-family: inherit;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        input:focus,
-        textarea:focus {
-            border: 1px solid var(--primary-green);
-            background: #fff;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .spinner-icon {
-            display: inline-block;
-            margin-left: 10px;
-            font-size: 1.2rem;
-            vertical-align: middle;
-            animation: spin 1s linear infinite;
-        }
-
-        button {
-            width: 100%;
-            padding: 18px;
-            border-radius: 15px;
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        button:disabled {
-            background: #dfe6e9;
-            cursor: not-allowed;
-        }
-
-        .btn-generate.disabled-nudge {
-            background: #fff !important;
-            color: var(--primary-green) !important;
-            border: 2px solid var(--primary-green) !important;
-            cursor: pointer !important;
-            opacity: 1 !important;
-            box-shadow: none !important;
-            transform: none !important;
-        }
-
-        .btn-generate.disabled-nudge:hover {
-            background: var(--primary-green) !important;
-            color: #fff !important;
-        }
-
-        /* --- SUCCESS BANNER --- */
-        .success-banner {
-            background-color: #ecfdf5;
-            border: 1px solid #a7f3d0;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 32px;
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            animation: successIn 0.5s ease-out forwards;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        @keyframes successIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .success-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .success-icon-bg {
-            background: #10b981;
-            padding: 4px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .success-icon {
-            width: 16px;
-            height: 16px;
-            color: white;
-        }
-
-        .success-text {
-            color: #065f46;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin: 0;
-            text-align: left;
-        }
-
-        .success-close {
-            background: none !important;
-            padding: 0 !important;
-            width: auto !important;
-            color: #34d399;
-            cursor: pointer;
-            border: none !important;
-            box-shadow: none !important;
-        }
-
-        .success-close:hover {
-            color: #059669;
-            background: none !important;
-            transform: none !important;
-        }
-
-        /* Ensure the upgrade pill stays small and stationary */
-        .upgrade-pill,
-        .upgrade-btn {
-            width: auto !important;
-            animation: none !important;
-            transform: none !important;
-        }
-
-        /* Ensure the big generate button is the only one that spins */
-        .btn-generate.loading .spinner-icon {
-            display: inline-block;
-        }
-
-        /* --- OUTPUT BOX (PRO/SEO READY) --- */
-        .output-container {
-            margin-top: 25px;
-            padding: 20px;
-            background: #fdfcf6;
-            border-radius: 15px;
-            border: 1px dashed #d1d8e0;
-            min-height: 150px;
-            max-height: 400px;
-            overflow-y: auto;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #4b5563;
-            white-space: pre-wrap;
-            /* MAGIC LINE: Handles AI line breaks */
-            text-align: left;
+        .tool-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- TEASE ENGINE UI --- */
-        .energy-meter {
-            margin-top: auto;
-            border-top: 1px solid var(--border-light);
-            padding-top: 20px;
-            font-size: 0.85rem;
-            color: #636e72;
-            text-align: center;
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        .energy-meter .progress-bar {
-            height: 6px;
-            background: #dfe6e9;
-            border-radius: 10px;
-            margin: 10px 0;
-            overflow: hidden;
+        .spinner {
+            animation: spin 1s linear infinite;
         }
 
-        .energy-meter .progress-fill {
-            height: 100%;
-            background: var(--primary-green);
-            width: 100%;
-            transition: width 0.3s ease;
-        }
-
-        .energy-meter a {
-            color: var(--primary-green);
-            font-weight: 600;
-            text-decoration: none;
-            display: block;
-            margin-top: 8px;
-        }
-
-        .premium-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-light);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .premium-toggle:hover {
-            border-color: var(--primary-green);
-        }
-
-        .premium-toggle p {
-            margin: 0;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-
-        .premium-toggle span {
-            font-size: 1.1rem;
-        }
-
-        .upgrade-teaser {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .upgrade-teaser h4 {
-            font-family: 'Calistoga', serif;
-            font-size: 1.4rem;
-            color: var(--primary-green);
-            margin: 0 0 10px 0;
-        }
-
-        .upgrade-teaser p {
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            color: #636e72;
-        }
-
-        .blurred-post-container {
-            position: relative;
-            margin-top: 20px;
-        }
-
-        .blurred-content {
-            filter: blur(5px);
-            opacity: 0.6;
-            user-select: none;
-            pointer-events: none;
-            white-space: pre-wrap;
-        }
-
-        .unlock-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px 30px;
-            border-radius: 15px;
-            box-shadow: var(--card-shadow);
-            text-align: center;
-            z-index: 10;
-            border: 1px solid #dfe6e9;
-            width: 80%;
-        }
-
-        .unlock-overlay h4 {
-            font-family: 'Calistoga', serif;
-            font-size: 1.2rem;
-            margin: 0 0 5px 0;
-            color: var(--text-dark);
-        }
-
-        .unlock-overlay p {
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-        }
-
-        /* --- RESPONSIVE DROPDOWN LOGIC --- */
-        @media (max-width: 768px) {
-            .dashboard-container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .mobile-nav {
-                display: block;
-                padding: 20px;
-                background: #fff;
-                border-bottom: 1px solid var(--border-light);
-            }
-
-            #mobile-select {
-                width: 100%;
-                padding: 12px;
-                border-radius: 10px;
-                border: 1px solid var(--primary-green);
-            }
-
-            .main-content {
-                padding: 20px;
-                padding-top: 30px;
-            }
-
-            .tool-card {
-                padding: 25px;
-                border-radius: 20px;
-                max-height: 80vh;
-                overflow-y: auto;
-                margin-top: 0;
-            }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 
 <body>
+    <div id="root"></div>
 
-    <div class="dashboard-container">
-        <nav class="sidebar">
-            <div class="video-sidebar-container">
-                <video id="growth-video" playsinline muted preload="auto">
-                    <source src="/vine-growth.mp4" type="video/mp4">
-                </video>
-            </div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-            <div class="sidebar-content">
-                <h2>Companion Tools</h2>
-                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
-                <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
-                <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
-                <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
-                <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
-
-                <div class="nav-item upcoming"
-                    style="opacity: 0.6; cursor: help; border: 1px dashed #d1d8e0; margin-top: 15px; display: flex; align-items: center; gap: 8px;"
-                    onclick="alert('We\'re currently training the Caption Generator to match your soulful voice. Pro members get first access on launch day! ✨')">
-                    <span style="font-size: 1rem;">🔒</span>
-                    <div style="display: flex; flex-direction: column;">
-                        <span style="font-size: 0.85rem; font-weight: 600;">Caption Generator</span>
-                        <span style="font-size: 0.7rem; color: #7d8a70;">Coming Soon for Pro Users</span>
-                    </div>
-                </div>
-
-                <!-- Help & Support -->
-                <div class="nav-item" 
-                    style="margin-top: 20px; border-top: 1px solid #f1f3ef; padding-top: 20px; display: flex; align-items: center; gap: 10px;"
-                    onclick="switchTool('help-support', this)">
-                    <span style="font-size: 1.1rem;">🧭</span>
-                    <span style="font-weight: 600;">Help & Support</span>
-                </div>
-            </div>
-        </nav>
-
-        <div class="mobile-nav">
-            <select id="mobile-select" onchange="switchTool(this.value)">
-                <option value="find-your-voice">Find Your Voice</option>
-                <option value="bio-builder">Bio Builder</option>
-                <option value="find-your-hook">Find Your Hook</option>
-                <option value="the-multiplier">The Multiplier</option>
-                <option value="content-planner">Content Planner</option>
-                <option value="help-support">Help & Support</option>
-            </select>
-        </div>
-
-        <main class="main-content">
-            <header id="tier-kit-header" style="margin-bottom: 35px; text-align: center; position: relative;">
-                <h1 id="tier-kit-title" style="font-family: 'Calistoga', serif; color: var(--primary-green); font-size: 2.2rem; margin: 0; line-height: 1.2;">
-                    The Content Companion Free Kit
-                </h1>
-                <p id="tier-kit-subtitle" style="color: #636e72; font-size: 0.95rem; margin-top: 8px;">Your tools are ready to grow with you. ✨</p>
-                
-                <!-- Refresh Plan Button -->
-                <div style="display: flex; justify-content: center; margin-top: 15px;">
-                    <button id="refresh-plan-btn" class="sync-btn" onclick="refreshPlan()">
-                        <span class="sync-icon">↻</span>
-                        Refresh Plan
-                    </button>
-                </div>
-            </header>
-
-            <!-- Success Banner -->
-            <div id="success-banner" class="success-banner">
-                <div class="success-content">
-                    <div class="success-icon-bg">
-                        <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
-                    <p id="success-message" class="success-text"></p>
-                </div>
-                <button onclick="dismissSuccessBanner()" class="success-close">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-
-            <section id="find-your-voice" class="tool-card active">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">14/14 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
-                </div>
-                <h3>Find Your Voice</h3>
-                <p>Stop guessing how you sound. This tool analyzes your writing to tell you exactly what makes your style unique so you can repeat it every time.</p>
-                <label>Writing Sample</label>
-                <textarea id="voice-sample" rows="6"
-                    placeholder="Paste a sample of your best writing here (emails, captions, blog posts)..."></textarea>
-
-                <button class="btn-generate" onclick="runTool('voice')">Analyze My Voice</button>
-                <div id="voice-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="bio-builder" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">14/14 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
-                </div>
-                <h3>Expert status, instantly articulated.</h3>
-                <p>Finally, a professional bio that doesn't sound like everyone else. We turn your random bullet points into a clean, high-authority profile.</p>
-                <label>About You / Your Value</label>
-                <textarea id="bio-input" rows="4" placeholder="Share your niche, experience, results, and a bit of your personality..."></textarea>
-                <button class="btn-generate" onclick="runTool('bio')">Generate Bio</button>
-                <div id="bio-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="find-your-hook" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">14/14 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
-                </div>
-                <h3>Find Your Hook</h3>
-                <p>Stop getting scrolled past. We take your boring topics and turn them into "must-read" opening lines that grab attention without the hype.</p>
-                <label>Your Topic</label>
-                <textarea id="hook-topic" rows="3" placeholder="e.g. Why most wellness routines fail..."></textarea>
-                
-                <button class="btn-generate" onclick="runTool('hook')">Create Hook</button>
-                <div id="hook-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="the-multiplier" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">14/14 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
-                </div>
-                <h3>The Multiplier</h3>
-                <p>Our powerhouse content engine. Give it one "Core Truth," and it instantly grows it into 3 distinct high-leverage assets for your week.</p>
-                <label>Your Core Truth / Idea</label>
-                <textarea id="multiplier-input" rows="5" placeholder="Paste your core truth, a draft, or a published post here..."></textarea>
-
-                <button class="btn-generate" onclick="runTool('multiplier')">Multiply My Idea</button>
-                <div id="multiplier-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <section id="content-planner" class="tool-card">
-                <div class="tool-header">
-                    <div class="energy-status">
-                        <span class="energy-icon">🌿</span>
-                        <span id="runs-display">14/14 Runs Left</span>
-                    </div>
-                    <button class="upgrade-pill" onclick="goToUpgrade()">Upgrade</button>
-                </div>
-                <h3>Content Planner</h3>
-                <p>Quit the daily posting grind. We turn one simple idea into a 3-post weekly plan that builds real trust with your audience—no fluff required.</p>
-                <label>Weekly Theme / Goal</label>
-                <input type="text" id="plan-theme" placeholder="e.g. Launching my meditation course">
-
-                <button class="btn-generate" onclick="runTool('plan')">Plan My Week</button>
-                <div id="plan-result" class="output-container">Results will appear here...</div>
-            </section>
-
-            <!-- HELP & SUPPORT SECTION -->
-            <section id="help-support" class="tool-card">
-                <h3 style="font-family: 'Calistoga', serif; color: var(--primary-green); margin-bottom: 25px;">🧭 The Companion Suite: Member Guide</h3>
-                
-                <div class="support-content" style="line-height: 1.6; color: #4a4a4a; padding-bottom: 40px;">
-                    <p style="font-size: 1.1rem; color: #4b5563; margin-bottom: 30px;">
-                        Welcome to your creative sanctuary. These tools are designed to remove the noise and help you build high-authority content with zero friction.
-                    </p>
-
-                    <h4 style="margin-top: 35px; color: var(--text-dark); font-size: 1.1rem;">1. How to Use the Tools</h4>
-                    <p>Every tool follows a simple <strong>Input → Architecture → Asset</strong> flow:</p>
-                    <ul style="list-style: none; padding-left: 0; margin-top: 20px;">
-                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px;">
-                            <span style="color: var(--primary-green); font-size: 1.2rem; line-height: 1;">🌿</span>
-                            <span><strong>Input:</strong> Paste a messy thought, a rough draft, or a simple topic.</span>
-                        </li>
-                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px;">
-                            <span style="color: var(--primary-green); font-size: 1.2rem; line-height: 1;">🌿</span>
-                            <span><strong>Generate:</strong> Click the button to let the AI analyze your "Creative DNA."</span>
-                        </li>
-                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px;">
-                            <span style="color: var(--primary-green); font-size: 1.2rem; line-height: 1;">🌿</span>
-                            <span><strong>Result:</strong> You will receive a structured breakdown. Each generation counts as one run.</span>
-                        </li>
-                    </ul>
-
-                    <h4 style="margin-top: 35px; color: var(--text-dark); font-size: 1.1rem;">2. Understanding Your Runs</h4>
-                    <p>Your creative capacity is measured in <strong>Monthly Runs</strong>.</p>
-                    <ul style="list-style: none; padding-left: 0; margin-top: 20px;">
-                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px;">
-                            <span style="color: var(--primary-green); font-size: 1.2rem; line-height: 1;">🌿</span>
-                            <span><strong>The Process:</strong> Every time you hit "Generate Clarity," 1 run is deducted from your monthly total.</span>
-                        </li>
-                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px;">
-                            <span style="color: var(--primary-green); font-size: 1.2rem; line-height: 1;">🌿</span>
-                            <span><strong>Reset:</strong> Your runs refresh automatically on the 1st of every month.</span>
-                        </li>
-                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px;">
-                            <span style="color: var(--primary-green); font-size: 1.2rem; line-height: 1;">🌿</span>
-                            <span><strong>Check Your Balance:</strong> You can always see your remaining runs in the top-right corner of your Dashboard.</span>
-                        </li>
-                    </ul>
-
-                    <h4 style="margin-top: 35px; color: var(--text-dark); font-size: 1.1rem;">3. Troubleshooting & FAQs</h4>
-                    
-                    <!-- Pro Tip for Voice -->
-                    <div style="margin-top: 20px; background: #fdfcfb; border: 1px solid var(--primary-green); padding: 20px; border-radius: 12px;">
-                        <strong style="color: var(--primary-green); display: block; margin-bottom: 12px; font-size: 1.1rem;">🔄 The "Companion" Workflow</strong>
-                        <p style="margin-bottom: 20px; font-size: 0.9rem; color: #4a4a4a; line-height: 1.6;">
-                            For maximum results, follow this 3-step sequence:
-                            <br><br>
-                            <strong>1. Find Your Voice:</strong> Paste your notes to make sure the AI knows how you talk.
-                            <br>
-                            <strong>2. Find Your Hook:</strong> Input your topic to get 3 scroll-stopping headlines.
-                            <br>
-                            <strong>3. The Multiplier:</strong> Take your favorite Hook and paste it here.
-                            <br><br>
-                            <em>Result: You now have 3 full posts ready for the week.</em>
-                        </p>
-
-                        <strong style="color: var(--primary-green); display: block; margin-bottom: 8px;">✨ Pro Tip for "Find Your Voice":</strong>
-                        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #4a4a4a;">
-                            AI cannot "find" your voice if you only give it one sentence. For the best results, paste at least 300 words of your previous writing (emails, captions, or notes). The more "DNA" you provide, the more accurate your Voice Fingerprint will be.
-                        </p>
-                        
-                        <strong style="color: var(--primary-green); display: block; margin-bottom: 8px;">🪝 Mastering the Hook:</strong>
-                        <p style="margin-bottom: 0; font-size: 0.9rem; color: #4a4a4a;">
-                            The "Find Your Hook" tool is a brain-storming partner. If the results feel too aggressive, try giving it a more specific "Perspective." 
-                            <br><br>
-                            <strong>Bad Input:</strong> "Making coffee."
-                            <br>
-                            <strong>Great Input:</strong> "The ritual of making slow coffee to avoid morning anxiety."
-                        </p>
-                    </div>
-
-                    <div style="overflow-x: auto; margin-top: 25px; border-radius: 12px; border: 1px solid #f1f3ef;">
-                        <table style="width: 100%; border-collapse: collapse; min-width: 400px; text-align: left;">
-                            <thead>
-                                <tr style="background: #fdfcfb; border-bottom: 2px solid #f1f3ef;">
-                                    <th style="padding: 16px; font-weight: 600; color: #4a4a4a; width: 40%;">Question</th>
-                                    <th style="padding: 16px; font-weight: 600; color: #4a4a4a;">Answer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="border-bottom: 1px solid #f1f3ef;">
-                                    <td style="padding: 16px; font-size: 0.95rem; vertical-align: top;">Why is the "Generate" button grey?</td>
-                                    <td style="padding: 16px; font-size: 0.95rem; color: #636e72;">You have either reached your monthly limit of runs or the text box is empty.</td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid #f1f3ef;">
-                                    <td style="padding: 16px; font-size: 0.95rem; vertical-align: top;">Can I save my results?</td>
-                                    <td style="padding: 16px; font-size: 0.95rem; color: #636e72;">Currently, results are "live." We recommend copying your favorite generations into a notes app immediately.</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 16px; font-size: 0.95rem; vertical-align: top;">How do I get more runs?</td>
-                                    <td style="padding: 16px; font-size: 0.95rem; color: #636e72;">Click the "Upgrade" link next to your run counter to see the Starter, Pro, and Elite options.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-    </div>
-
-    <script>
-        // Catch the signals from Wix
-        const params = new URLSearchParams(window.location.search);
-        
-        const tierLimits = {
-            'Free': 14,
-            'Starter': 150,
-            'Pro': 300,
-            'Elite': 600
-        };
-
-        const rawTier = params.get('tier') || 'Free';
-        let initialTier = 'Free';
-        const tierLower = rawTier.toLowerCase();
-        if (tierLower.includes('elite')) initialTier = 'Elite';
-        else if (tierLower.includes('pro')) initialTier = 'Pro';
-        else if (tierLower.includes('starter')) initialTier = 'Starter';
-
-        // Initialize usage per tool
-        let userStats = {
-            tier: initialTier,
-            dailyLimit: tierLimits[initialTier] || 2,
-            usage: {
-                voice: 0,
-                bio: 0,
-                hook: 0,
-                plan: 0,
-                multiplier: 0
-            }
-        };
-
-        // --- THE HANDSHAKE: Listen for Wix Data ---
-        window.addEventListener('message', (event) => {
-            // Security: Only trust signals from your domain (including Wix subdomains)
-            const allowedOrigins = [
-                "https://www.freespiritmarketer.com",
-                "https://freespiritmarketer.com",
-                "https://gmajors1326.wixsite.com"
-            ];
-            
-            if (!allowedOrigins.includes(event.origin) && !event.origin.endsWith(".wix.com")) {
-                console.warn("Unauthorized origin blocked:", event.origin);
-                return;
-            }
-
-            if (event.data.type === 'USER_DATA') {
-                console.log("Handshake Received:", event.data);
-                
-                // Extract plan info from any possible key Wix might use
-                const extractName = (val) => {
-                    if (!val) return "";
-                    if (typeof val === 'string') return val;
-                    if (typeof val === 'object') return val.name || val.title || val.planName || JSON.stringify(val);
-                    return String(val);
-                };
-
-                const incomingData = (
-                    extractName(event.data.tier) || 
-                    extractName(event.data.plan) || 
-                    extractName(event.data.planName) || 
-                    extractName(event.data.subscription) || 
-                    extractName(event.data.planTitle) ||
-                    ""
-                ).toLowerCase();
-
-                let detectedTier = "Free";
-                // Normalize Tier Mapping based on keywords
-                const matches = (str) => {
-                    const s = str.toLowerCase();
-                    if (s.includes('elite')) return 'Elite';
-                    if (s.includes('pro')) return 'Pro';
-                    if (s.includes('starter') || s.includes('launch') || s.includes('basic') || s.includes('starter kit')) return 'Starter';
-                    return null;
-                };
-
-                detectedTier = matches(incomingData) || matches(JSON.stringify(event.data)) || "Free";
-
-                // TIER RANKING: Elite (3) > Pro (2) > Starter (1) > Free (0)
-                const rank = (t) => t === 'Elite' ? 3 : t === 'Pro' ? 2 : t === 'Starter' ? 1 : 0;
-                
-                const oldRank = rank(userStats.tier);
-                const newRank = rank(detectedTier);
-
-                if (newRank > oldRank) {
-                    console.log(`Tier upgraded from ${userStats.tier} to ${detectedTier}`);
-                    userStats.tier = detectedTier;
-                    
-                    // Trigger Upgrade Success Notification
-                    const banner = document.getElementById('success-banner');
-                    const message = document.getElementById('success-message');
-                    if (banner && message) {
-                        message.innerHTML = `Plan Updated! You are now on the <b>${detectedTier}</b> tier. 🌿✨`;
-                        banner.style.display = 'flex';
-                    }
-                } else if (newRank === oldRank) {
-                    userStats.tier = detectedTier;
-                } else {
-                    console.log(`Ignored lower tier signal (${detectedTier}) to preserve ${userStats.tier}`);
-                }
-
-                userStats.dailyLimit = tierLimits[userStats.tier] || 2;
-                
-                if (event.data.usage) {
-                    userStats.usage = event.data.usage;
-                }
-                
-                // Update UI based on new data
-                updateEnergyMeter();
-                updateTierRestrictions();
-            }
-        });
-
-        function goToUpgrade() {
-            const tier = userStats.tier || 'Free';
-            const url = `https://www.freespiritmarketer.com/pricing-plans?currentTier=${tier}`;
-            
-            // Create a temporary link and click it to "break out" of the iframe
-            const link = document.createElement('a');
-            link.href = url;
-            link.target = '_top'; // This is the key to navigating the parent Wix window
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function refreshPlan() {
-            const btn = document.getElementById('refresh-plan-btn');
-            if (btn) {
-                btn.classList.add('syncing');
-                btn.innerHTML = `<span class="sync-icon">↻</span> Refreshing...`;
-                btn.disabled = true;
-            }
-
-            // Target Wix domain
-            const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
-            
-            // Send both SYNC and GET signals to ensure Wix refreshes database state
-            window.parent.postMessage({ type: 'SYNC_PLAN' }, targetOrigin);
-            
-            // Add a slight delay before requesting data to allow Wix to process sync
-            setTimeout(() => {
-                window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
-                
-                // Reset button UI after 2 seconds
-                setTimeout(() => {
-                    if (btn) {
-                        btn.classList.remove('syncing');
-                        btn.innerHTML = `<span class="sync-icon">↻</span> Refresh Plan`;
-                        btn.disabled = false;
-                    }
-                }, 1000);
-            }, 500);
-        }
-
-        function checkSuccessBanner() {
-            const totalRuns = Object.values(userStats.usage).reduce((a, b) => a + b, 0);
-            const banner = document.getElementById('success-banner');
-            const message = document.getElementById('success-message');
-            
-            // User-provided logic: Show if total runs is 0 (fresh plan/upgrade)
-            // We also check if it's already been dismissed for THIS tier to avoid annoying users
-            const alreadyDismissed = localStorage.getItem('success_banner_dismissed_tier') === userStats.tier;
-
-            if (totalRuns === 0 && banner && !alreadyDismissed) {
-                message.innerHTML = `Success! Your <b>${userStats.tier}</b> plan is now active. 🌿✨`;
-                banner.style.display = 'flex';
-            } else if (banner) {
-                banner.style.display = 'none';
-            }
-        }
-
-        function dismissSuccessBanner() {
-            const banner = document.getElementById('success-banner');
-            if (banner) banner.style.display = 'none';
-            // Mark as dismissed for this specific tier so it only resets on next upgrade
-            localStorage.setItem('success_banner_dismissed_tier', userStats.tier);
-        }
-
-        function updateTierRestrictions() {
-            // Check for success banner (creditsUsed === 0 logic)
-            checkSuccessBanner();
-
-            // Dynamic Header Title Update
-            const kitTitle = document.getElementById('tier-kit-title');
-            if (kitTitle) {
-                kitTitle.innerText = `The Content Companion ${userStats.tier} Kit`;
-            }
-
-            const hasPremiumFeatures = userStats.tier === 'Pro' || userStats.tier === 'Elite';
-            
-            // Planner SEO Toggle
-            const plannerText = document.getElementById('planner-premium-text');
-            const plannerLock = document.getElementById('planner-premium-lock');
-            if (hasPremiumFeatures) {
-                if (plannerText) plannerText.innerText = "Advanced SEO Keywords (UNLOCKED)";
-                if (plannerLock) plannerLock.innerText = "✨";
-            } else {
-                if (plannerText) plannerText.innerText = "Advanced SEO Keywords (Pro & Elite Only)";
-                if (plannerLock) plannerLock.innerText = "🔒";
-            }
-
-            // Hide/Disable Image Gen for non-elite
-            const navImgGen = document.getElementById('nav-image-gen');
-            if (userStats.tier === 'Elite') {
-                if (navImgGen) {
-                    navImgGen.style.opacity = "1";
-                    navImgGen.style.cursor = "pointer";
-                    navImgGen.onclick = (e) => switchTool('image-generator', navImgGen);
-                }
-            } else {
-                if (navImgGen) {
-                    navImgGen.style.opacity = "0.5";
-                    navImgGen.style.cursor = "not-allowed";
-                    navImgGen.onclick = () => {
-                        if (confirm("Image Generation is an Elite Feature. ✨ Would you like to see our plans to unlock it?")) {
-                            goToUpgrade();
-                        }
-                    };
-                }
-            }
-        }
-
-        // Update the Energy Meter UI immediately
-        document.addEventListener('DOMContentLoaded', () => {
-            updateEnergyMeter();
-            updateTierRestrictions();
-            
-            // Initial call to Wix to get latest usage/tier
-            const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
-            window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
-        });
-
-        function updateEnergyMeter(type) {
-            // If no type provided, update all displays (initial load)
-            const types = type ? [type] : ['voice', 'bio', 'hook', 'plan', 'multiplier'];
-            
-            const originalTexts = {
-                'voice': 'Analyze My Voice',
-                'bio': 'Generate Bio',
-                'hook': 'Create Hook',
-                'plan': 'Plan My Week',
-                'multiplier': 'Multiply My Idea'
+        const App = () => {
+            const tiers = {
+                'Free': { limit: 14, color: 'text-stone-400', bg: 'bg-stone-50' },
+                'Starter': { limit: 150, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                'Pro': { limit: 300, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                'Elite': { limit: 600, color: 'text-purple-600', bg: 'bg-purple-50' }
             };
 
-            types.forEach(t => {
-                const section = document.getElementById(
-                    t === 'voice' ? 'find-your-voice' : 
-                    t === 'bio' ? 'bio-builder' : 
-                    t === 'hook' ? 'find-your-hook' : 
-                    t === 'plan' ? 'content-planner' : 
-                    'the-multiplier'
-                );
-                if (!section) return;
-
-                const display = section.querySelector('#runs-display');
-                if (!display) return;
-
-                const used = userStats.usage[t] || 0;
-                const remaining = userStats.dailyLimit - used;
-                const periodText = userStats.tier === 'Free' ? 'THIS TRIAL' : 'THIS MONTH';
-                
-                display.innerText = `${remaining < 0 ? 0 : remaining}/${userStats.dailyLimit} RUNS LEFT ${periodText}`;
-                
-                const btn = section.querySelector('.btn-generate');
-                if (!btn) return;
-
-                if (remaining <= 0) {
-                    display.parentElement.style.background = "#fff5f5";
-                    display.style.color = "#c53030";
-                    display.innerText = "LIMIT REACHED";
-
-                    // SOFT-LOCK LOGIC: Disables generation and prompts upgrade
-                    btn.disabled = false; // We keep it enabled so it can be a clickable "nudge"
-                    btn.classList.add('disabled-nudge');
-                    btn.innerHTML = `Upgrade to Generate More ✨`;
-                    btn.onclick = () => {
-                        goToUpgrade();
-                    };
-                } else {
-                    display.parentElement.style.background = "#f1f3ef";
-                    display.style.color = "var(--primary-green)";
-                    
-                    btn.classList.remove('disabled-nudge');
-                    btn.innerHTML = originalTexts[t] || 'Generate';
-                    btn.disabled = false;
-                    btn.onclick = () => runTool(t);
-                }
+            const [userStats, setUserStats] = useState({
+                tier: 'Free',
+                usage: { voice: 0, bio: 0, hook: 0, plan: 0, multiplier: 0 },
+                dailyLimit: 14
             });
-        }
 
-        // --- TOOL SWITCHING & VINE GROWTH ---
-        function switchTool(toolId, element) {
-            document.querySelectorAll('.tool-card').forEach(card => card.classList.remove('active'));
-            document.getElementById(toolId).classList.add('active');
+            const [activeTool, setActiveTool] = useState('home');
+            const [input, setInput] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [result, setResult] = useState(null);
+            const [successMessage, setSuccessMessage] = useState('');
+            const [isSyncing, setIsSyncing] = useState(false);
 
-            if (element) {
-                document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
-            }
-            document.getElementById('mobile-select').value = toolId;
+            // Tools Config
+            const tools = {
+                voice: { 
+                    id: 'voice', 
+                    title: 'Find Your Voice', 
+                    icon: 'mic-2', 
+                    color: 'text-indigo-600', 
+                    bg: 'bg-indigo-50',
+                    desc: 'Analyze your writing DNA and extract your unique stylistic fingerprint.',
+                    placeholder: 'Paste a sample of your best writing here (emails, captions, blog posts)...',
+                    endpoint: '/api/tools/analyze-voice',
+                    payloadKey: 'userInput'
+                },
+                bio: { 
+                    id: 'bio', 
+                    title: 'Bio Builder', 
+                    icon: 'user-circle', 
+                    color: 'text-emerald-600', 
+                    bg: 'bg-emerald-50',
+                    desc: 'Expert status, instantly articulated. Clean, high-authority Instagram profiles.',
+                    placeholder: 'Share your niche, experience, results, and a bit of your personality...',
+                    endpoint: '/api/tools/generate-bio',
+                    payloadKey: 'userInput'
+                },
+                hook: { 
+                    id: 'hook', 
+                    title: 'Find Your Hook', 
+                    icon: 'anchor', 
+                    color: 'text-amber-600', 
+                    bg: 'bg-amber-50',
+                    desc: 'Stop the scroll with 3 distinct types of psychological opening lines.',
+                    placeholder: 'e.g. Why most wellness routines fail...',
+                    endpoint: '/api/tools/generate-hook',
+                    payloadKey: 'idea'
+                },
+                multiplier: { 
+                    id: 'multiplier', 
+                    title: 'The Multiplier', 
+                    icon: 'zap', 
+                    color: 'text-purple-600', 
+                    bg: 'bg-purple-50',
+                    desc: 'Turn one "Core Truth" into 3 high-leverage weekly content assets.',
+                    placeholder: 'Paste your core truth, a draft, or a published post here...',
+                    endpoint: '/api/tools/generate-multiplier',
+                    payloadKey: 'userInput'
+                },
+                plan: { 
+                    id: 'plan', 
+                    title: 'Content Planner', 
+                    icon: 'calendar', 
+                    color: 'text-stone-600', 
+                    bg: 'bg-stone-100',
+                    desc: 'Mapping out a sustainable 3-post weekly rhythm from one theme.',
+                    placeholder: 'e.g. Launching my meditation course',
+                    endpoint: '/api/tools/plan-weekly',
+                    payloadKey: 'themeInput'
+                }
+            };
 
-            // VEO TRIGGER (Restart vine on click)
-            const video = document.getElementById('growth-video');
-            if (video) {
-                video.pause();
-                video.currentTime = 0; // Back to the seed
-                setTimeout(() => { video.play(); }, 50);
-            }
-        }
+            useEffect(() => {
+                const handleMessage = (event) => {
+                    const allowedOrigins = [
+                        "https://www.freespiritmarketer.com",
+                        "https://freespiritmarketer.com",
+                        "https://gmajors1326.wixsite.com"
+                    ];
+                    if (!allowedOrigins.includes(event.origin) && !event.origin.endsWith(".wix.com")) return;
 
-        // --- THE "SENIOR DEV" RUNTOOL LOGIC ---
-        async function runTool(type) {
-            const resultDiv = document.getElementById(`${type}-result`);
-            
-            const used = userStats.usage[type] || 0;
+                    if (event.data.type === 'USER_DATA') {
+                        const incomingTier = mapTier(event.data.tier || 'Free');
+                        const oldTier = userStats.tier;
+                        
+                        setUserStats(prev => ({
+                            ...prev,
+                            tier: incomingTier,
+                            dailyLimit: tiers[incomingTier]?.limit || 14,
+                            usage: event.data.usage || prev.usage
+                        }));
 
-            // 1. CHECK THE LIMIT
-            if (used >= userStats.dailyLimit) {
-                const nextTier = userStats.tier === 'Free' ? 'Starter' : userStats.tier === 'Starter' ? 'Pro' : 'Elite';
-                const nextLimit = tierLimits[nextTier] || 20;
-                const currentPeriod = userStats.tier === 'Free' ? 'trial' : 'monthly';
-                const nextPeriod = 'monthly';
+                        if (rank(incomingTier) > rank(oldTier)) {
+                            setSuccessMessage(`Plan Updated! You are now on the ${incomingTier} tier. 🌿✨`);
+                        }
+                    }
+                };
+
+                window.addEventListener('message', handleMessage);
                 
-                resultDiv.innerHTML = `
-                    <div class="limit-box" style="text-align: center; padding: 25px; border: 2px solid #f1f3ef; border-radius: 20px;">
-                        <h4 style="font-family: 'Calistoga', serif;">Expand Your Toolkit 🌿</h4>
-                        <p style="font-size: 0.85rem; color: #636e72;">
-                            You've used your ${userStats.dailyLimit} ${currentPeriod} runs for this tool. 
-                            Upgrade to <b>${nextTier}</b> for ${nextLimit} ${nextPeriod} runs per tool.
-                        </p>
-                        <button class="btn-generate" onclick="goToUpgrade()">
-                            Explore Plans
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-
-            const activeSection = document.getElementById(
-                type === 'voice' ? 'find-your-voice' : 
-                type === 'bio' ? 'bio-builder' : 
-                type === 'hook' ? 'find-your-hook' : 
-                type === 'plan' ? 'content-planner' : 
-                'the-multiplier'
-            );
-            const btn = activeSection.querySelector('.btn-generate');
-
-            // 1. Loading State (Prevents double clicks)
-            resultDiv.innerHTML = "Gathering insights... ✨";
-            btn.disabled = true;
-            btn.classList.add('loading');
-            btn.innerHTML = `Thinking... <span class="spinner-icon">↻</span>`;
-
-            // 2. Map Payload (All contextual data passed here)
-            let payload = { tier: userStats.tier };
-            let endpoint = `/api/tools/generate-${type}`;
-
-            if (type === 'voice') {
-                payload = { userInput: document.getElementById('voice-sample').value };
-                endpoint = '/api/tools/analyze-voice';
-            } else if (type === 'bio') {
-                payload = { userInput: document.getElementById('bio-input').value };
-            } else if (type === 'hook') {
-                payload = { idea: document.getElementById('hook-topic').value };
-            } else if (type === 'plan') {
-                payload = { themeInput: document.getElementById('plan-theme').value };
-                endpoint = '/api/tools/plan-weekly';
-            } else if (type === 'multiplier') {
-                payload = { userInput: document.getElementById('multiplier-input').value };
-            }
-
-            // 3. API Call
-            try {
-                const response = await fetch(endpoint, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `Server responded with ${response.status}`);
-                }
-
-                const result = await response.json();
-
-                // Increment Runs for this specific tool
-                userStats.usage[type] = (userStats.usage[type] || 0) + 1;
-
-                // Calculate total runs for Wix if they only track total
-                const totalRuns = Object.values(userStats.usage).reduce((a, b) => a + b, 0);
-
-                // Shout back to Wix to update the Database
+                // Initial request
                 const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
-                window.parent.postMessage({
-                    type: 'UPDATE_USAGE',
-                    newCount: totalRuns,
-                    toolType: type,
-                    toolUsedCount: userStats.usage[type]
-                }, targetOrigin);
+                window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
 
-                // --- RENDER LOGIC ---
-                if (type === 'multiplier') {
-                    const data = result.data;
-                    resultDiv.innerHTML = `
-                        <div style="margin-bottom: 30px;">
-                            <strong style="color: #2b6cb0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 12px;">1. The "How-To" (Educational)</strong>
-                            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; line-height: 1.6; color: #2d3748; white-space: pre-wrap;">${data.educational_asset}</div>
-                        </div>
-                        <div style="margin-bottom: 30px;">
-                            <strong style="color: #c53030; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 12px;">2. The "Story" (Emotional)</strong>
-                            <div style="background: #fdfcfb; padding: 20px; border-radius: 12px; border: 1px solid #fed7d7; line-height: 1.6; color: #2d3748; white-space: pre-wrap;">${data.emotional_asset}</div>
-                        </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 12px;">3. The "Contrarian" (Analytical)</strong>
-                            <div style="background: #f1f3ef; padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); line-height: 1.6; color: #2d3748; white-space: pre-wrap;">${data.contrarian_asset}</div>
-                        </div>
-                    `;
-                } else if (type === 'voice') {
-                    const data = result.data;
-                    resultDiv.innerHTML = `
-                        <div style="margin-bottom: 25px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Your Voice DNA</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626;">${data.your_voice_dna}</div>
-                        </div>
-                        <div style="margin-bottom: 25px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Signature Patterns</strong>
-                            <div style="margin-top: 10px; color: #4b5563; line-height: 1.6;">${data.signature_patterns.split('\n').map(p => `<div style="margin-bottom: 5px;">${p.startsWith('-') ? p : '• ' + p}</div>`).join('')}</div>
-                        </div>
-                        <div style="margin-bottom: 25px; border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">The Filter (What to Avoid)</strong>
-                            <div style="margin-top: 10px; color: #c53030; font-weight: 500;">${data.the_filter}</div>
-                        </div>
-                        <div style="background: #fdfcf6; border: 1px dashed var(--primary-green); padding: 15px; border-radius: 12px; margin-top: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 10px;">Aha! Moment: Your Voice in Action</strong>
-                            <div style="font-style: italic; color: #262626;">"${data.voice_sample}"</div>
-                        </div>
-                    `;
-                } else if (type === 'bio') {
-                    const data = result.data;
-                    resultDiv.innerHTML = `
-                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border: 1px solid var(--border-light); white-space: pre-wrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 1.05rem; line-height: 1.5; color: #262626;">${data.insta_bio}</div>
-                        <button class="btn-generate" style="margin-top: 20px; background: #fff; color: var(--primary-green); border: 2px solid var(--primary-green);" onclick="navigator.clipboard.writeText(\`${data.insta_bio}\`).then(() => { this.innerText = 'Copied! ✨'; setTimeout(() => this.innerText = 'Copy Bio', 2000); })">Copy Bio</button>
-                    `;
-                } else if (type === 'hook') {
-                    const data = result.data;
-                    resultDiv.innerHTML = `
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: #c53030; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">The Negative Hook (Hard Truth)</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626; line-height: 1.4;">"${data.the_negative}"</div>
-                        </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: #2b6cb0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">The Curiosity Gap (Open Loop)</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626; line-height: 1.4;">"${data.the_curiosity}"</div>
-                        </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong style="color: var(--primary-green); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">The Authority Shift (Counter-Intuitive)</strong>
-                            <div style="margin-top: 10px; font-size: 1.1rem; font-family: 'Calistoga', serif; color: #262626; line-height: 1.4;">"${data.the_authority}"</div>
-                        </div>
-                    `;
-                } else if (type === 'plan') {
-                    const data = result.data;
-                    resultDiv.innerHTML = `
-                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
-                            <strong>Post 1: The Hook</strong><br>${data.the_hook_post}
-                        </div>
-                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
-                            <strong>Post 2: The Value</strong><br>${data.the_value_post}
-                        </div>
-                        <div style="margin-bottom: 15px; background: #f8f9fa; padding: 15px; border-radius: 12px;">
-                            <strong>Post 3: The Bridge</strong><br>${data.the_bridge_post}
-                        </div>
-                    `;
-                } else {
-                    resultDiv.innerText = result.data || "Success!";
+                return () => window.removeEventListener('message', handleMessage);
+            }, [userStats.tier]);
+
+            useEffect(() => {
+                lucide.createIcons();
+            }, [activeTool, userStats, result]);
+
+            const mapTier = (tier) => {
+                const s = tier.toLowerCase();
+                if (s.includes('elite')) return 'Elite';
+                if (s.includes('pro')) return 'Pro';
+                if (s.includes('starter') || s.includes('launch') || s.includes('kit')) return 'Starter';
+                return 'Free';
+            };
+
+            const rank = (t) => t === 'Elite' ? 3 : t === 'Pro' ? 2 : t === 'Starter' ? 1 : 0;
+
+            const refreshPlan = () => {
+                setIsSyncing(true);
+                const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
+                window.parent.postMessage({ type: 'SYNC_PLAN' }, targetOrigin);
+                setTimeout(() => {
+                    window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
+                    setTimeout(() => setIsSyncing(false), 1000);
+                }, 500);
+            };
+
+            const goToUpgrade = () => {
+                const url = `https://www.freespiritmarketer.com/pricing-plans?currentTier=${userStats.tier}`;
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_top';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+
+            const handleGenerate = async () => {
+                const tool = tools[activeTool];
+                const used = userStats.usage[activeTool] || 0;
+                
+                if (used >= userStats.dailyLimit) {
+                    setResult({ type: 'limit' });
+                    return;
                 }
 
-            } catch (error) {
-                resultDiv.innerText = `Error: ${error.message}. Please check your connection or API key.`;
-                console.error("Dashboard Error:", error);
-            } finally {
-                // 4. Reset Button & Update Meter
-                btn.classList.remove('loading');
-                updateEnergyMeter(type);
+                setLoading(true);
+                try {
+                    const response = await fetch(tool.endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ [tool.payloadKey]: input, tier: userStats.tier })
+                    });
+
+                    if (!response.ok) throw new Error('API request failed');
+
+                    const data = await response.json();
+                    setResult(data.data);
+
+                    // Update local state
+                    const newUsage = { ...userStats.usage, [activeTool]: used + 1 };
+                    setUserStats(prev => ({ ...prev, usage: newUsage }));
+
+                    // Notify Wix
+                    const totalRuns = Object.values(newUsage).reduce((a, b) => a + b, 0);
+                    const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
+                    window.parent.postMessage({
+                        type: 'UPDATE_USAGE',
+                        newCount: totalRuns,
+                        toolType: activeTool,
+                        toolUsedCount: newUsage[activeTool]
+                    }, targetOrigin);
+
+                } catch (err) {
+                    console.error(err);
+                    setResult({ type: 'error', message: err.message });
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const copyToClipboard = (text, e) => {
+                navigator.clipboard.writeText(text);
+                const originalText = e.target.innerText;
+                e.target.innerText = 'Copied! ✨';
+                setTimeout(() => e.target.innerText = originalText, 2000);
+            };
+
+            if (activeTool === 'help-support') {
+                return (
+                    <div className="max-w-3xl mx-auto px-6 py-10 animate-fade-in">
+                        <button onClick={() => setActiveTool('home')} className="flex items-center gap-2 text-stone-400 hover:text-stone-600 mb-8 transition-colors">
+                            <i data-lucide="arrow-left" className="w-4 h-4"></i> Back to Dashboard
+                        </button>
+                        
+                        <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 p-8 md:p-12">
+                            <h2 className="text-3xl font-serif text-[#7d8a70] mb-8 flex items-center gap-3">
+                                🧭 Member Guide
+                            </h2>
+                            
+                            <div className="space-y-12 text-stone-600 leading-relaxed">
+                                <section>
+                                    <h3 className="text-xl font-bold text-stone-800 mb-4">1. How to Use the Tools</h3>
+                                    <p className="mb-6">Every tool follows a simple Input → Architecture → Asset flow:</p>
+                                    <ul className="space-y-4">
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-xl">🌿</span>
+                                            <p><span className="font-bold text-stone-800">Input:</span> Paste a messy thought, a rough draft, or a simple topic.</p>
+                                        </li>
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-xl">🌿</span>
+                                            <p><span className="font-bold text-stone-800">Generate:</span> Click the button to let the AI analyze your "Creative DNA."</p>
+                                        </li>
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-xl">🌿</span>
+                                            <p><span className="font-bold text-stone-800">Result:</span> You will receive a structured breakdown. Each generation counts as one run.</p>
+                                        </li>
+                                    </ul>
+                                </section>
+
+                                <section className="bg-stone-50 rounded-2xl p-6 border border-stone-100">
+                                    <h3 className="text-lg font-bold text-[#7d8a70] mb-4 flex items-center gap-2">
+                                        <i data-lucide="refresh-cw" className="w-5 h-5"></i> The "Companion" Workflow
+                                    </h3>
+                                    <div className="grid gap-4 text-sm">
+                                        <p><strong>1. Find Your Voice:</strong> Paste your notes to make sure the AI knows how you talk.</p>
+                                        <p><strong>2. Find Your Hook:</strong> Input your topic to get 3 scroll-stopping headlines.</p>
+                                        <p><strong>3. The Multiplier:</strong> Take your favorite Hook and paste it here.</p>
+                                        <p className="italic text-stone-400 mt-2">Result: You now have 3 full posts ready for the week.</p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 className="text-xl font-bold text-stone-800 mb-4">2. Understanding Your Runs</h3>
+                                    <p className="mb-4">Your creative capacity is measured in Monthly Runs.</p>
+                                    <p className="text-sm">Runs refresh automatically on the 1st of every month. You can check your balance in the top-right corner of the home screen.</p>
+                                </section>
+
+                                <section>
+                                    <h3 className="text-xl font-bold text-stone-800 mb-4">3. Troubleshooting & FAQ</h3>
+                                    <div className="border border-stone-100 rounded-xl overflow-hidden">
+                                        <table className="w-full text-sm text-left">
+                                            <thead className="bg-stone-50 border-bottom border-stone-100">
+                                                <tr>
+                                                    <th className="p-4 font-bold text-stone-800">Question</th>
+                                                    <th className="p-4 font-bold text-stone-800">Answer</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-stone-100">
+                                                <tr>
+                                                    <td className="p-4 font-medium">Generate button grey?</td>
+                                                    <td className="p-4 text-stone-400">Reached monthly limit or text box is empty.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="p-4 font-medium">Can I save results?</td>
+                                                    <td className="p-4 text-stone-400">Results are "live." Copy favorites immediately.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                );
             }
-        }
+
+            if (activeTool !== 'home') {
+                const tool = tools[activeTool];
+                const used = userStats.usage[activeTool] || 0;
+                const remaining = userStats.dailyLimit - used;
+
+                return (
+                    <div className="max-w-3xl mx-auto px-6 py-10 animate-fade-in">
+                        <div className="flex justify-between items-center mb-8">
+                            <button onClick={() => {setActiveTool('home'); setResult(null); setInput('');}} className="flex items-center gap-2 text-stone-400 hover:text-stone-600 transition-colors">
+                                <i data-lucide="arrow-left" className="w-4 h-4"></i> Back
+                            </button>
+                            <div className="flex gap-3 items-center">
+                                <div className={`text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full ${remaining <= 0 ? 'bg-red-50 text-red-500' : 'bg-stone-100 text-stone-500'}`}>
+                                    {remaining <= 0 ? 'Limit Reached' : `${remaining}/${userStats.dailyLimit} Runs Remaining`}
+                                </div>
+                                <button onClick={goToUpgrade} className="text-[10px] font-bold tracking-widest uppercase bg-stone-900 text-white px-3 py-1 rounded-full hover:bg-black transition-colors">
+                                    Upgrade
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 p-8 md:p-12">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${tool.bg} ${tool.color}`}>
+                                    <i data-lucide={tool.icon} className="w-6 h-6"></i>
+                                </div>
+                                <h2 className="text-3xl font-serif text-stone-800">{tool.title}</h2>
+                            </div>
+                            
+                            <p className="text-stone-500 mb-8 leading-relaxed">{tool.desc}</p>
+                            
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-stone-300 block mb-3">Input Data</label>
+                                    <textarea 
+                                        value={input} 
+                                        onChange={(e) => setInput(e.target.value)} 
+                                        className="w-full h-40 p-5 bg-stone-50 rounded-2xl border border-stone-100 outline-none focus:border-[#7d8a70] focus:bg-white transition-all resize-none text-stone-600" 
+                                        placeholder={tool.placeholder} 
+                                    />
+                                </div>
+
+                                {remaining <= 0 ? (
+                                    <button onClick={goToUpgrade} className="w-full py-5 bg-white border-2 border-[#7d8a70] text-[#7d8a70] rounded-2xl font-bold hover:bg-[#7d8a70] hover:text-white transition-all">
+                                        Upgrade to Generate More ✨
+                                    </button>
+                                ) : (
+                                    <button 
+                                        onClick={handleGenerate} 
+                                        disabled={loading || !input.trim()} 
+                                        className="w-full py-5 bg-[#7d8a70] text-white rounded-2xl font-bold shadow-lg shadow-[#7d8a70]/20 hover:bg-[#6a765f] disabled:bg-stone-200 disabled:shadow-none transition-all flex items-center justify-center gap-3"
+                                    >
+                                        {loading ? (
+                                            <>Generating Clarity... <i data-lucide="refresh-cw" className="w-5 h-5 spinner"></i></>
+                                        ) : "Generate Asset"}
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+
+                        {result && result.type === 'limit' && (
+                             <div className="mt-8 p-10 bg-white rounded-[2rem] border-2 border-dashed border-stone-100 text-center animate-fade-in">
+                                <h4 className="font-serif text-2xl mb-4">Expand Your Toolkit 🌿</h4>
+                                <p className="text-stone-500 mb-8">You've reached your limit for this tool. Ready for more creative capacity?</p>
+                                <button onClick={goToUpgrade} className="px-8 py-4 bg-stone-900 text-white rounded-xl font-bold hover:bg-black transition-all">
+                                    Explore Plans
+                                </button>
+                             </div>
+                        )}
+
+                        {result && !result.type && (
+                            <div className="mt-8 space-y-6 animate-fade-in">
+                                {activeTool === 'bio' ? (
+                                    <div className="p-8 bg-white rounded-[2rem] border border-stone-100 shadow-sm">
+                                        <div className="bg-stone-50 p-6 rounded-2xl text-lg leading-relaxed text-stone-800 whitespace-pre-wrap font-sans mb-6">
+                                            {result.insta_bio}
+                                        </div>
+                                        <button 
+                                            onClick={(e) => copyToClipboard(result.insta_bio, e)}
+                                            className="px-6 py-3 bg-white border-2 border-[#7d8a70] text-[#7d8a70] rounded-xl font-bold hover:bg-[#7d8a70] hover:text-white transition-all"
+                                        >
+                                            Copy Bio
+                                        </button>
+                                    </div>
+                                ) : activeTool === 'voice' ? (
+                                    <>
+                                        <div className="grid md:grid-cols-2 gap-6">
+                                            <div className="p-6 bg-white rounded-[2rem] border border-stone-100 shadow-sm">
+                                                <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#7d8a70] mb-4">Voice DNA</h4>
+                                                <p className="font-serif text-xl text-stone-800">{result.your_voice_dna}</p>
+                                            </div>
+                                            <div className="p-6 bg-white rounded-[2rem] border border-stone-100 shadow-sm">
+                                                <h4 className="text-[10px] font-bold uppercase tracking-widest text-red-400 mb-4">The Filter</h4>
+                                                <p className="text-stone-600">{result.the_filter}</p>
+                                            </div>
+                                        </div>
+                                        <div className="p-8 bg-white rounded-[2rem] border border-stone-100 shadow-sm">
+                                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-4">Signature Patterns</h4>
+                                            <div className="space-y-3">
+                                                {result.signature_patterns.split('\n').map((p, i) => (
+                                                    <div key={i} className="flex gap-3 text-stone-600">
+                                                        <span className="text-[#7d8a70]">🌿</span> {p.replace(/^- /, '')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="p-8 bg-indigo-50/30 border border-indigo-100 rounded-[2rem]">
+                                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-indigo-500 mb-4">Aha! Moment: Your Voice in Action</h4>
+                                            <p className="italic text-lg text-indigo-900 leading-relaxed">"{result.voice_sample}"</p>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="space-y-6">
+                                        {Object.entries(result).map(([k, v]) => (
+                                            <div key={k} className="p-8 bg-white rounded-[2rem] border border-stone-100 shadow-sm">
+                                                <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#7d8a70] mb-4">{k.replace(/_/g, ' ')}</h4>
+                                                <p className="text-stone-600 leading-relaxed whitespace-pre-wrap">{v}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                );
+            }
+
+            return (
+                <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 animate-fade-in">
+                    {successMessage && (
+                        <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex justify-between items-center animate-fade-in">
+                            <p className="flex items-center gap-2">
+                                <i data-lucide="check-circle" className="w-5 h-5"></i> {successMessage}
+                            </p>
+                            <button onClick={() => setSuccessMessage('')} className="text-emerald-400 hover:text-emerald-600">
+                                <i data-lucide="x" className="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    )}
+
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16 text-center md:text-left">
+                        <div>
+                            <h1 className="text-4xl md:text-5xl font-serif text-[#7d8a70] mb-3">The Companion Suite</h1>
+                            <p className="text-stone-400 text-lg">Your creative sanctuary for high-authority content.</p>
+                            <button 
+                                onClick={refreshPlan} 
+                                className="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-stone-400 hover:text-stone-600 transition-colors"
+                            >
+                                <i data-lucide="refresh-cw" className={`w-3 h-3 ${isSyncing ? 'spinner' : ''}`}></i> 
+                                {isSyncing ? 'Refreshing...' : 'Refresh Plan'}
+                            </button>
+                        </div>
+
+                        <div className="bg-white p-8 rounded-[2rem] border border-stone-100 shadow-sm text-center min-w-[240px]">
+                            <div className={`text-[10px] font-bold tracking-widest uppercase mb-2 ${tiers[userStats.tier]?.color}`}>
+                                ✦ {userStats.tier} Plan
+                            </div>
+                            <div className="text-4xl font-bold text-stone-800 mb-2">
+                                {Object.values(userStats.usage).reduce((a, b) => a + b, 0)}/{userStats.dailyLimit}
+                            </div>
+                            <div className="text-[10px] font-bold uppercase text-stone-300 tracking-tighter">Total Runs Used This Month</div>
+                            <button onClick={goToUpgrade} className="mt-6 w-full py-3 bg-stone-900 text-white rounded-xl text-xs font-bold hover:bg-black transition-all">
+                                Upgrade Plan
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Object.values(tools).map(t => (
+                            <div 
+                                key={t.id} 
+                                onClick={() => setActiveTool(t.id)} 
+                                className="group bg-white p-8 rounded-[2rem] border border-stone-100 cursor-pointer transition-all tool-card-hover"
+                            >
+                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${t.bg} ${t.color}`}>
+                                    <i data-lucide={t.icon} className="w-7 h-7"></i>
+                                </div>
+                                <h3 className="text-2xl font-bold text-stone-800 mb-3">{t.title}</h3>
+                                <p className="text-stone-400 text-sm leading-relaxed">{t.desc}</p>
+                                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#7d8a70] opacity-0 group-hover:opacity-100 transition-opacity">
+                                    Open Tool <i data-lucide="chevron-right" className="w-3 h-3"></i>
+                                </div>
+                            </div>
+                        ))}
+                        
+                        <div 
+                            onClick={() => setActiveTool('help-support')}
+                            className="bg-[#7d8a70] p-8 rounded-[2rem] cursor-pointer hover:bg-[#6a765f] transition-all flex flex-col justify-between"
+                        >
+                            <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-white">
+                                <i data-lucide="compass" className="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-bold text-white mb-2">Member Guide</h3>
+                                <p className="text-white/60 text-sm">Need help? Explore the Companion workflow and troubleshooting tips.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-16 pt-12 border-t border-stone-100 text-center">
+                        <div className="inline-flex items-center gap-8 bg-white px-8 py-4 rounded-full border border-stone-100 shadow-sm">
+                            <div className="flex items-center gap-2 text-stone-300">
+                                <i data-lucide="lock" className="w-4 h-4"></i>
+                                <span className="text-[10px] font-bold uppercase tracking-widest">Upcoming: Caption Generator</span>
+                            </div>
+                            <div className="h-4 w-px bg-stone-100"></div>
+                            <div className="text-[10px] text-stone-400 font-medium italic">
+                                Pro members get first access on launch day. ✨
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 
