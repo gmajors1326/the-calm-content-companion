@@ -671,19 +671,22 @@
                     ""
                 ).toString().toLowerCase();
 
-                let detectedTier = "";
+                let detectedTier = "Free";
                 // Normalize Tier Mapping based on keywords
                 if (incomingData.includes('elite')) detectedTier = 'Elite';
                 else if (incomingData.includes('pro')) detectedTier = 'Pro';
                 else if (incomingData.includes('starter')) detectedTier = 'Starter';
 
-                // CRITICAL FIX: Only update userStats.tier if we actually found a paid tier.
-                // This prevents Wix from overwriting a valid URL parameter with "Free".
-                if (detectedTier !== "") {
+                // TIER RANKING: Elite (3) > Pro (2) > Starter (1) > Free (0)
+                // We only update if the new tier is HIGHER than the current one.
+                // This prevents "Free" signals from downgrading a valid URL-based Elite tier.
+                const rank = (t) => t === 'Elite' ? 3 : t === 'Pro' ? 2 : t === 'Starter' ? 1 : 0;
+                
+                if (rank(detectedTier) >= rank(userStats.tier)) {
+                    console.log(`Tier updated from ${userStats.tier} to ${detectedTier}`);
                     userStats.tier = detectedTier;
-                } else if (incomingData.includes('free')) {
-                    // Only drop to Free if Wix explicitly says so
-                    userStats.tier = 'Free';
+                } else {
+                    console.log(`Ignored lower tier signal (${detectedTier}) to preserve ${userStats.tier}`);
                 }
 
                 userStats.dailyLimit = tierLimits[userStats.tier] || 2;
