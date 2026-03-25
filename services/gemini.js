@@ -5,8 +5,9 @@ if (!process.env.GEMINI_API_KEY) {
     console.warn("WARNING: GEMINI_API_KEY is missing from the environment variables.");
 }
 
+// Use a direct model name or gemini-1.5-flash-latest for broader compatibility
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'placeholder');
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
 /**
  * Helper to run a prompt against Gemini and expect JSON or Text
@@ -23,9 +24,10 @@ async function runGemini(systemPrompt, userPrompt, isJson = true) {
             },
         });
 
-        return result.response.text();
+        const response = await result.response;
+        return response.text();
     } catch (error) {
-        console.error("Gemini API Error:", error);
+        console.error("Gemini API Error Detail:", error);
         throw error;
     }
 }
