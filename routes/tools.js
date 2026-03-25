@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateHook, humanizeText, planContentDirection, generateBio, interpretSignal, multiplyContent } = require('../services/openai');
+const { generateHook, humanizeText, planContentDirection, generateBio, interpretSignal, multiplyContent } = require('../services/gemini');
 
 // --- TOOL 1: FIND YOUR HOOK ROUTE ---
 router.post('/generate-hook', async (req, res) => {

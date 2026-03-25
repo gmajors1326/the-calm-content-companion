@@ -2,13 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const openaiService = require('./services/openai.js');
+const geminiService = require('./services/gemini.js');
 const PLANS = require('./constants/plans.js');
 
 const app = express();
 console.log("Companion Server starting...");
 console.log("Environment PORT:", process.env.PORT);
-console.log("API KEY LOADED:", process.env.OPENAI_API_KEY ? "YES" : "NO");
+console.log("GEMINI API KEY LOADED:", process.env.GEMINI_API_KEY ? "YES" : "NO");
 
 app.use(express.json());
 app.use(cors());
@@ -36,7 +36,7 @@ app.post('/api/tools/analyze-voice', async (req, res) => {
         if (!userInput || userInput.trim().length < 20) {
             return res.status(400).json({ success: false, error: "Please share a longer sample (at least 20 characters). ✨" });
         }
-        const result = await openaiService.analyzeVoice(userInput);
+        const result = await geminiService.analyzeVoice(userInput);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
     } catch (err) {
@@ -52,7 +52,7 @@ app.post('/api/tools/generate-bio', async (req, res) => {
             return res.status(400).json({ success: false, error: "Please share a bit more about yourself so we can build your bio. ✨" });
         }
         
-        const result = await openaiService.buildBio(userInput, platform, vibe);
+        const result = await geminiService.buildBio(userInput, platform, vibe);
         let resultJSON;
         try {
             resultJSON = JSON.parse(result);
@@ -76,7 +76,7 @@ app.post('/api/tools/generate-hook', async (req, res) => {
         if (!idea || idea.trim().length < 5) {
             return res.status(400).json({ success: false, error: "Please share a bit more detail about your topic. ✨" });
         }
-        const result = await openaiService.findYourHook(idea);
+        const result = await geminiService.findYourHook(idea);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
     } catch (err) {
@@ -91,7 +91,7 @@ app.post('/api/tools/plan-weekly', async (req, res) => {
         if (!themeInput || themeInput.trim().length < 5) {
             return res.status(400).json({ success: false, error: "Please share a theme or goal (at least 5 characters). ✨" });
         }
-        const result = await openaiService.planWeeklyStrategy(themeInput);
+        const result = await geminiService.planWeeklyStrategy(themeInput);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
     } catch (err) {
@@ -106,7 +106,7 @@ app.post('/api/tools/generate-multiplier', async (req, res) => {
         if (!userInput || userInput.trim().length < 10) {
             return res.status(400).json({ success: false, error: "Please share a bit more detail (at least 10 characters). ✨" });
         }
-        const result = await openaiService.multiplyContent(userInput);
+        const result = await geminiService.multiplyContent(userInput);
         const resultJSON = JSON.parse(result);
         res.json({ success: true, data: resultJSON });
     } catch (err) {

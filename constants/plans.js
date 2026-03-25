@@ -1,22 +1,22 @@
 const PLANS = {
     FREE: {
         name: 'Free',
-        dailyLimit: 2,
+        dailyLimit: 14,
         features: ['find-your-voice', 'voice-architect', 'bio-builder', 'find-your-hook', 'content-planner', 'weekly-strategist', 'the-multiplier']
     },
     STARTER: {
         name: 'Starter',
-        dailyLimit: 3,
+        dailyLimit: 150,
         features: ['find-your-voice', 'voice-architect', 'bio-builder', 'find-your-hook', 'content-planner', 'weekly-strategist', 'the-multiplier']
     },
     PRO: {
         name: 'Pro',
-        dailyLimit: 5,
+        dailyLimit: 300,
         features: ['find-your-voice', 'voice-architect', 'bio-builder', 'find-your-hook', 'content-planner', 'weekly-strategist', 'the-multiplier', 'extra-features']
     },
     ELITE: {
         name: 'Elite',
-        dailyLimit: 10,
+        dailyLimit: 600,
         features: ['find-your-voice', 'voice-architect', 'bio-builder', 'find-your-hook', 'content-planner', 'weekly-strategist', 'the-multiplier', 'extra-features', 'image-generation']
     }
 };
