@@ -890,7 +890,7 @@
             const alreadyDismissed = localStorage.getItem('success_banner_dismissed_tier') === userStats.tier;
 
             if (totalRuns === 0 && banner && !alreadyDismissed) {
-                message.innerHTML = `Success! Your <b>${userStats.tier}</b> plan is now active.`;
+                message.innerHTML = `Success! Your <b>${userStats.tier}</b> plan is now active. 🌿✨`;
                 banner.style.display = 'flex';
             } else if (banner) {
                 banner.style.display = 'none';
