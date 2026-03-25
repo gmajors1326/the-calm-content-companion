@@ -160,22 +160,23 @@ async function buildBio(userInput, platform = 'Instagram', vibe = 'Clear & Profe
     }
 
     const systemPrompt = `You are the "Bio Builder" for The Calm Content Companion. 
-Your goal is to turn messy personal details into a minimalist, high-authority social media bio.
+Your goal is to turn messy personal details into a minimalist, high-authority Instagram bio.
 
 RULES:
 - Eliminate "I help..." and "Helping..." clichés.
 - Focus on the "Calm" brand: sophisticated, direct, and rhythmic.
 - Return strictly in JSON format with keys: the_hook, the_authority, and the_human.
 - ALL values must be single strings.
-- Use simple, layman's terms. Avoid complex jargon.`;
+- Use simple, layman's terms. Avoid complex jargon.
+- MUST INCLUDE relevant emojis for each line to fit the Instagram aesthetic.`;
 
     const userPrompt = `USER INPUT: "${userInput}"
-PLATFORM: ${platform}
+PLATFORM: Instagram
 VIBE: ${vibe}
 Provide:
-1. "the_hook": A 4-6 word opening statement that defines a unique worldview.
-2. "the_authority": A brief sentence or phrase that proves why you should be listened to (results/experience).
-3. "the_human": A single, non-business detail that adds texture without being "quirky."`;
+1. "the_hook": A 4-6 word opening statement with an emoji.
+2. "the_authority": A brief sentence proving results/experience with an emoji.
+3. "the_human": A single, non-business detail with an emoji.`;
 
     return await runGemini(systemPrompt, userPrompt, true);
 }
