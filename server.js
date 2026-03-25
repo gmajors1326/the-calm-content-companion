@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Root Route: Serve the dashboard immediately on load
-app.get(['/', '/the-content-companion-tools'], (req, res) => {
+app.get(['/', '/the-content-companion-tools', '/the-calm-content-toolbox'], (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
