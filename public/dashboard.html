@@ -799,20 +799,33 @@
                 console.log("Handshake Received:", event.data);
                 
                 // Extract plan info from any possible key Wix might use
+                const extractName = (val) => {
+                    if (!val) return "";
+                    if (typeof val === 'string') return val;
+                    if (typeof val === 'object') return val.name || val.title || val.planName || JSON.stringify(val);
+                    return String(val);
+                };
+
                 const incomingData = (
-                    event.data.tier || 
-                    event.data.plan || 
-                    event.data.planName || 
-                    event.data.subscription || 
-                    event.data.planTitle ||
+                    extractName(event.data.tier) || 
+                    extractName(event.data.plan) || 
+                    extractName(event.data.planName) || 
+                    extractName(event.data.subscription) || 
+                    extractName(event.data.planTitle) ||
                     ""
-                ).toString().toLowerCase();
+                ).toLowerCase();
 
                 let detectedTier = "Free";
                 // Normalize Tier Mapping based on keywords
-                if (incomingData.includes('elite')) detectedTier = 'Elite';
-                else if (incomingData.includes('pro')) detectedTier = 'Pro';
-                else if (incomingData.includes('starter')) detectedTier = 'Starter';
+                const matches = (str) => {
+                    const s = str.toLowerCase();
+                    if (s.includes('elite')) return 'Elite';
+                    if (s.includes('pro')) return 'Pro';
+                    if (s.includes('starter') || s.includes('launch') || s.includes('basic') || s.includes('starter kit')) return 'Starter';
+                    return null;
+                };
+
+                detectedTier = matches(incomingData) || matches(JSON.stringify(event.data)) || "Free";
 
                 // TIER RANKING: Elite (3) > Pro (2) > Starter (1) > Free (0)
                 // We only update if the new tier is HIGHER than the current one.
