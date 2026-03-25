@@ -276,6 +276,21 @@
             cursor: not-allowed;
         }
 
+        .btn-generate.disabled-nudge {
+            background: #fff !important;
+            color: var(--primary-green) !important;
+            border: 2px solid var(--primary-green) !important;
+            cursor: pointer !important;
+            opacity: 1 !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        .btn-generate.disabled-nudge:hover {
+            background: var(--primary-green) !important;
+            color: #fff !important;
+        }
+
         /* Ensure the upgrade pill stays small and stationary */
         .upgrade-pill,
         .upgrade-btn {
@@ -619,9 +634,9 @@
         
         const tierLimits = {
             'Free': 2,
-            'Starter': 3,
-            'Pro': 5,
-            'Elite': 10
+            'Starter': 5,
+            'Pro': 10,
+            'Elite': 20
         };
 
         const rawTier = params.get('tier') || 'Free';
@@ -756,6 +771,14 @@
             // If no type provided, update all displays (initial load)
             const types = type ? [type] : ['voice', 'bio', 'hook', 'plan', 'multiplier'];
             
+            const originalTexts = {
+                'voice': 'Analyze My Voice',
+                'bio': 'Generate Bio',
+                'hook': 'Create Hook',
+                'plan': 'Plan My Week',
+                'multiplier': 'Multiply My Idea'
+            };
+
             types.forEach(t => {
                 const section = document.getElementById(
                     t === 'voice' ? 'find-your-voice' : 
@@ -772,15 +795,31 @@
                 const used = userStats.usage[t] || 0;
                 const remaining = userStats.dailyLimit - used;
                 
-                display.innerText = `${remaining}/${userStats.dailyLimit} RUNS LEFT`;
+                display.innerText = `${remaining < 0 ? 0 : remaining}/${userStats.dailyLimit} RUNS LEFT`;
                 
-                if (remaining === 0) {
+                const btn = section.querySelector('.btn-generate');
+                if (!btn) return;
+
+                if (remaining <= 0) {
                     display.parentElement.style.background = "#fff5f5";
                     display.style.color = "#c53030";
-                    display.innerText = "TOOL DEPLETED";
+                    display.innerText = "LIMIT REACHED";
+
+                    // SOFT-LOCK LOGIC: Disables generation and prompts upgrade
+                    btn.disabled = false; // We keep it enabled so it can be a clickable "nudge"
+                    btn.classList.add('disabled-nudge');
+                    btn.innerHTML = `Upgrade to Generate More ✨`;
+                    btn.onclick = () => {
+                        window.top.location.href = 'https://www.freespiritmarketer.com/pricing-plans/the-calm-content-companion';
+                    };
                 } else {
                     display.parentElement.style.background = "#f1f3ef";
                     display.style.color = "var(--primary-green)";
+                    
+                    btn.classList.remove('disabled-nudge');
+                    btn.innerHTML = originalTexts[t] || 'Generate';
+                    btn.disabled = false;
+                    btn.onclick = () => runTool(t);
                 }
             });
         }
@@ -814,7 +853,7 @@
             // 1. CHECK THE LIMIT
             if (used >= userStats.dailyLimit) {
                 const nextTier = userStats.tier === 'Free' ? 'Starter' : userStats.tier === 'Starter' ? 'Pro' : 'Elite';
-                const nextLimit = tierLimits[nextTier] || 10;
+                const nextLimit = tierLimits[nextTier] || 20;
                 
                 resultDiv.innerHTML = `
                     <div class="limit-box" style="text-align: center; padding: 25px; border: 2px solid #f1f3ef; border-radius: 20px;">
@@ -839,7 +878,6 @@
                 'the-multiplier'
             );
             const btn = activeSection.querySelector('.btn-generate');
-            const originalText = btn.innerText;
 
             // 1. Loading State (Prevents double clicks)
             resultDiv.innerHTML = "Gathering insights... ✨";
@@ -882,7 +920,6 @@
 
                 // Increment Runs for this specific tool
                 userStats.usage[type] = (userStats.usage[type] || 0) + 1;
-                updateEnergyMeter(type);
 
                 // Calculate total runs for Wix if they only track total
                 const totalRuns = Object.values(userStats.usage).reduce((a, b) => a + b, 0);
@@ -999,10 +1036,9 @@
                 resultDiv.innerText = `Error: ${error.message}. Please check your connection or API key.`;
                 console.error("Dashboard Error:", error);
             } finally {
-                // 4. Reset Button
-                btn.disabled = false;
+                // 4. Reset Button & Update Meter
                 btn.classList.remove('loading');
-                btn.innerText = originalText;
+                updateEnergyMeter(type);
             }
         }
     </script>
