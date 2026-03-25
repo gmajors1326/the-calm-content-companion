@@ -190,6 +190,37 @@
             transform: scale(1.05);
         }
 
+        /* --- SYNC BUTTON --- */
+        .sync-btn {
+            background: transparent !important;
+            border: 1px solid var(--primary-green) !important;
+            color: var(--primary-green) !important;
+            font-size: 0.75rem !important;
+            padding: 6px 14px !important;
+            width: auto !important;
+            margin: 0 !important;
+            border-radius: 20px !important;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sync-btn:hover {
+            background: #f1f3ef !important;
+            transform: translateY(-1px);
+        }
+
+        .sync-btn.syncing .sync-icon {
+            animation: spin 1s linear infinite;
+        }
+
+        .sync-icon {
+            font-size: 0.9rem;
+        }
+
         h3 {
             font-family: 'Calistoga', serif;
             font-size: 1.8rem;
@@ -598,11 +629,19 @@
         </div>
 
         <main class="main-content">
-            <header id="tier-kit-header" style="margin-bottom: 35px; text-align: center;">
+            <header id="tier-kit-header" style="margin-bottom: 35px; text-align: center; position: relative;">
                 <h1 id="tier-kit-title" style="font-family: 'Calistoga', serif; color: var(--primary-green); font-size: 2.2rem; margin: 0; line-height: 1.2;">
                     The Content Companion Free Kit
                 </h1>
                 <p id="tier-kit-subtitle" style="color: #636e72; font-size: 0.95rem; margin-top: 8px;">Your tools are ready to grow with you. ✨</p>
+                
+                <!-- Refresh Plan Button -->
+                <div style="display: flex; justify-content: center; margin-top: 15px;">
+                    <button id="refresh-plan-btn" class="sync-btn" onclick="refreshPlan()">
+                        <span class="sync-icon">↻</span>
+                        Refresh Plan
+                    </button>
+                </div>
             </header>
 
             <!-- Success Banner -->
@@ -802,6 +841,35 @@
         function goToUpgrade() {
             const tier = userStats.tier || 'Free';
             window.top.location.href = `https://www.freespiritmarketer.com/plans-pricing?currentTier=${tier}`;
+        }
+
+        function refreshPlan() {
+            const btn = document.getElementById('refresh-plan-btn');
+            if (btn) {
+                btn.classList.add('syncing');
+                btn.innerHTML = `<span class="sync-icon">↻</span> Refreshing...`;
+                btn.disabled = true;
+            }
+
+            // Target Wix domain
+            const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
+            
+            // Send both SYNC and GET signals to ensure Wix refreshes database state
+            window.parent.postMessage({ type: 'SYNC_PLAN' }, targetOrigin);
+            
+            // Add a slight delay before requesting data to allow Wix to process sync
+            setTimeout(() => {
+                window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
+                
+                // Reset button UI after 2 seconds
+                setTimeout(() => {
+                    if (btn) {
+                        btn.classList.remove('syncing');
+                        btn.innerHTML = `<span class="sync-icon">↻</span> Refresh Plan`;
+                        btn.disabled = false;
+                    }
+                }, 1000);
+            }, 500);
         }
 
         function checkSuccessBanner() {
