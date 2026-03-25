@@ -291,6 +291,71 @@
             color: #fff !important;
         }
 
+        /* --- SUCCESS BANNER --- */
+        .success-banner {
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            animation: successIn 0.5s ease-out forwards;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        @keyframes successIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .success-icon-bg {
+            background: #10b981;
+            padding: 4px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-icon {
+            width: 16px;
+            height: 16px;
+            color: white;
+        }
+
+        .success-text {
+            color: #065f46;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0;
+            text-align: left;
+        }
+
+        .success-close {
+            background: none !important;
+            padding: 0 !important;
+            width: auto !important;
+            color: #34d399;
+            cursor: pointer;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .success-close:hover {
+            color: #059669;
+            background: none !important;
+            transform: none !important;
+        }
+
         /* Ensure the upgrade pill stays small and stationary */
         .upgrade-pill,
         .upgrade-btn {
@@ -540,6 +605,24 @@
                 <p id="tier-kit-subtitle" style="color: #636e72; font-size: 0.95rem; margin-top: 8px;">Your tools are ready to grow with you. ✨</p>
             </header>
 
+            <!-- Success Banner -->
+            <div id="success-banner" class="success-banner">
+                <div class="success-content">
+                    <div class="success-icon-bg">
+                        <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p id="success-message" class="success-text"></p>
+                </div>
+                <button onclick="dismissSuccessBanner()" class="success-close">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
             <section id="find-your-voice" class="tool-card active">
                 <div class="tool-header">
                     <div class="energy-status">
@@ -721,7 +804,34 @@
             window.top.location.href = `https://www.freespiritmarketer.com/plans-pricing?currentTier=${tier}`;
         }
 
+        function checkSuccessBanner() {
+            const totalRuns = Object.values(userStats.usage).reduce((a, b) => a + b, 0);
+            const banner = document.getElementById('success-banner');
+            const message = document.getElementById('success-message');
+            
+            // User-provided logic: Show if total runs is 0 (fresh plan/upgrade)
+            // We also check if it's already been dismissed for THIS tier to avoid annoying users
+            const alreadyDismissed = localStorage.getItem('success_banner_dismissed_tier') === userStats.tier;
+
+            if (totalRuns === 0 && banner && !alreadyDismissed) {
+                message.innerHTML = `Success! Your <b>${userStats.tier}</b> plan is now active. Enjoy your fresh monthly credits.`;
+                banner.style.display = 'flex';
+            } else if (banner) {
+                banner.style.display = 'none';
+            }
+        }
+
+        function dismissSuccessBanner() {
+            const banner = document.getElementById('success-banner');
+            if (banner) banner.style.display = 'none';
+            // Mark as dismissed for this specific tier so it only resets on next upgrade
+            localStorage.setItem('success_banner_dismissed_tier', userStats.tier);
+        }
+
         function updateTierRestrictions() {
+            // Check for success banner (creditsUsed === 0 logic)
+            checkSuccessBanner();
+
             // Dynamic Header Title Update
             const kitTitle = document.getElementById('tier-kit-title');
             if (kitTitle) {
