@@ -840,7 +840,15 @@
 
         function goToUpgrade() {
             const tier = userStats.tier || 'Free';
-            window.top.location.href = `/plans-pricing?currentTier=${tier}`;
+            const url = `https://www.freespiritmarketer.com/plans-pricing?currentTier=${tier}`;
+            
+            // Create a temporary link and click it to "break out" of the iframe
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_top'; // This is the key to navigating the parent Wix window
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function refreshPlan() {
