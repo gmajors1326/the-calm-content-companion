@@ -17,32 +17,28 @@
             --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- ENABLE PAGE SCROLL --- */
+        /* --- GLOBAL APP LOCK (NO SCROLL) --- */
         body,
         html {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            height: 100vh;
             width: 100vw;
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: hidden;
             background-color: var(--bg-off-white);
             font-family: 'Inter', sans-serif;
             color: var(--text-dark);
-            scroll-behavior: smooth;
         }
 
         .dashboard-container {
             display: flex;
-            min-height: 100vh;
+            height: 100%;
             width: 100%;
         }
 
-        /* --- SIDEBAR (STICKY) --- */
+        /* --- SIDEBAR (VIDEO BACKGROUND) --- */
         .sidebar {
-            position: sticky;
-            top: 0;
-            height: 100vh;
+            position: relative;
             width: 280px;
             background: #fff;
             border-right: 1px solid var(--border-light);
@@ -97,8 +93,6 @@
             font-weight: 500;
             transition: all 0.2s ease;
             color: #636e72;
-            text-decoration: none;
-            display: block;
         }
 
         .nav-item:hover {
@@ -123,11 +117,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 60px 20px 100px 20px;
+            padding: 60px 20px;
             position: relative;
         }
 
-        /* --- STACKED TOOL CARDS --- */
+        /* --- TOOL CARDS (TABS) --- */
         .tool-card {
             width: 100%;
             max-width: 600px;
@@ -135,10 +129,21 @@
             padding: 40px;
             border-radius: 30px;
             box-shadow: var(--card-shadow);
-            display: flex;
+            display: none; /* Only active shown */
             flex-direction: column;
-            margin-bottom: 50px;
-            scroll-margin-top: 40px;
+            animation: fadeIn 0.4s ease forwards;
+            margin-top: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .tool-card.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tool-header {
@@ -371,7 +376,7 @@
             border-radius: 15px;
             border: 1px dashed #d1d8e0;
             min-height: 150px;
-            max-height: 600px;
+            max-height: 400px;
             overflow-y: auto;
             font-size: 1rem;
             line-height: 1.6;
@@ -383,10 +388,10 @@
         @media (max-width: 768px) {
             .dashboard-container { flex-direction: column; }
             .sidebar { display: none; }
-            .mobile-nav { display: block; padding: 20px; background: #fff; border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 100; }
+            .mobile-nav { display: block; padding: 20px; background: #fff; border-bottom: 1px solid var(--border-light); }
             #mobile-select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--primary-green); }
             .main-content { padding: 20px; padding-top: 30px; }
-            .tool-card { padding: 25px; border-radius: 20px; }
+            .tool-card { padding: 25px; border-radius: 20px; max-height: 80vh; margin-top: 0; }
         }
     </style>
 </head>
@@ -403,25 +408,25 @@
 
             <div class="sidebar-content">
                 <h2>Companion Tools</h2>
-                <a href="#find-your-voice" class="nav-item active" onclick="updateNav(this)">Find Your Voice</a>
-                <a href="#bio-builder" class="nav-item" onclick="updateNav(this)">Bio Builder</a>
-                <a href="#find-your-hook" class="nav-item" onclick="updateNav(this)">Find Your Hook</a>
-                <a href="#the-multiplier" class="nav-item" onclick="updateNav(this)">The Multiplier</a>
-                <a href="#content-planner" class="nav-item" onclick="updateNav(this)">Content Planner</a>
-                <a href="#help-support" class="nav-item" style="margin-top: 20px; border-top: 1px solid #f1f3ef; padding-top: 20px;" onclick="updateNav(this)">
+                <div class="nav-item active" onclick="switchTool('find-your-voice', this)">Find Your Voice</div>
+                <div class="nav-item" onclick="switchTool('bio-builder', this)">Bio Builder</div>
+                <div class="nav-item" onclick="switchTool('find-your-hook', this)">Find Your Hook</div>
+                <div class="nav-item" onclick="switchTool('the-multiplier', this)">The Multiplier</div>
+                <div class="nav-item" onclick="switchTool('content-planner', this)">Content Planner</div>
+                <div class="nav-item" style="margin-top: 20px; border-top: 1px solid #f1f3ef; padding-top: 20px;" onclick="switchTool('help-support', this)">
                     🧭 Help & Support
-                </a>
+                </div>
             </div>
         </nav>
 
         <div class="mobile-nav">
-            <select id="mobile-select" onchange="window.location.hash = this.value">
-                <option value="#find-your-voice">Find Your Voice</option>
-                <option value="#bio-builder">Bio Builder</option>
-                <option value="#find-your-hook">Find Your Hook</option>
-                <option value="#the-multiplier">The Multiplier</option>
-                <option value="#content-planner">Content Planner</option>
-                <option value="#help-support">Help & Support</option>
+            <select id="mobile-select" onchange="switchTool(this.value)">
+                <option value="find-your-voice">Find Your Voice</option>
+                <option value="bio-builder">Bio Builder</option>
+                <option value="find-your-hook">Find Your Hook</option>
+                <option value="the-multiplier">The Multiplier</option>
+                <option value="content-planner">Content Planner</option>
+                <option value="help-support">Help & Support</option>
             </select>
         </div>
 
@@ -457,7 +462,7 @@
                 </button>
             </div>
 
-            <section id="find-your-voice" class="tool-card">
+            <section id="find-your-voice" class="tool-card active">
                 <div class="tool-header">
                     <div class="energy-status">
                         <span class="energy-icon">🌿</span>
@@ -549,8 +554,6 @@
                     </ul>
                     <h4 style="margin-top: 35px; color: var(--text-dark); font-size: 1.1rem;">2. The "Companion" Workflow</h4>
                     <p>1. Find Your Voice -> 2. Find Your Hook -> 3. The Multiplier.</p>
-                    <h4 style="margin-top: 35px; color: var(--text-dark); font-size: 1.1rem;">3. FAQs</h4>
-                    <p>Runs refresh on the 1st of every month.</p>
                 </div>
             </section>
         </main>
@@ -594,22 +597,25 @@
         function updateEnergyMeter(type) {
             const types = type ? [type] : ['voice', 'bio', 'hook', 'plan', 'multiplier'];
             types.forEach(t => {
-                const section = document.getElementById(t === 'voice' ? 'find-your-voice' : t === 'bio' ? 'bio-builder' : t === 'hook' ? 'find-your-hook' : t === 'plan' ? 'content-planner' : 'the-multiplier');
+                const section = document.getElementById(t === 'voice' ? 'find-your-voice' : t === 'bio' ? 'bio-builder' : t === 'hook' ? 'find-your-hook' : t === 'plan' ? 'content-planner' : t === 'multiplier' ? 'the-multiplier' : 'help-support');
                 if (!section) return;
                 const display = section.querySelector('#runs-display');
+                if (!display) return;
                 const used = userStats.usage[t] || 0;
                 const remaining = userStats.dailyLimit - used;
                 display.innerText = `${remaining < 0 ? 0 : remaining}/${userStats.dailyLimit} Runs Left`;
                 
                 const btn = section.querySelector('.btn-generate');
-                if (remaining <= 0) {
-                    btn.innerHTML = `Upgrade to Generate More ✨`;
-                    btn.classList.add('disabled-nudge');
-                    btn.onclick = goToUpgrade;
-                } else {
-                    btn.classList.remove('disabled-nudge');
-                    btn.innerHTML = t === 'voice' ? 'Analyze My Voice' : t === 'bio' ? 'Generate Bio' : t === 'hook' ? 'Create Hook' : t === 'plan' ? 'Plan My Week' : 'Multiply My Idea';
-                    btn.onclick = () => runTool(t);
+                if (btn) {
+                    if (remaining <= 0) {
+                        btn.innerHTML = `Upgrade to Generate More ✨`;
+                        btn.classList.add('disabled-nudge');
+                        btn.onclick = goToUpgrade;
+                    } else {
+                        btn.classList.remove('disabled-nudge');
+                        btn.innerHTML = t === 'voice' ? 'Analyze My Voice' : t === 'bio' ? 'Generate Bio' : t === 'hook' ? 'Create Hook' : t === 'plan' ? 'Plan My Week' : 'Multiply My Idea';
+                        btn.onclick = () => runTool(t);
+                    }
                 }
             });
         }
@@ -644,7 +650,6 @@
                 const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
                 window.parent.postMessage({ type: 'UPDATE_USAGE', newCount: Object.values(userStats.usage).reduce((a,b)=>a+b,0), toolType: type, toolUsedCount: userStats.usage[type] }, targetOrigin);
 
-                // Detailed Rendering Logic
                 const data = result.data;
                 if (type === 'multiplier') {
                     resultDiv.innerHTML = `
@@ -666,18 +671,23 @@
             setTimeout(() => window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin), 500);
         }
 
-        function updateNav(el) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
-        }
+        function switchTool(toolId, element) {
+            document.querySelectorAll('.tool-card').forEach(card => card.classList.remove('active'));
+            document.getElementById(toolId).classList.add('active');
 
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navItems = document.querySelectorAll('.nav-item');
-            let current = "";
-            sections.forEach(section => { if (pageYOffset >= section.offsetTop - 100) current = section.getAttribute('id'); });
-            navItems.forEach(item => { item.classList.remove('active'); if (item.getAttribute('href') === `#${current}`) item.classList.add('active'); });
-        });
+            if (element) {
+                document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                element.classList.add('active');
+            }
+            document.getElementById('mobile-select').value = toolId;
+
+            const video = document.getElementById('growth-video');
+            if (video) {
+                video.pause();
+                video.currentTime = 0;
+                setTimeout(() => { video.play(); }, 50);
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
