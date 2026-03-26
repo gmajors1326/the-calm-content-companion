@@ -21,6 +21,11 @@ app.get(['/', '/the-content-companion-tools', '/the-calm-content-toolbox'], (req
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
+// Ping Route: Used to keep the free Render service awake
+app.get('/ping', (req, res) => {
+    res.status(200).send('Awake');
+});
+
 // 2. SECURITY HEADERS FOR WIX IFRAME
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://*.wix.com https://www.freespiritmarketer.com;");
