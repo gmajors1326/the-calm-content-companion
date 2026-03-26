@@ -729,6 +729,11 @@
             try {
                 const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.error || "Server error");
+                }
+
                 userStats.usage[type]++;
                 updateEnergyMeter(type);
                 
@@ -738,15 +743,43 @@
                 const data = result.data;
                 if (type === 'multiplier') {
                     resultDiv.innerHTML = `
-                        <div style="margin-bottom: 25px;"><strong>The Core Truth:</strong><br>${data.core_truth}</div>
-                        <div style="margin-bottom: 25px;"><strong>Angles:</strong><br>Tactical: ${data.angles.tactical}<br>Emotional: ${data.angles.emotional}<br>Contrarian: ${data.angles.contrarian}</div>
+                        <div style="margin-bottom: 15px;"><strong>🌿 Educational / How-To:</strong><br>${data.educational_asset}</div>
+                        <div style="margin-bottom: 15px;"><strong>🌿 Emotional / Story:</strong><br>${data.emotional_asset}</div>
+                        <div style="margin-bottom: 15px;"><strong>🌿 Contrarian / Challenge:</strong><br>${data.contrarian_asset}</div>
                     `;
                 } else if (type === 'voice') {
-                    resultDiv.innerHTML = `<div><strong>Tone Profile:</strong> ${data.tone_profile}</div><div><strong>DNA:</strong> ${data.sentence_dna}</div>`;
+                    resultDiv.innerHTML = `
+                        <div style="margin-bottom: 15px;"><strong>✨ Your Voice DNA:</strong><br>${data.your_voice_dna}</div>
+                        <div style="margin-bottom: 15px;"><strong>✨ Signature Patterns:</strong><br>${data.signature_patterns}</div>
+                        <div style="margin-bottom: 15px;"><strong>✨ The Filter:</strong><br>${data.the_filter}</div>
+                        <div style="margin-bottom: 15px;"><strong>✨ Voice Sample:</strong><br>${data.voice_sample}</div>
+                    `;
+                } else if (type === 'hook') {
+                    resultDiv.innerHTML = `
+                        <div style="margin-bottom: 15px;"><strong>🪝 The Negative Hook:</strong><br>${data.the_negative}</div>
+                        <div style="margin-bottom: 15px;"><strong>🪝 The Curiosity Gap:</strong><br>${data.the_curiosity}</div>
+                        <div style="margin-bottom: 15px;"><strong>🪝 The Authority Shift:</strong><br>${data.the_authority}</div>
+                    `;
+                } else if (type === 'plan') {
+                    resultDiv.innerHTML = `
+                        <div style="margin-bottom: 15px;"><strong>📅 Post 1 (The Hook):</strong><br>${data.the_hook_post}</div>
+                        <div style="margin-bottom: 15px;"><strong>📅 Post 2 (The Value):</strong><br>${data.the_value_post}</div>
+                        <div style="margin-bottom: 15px;"><strong>📅 Post 3 (The Bridge):</strong><br>${data.the_bridge_post}</div>
+                    `;
+                } else if (type === 'bio') {
+                    resultDiv.innerHTML = `
+                        <div style="white-space: pre-line;"><strong>✨ Your New Bio:</strong><br>${data.insta_bio}</div>
+                    `;
                 } else {
                     resultDiv.innerText = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
                 }
-            } catch (error) { resultDiv.innerText = "Error processing request."; } finally { btn.disabled = false; btn.innerHTML = originalText; }
+            } catch (error) { 
+                console.error("Tool Execution Error:", error);
+                resultDiv.innerText = "Error processing request. Please try again. ✨"; 
+            } finally { 
+                btn.disabled = false; 
+                btn.innerHTML = originalText; 
+            }
         }
 
         function goToUpgrade() { window.top.location.href = `https://www.freespiritmarketer.com/pricing-plans?currentTier=${userStats.tier}`; }
