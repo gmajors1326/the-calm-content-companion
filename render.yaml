@@ -2,7 +2,7 @@ services:
   - type: web
     name: the-calm-content-companion
     runtime: node
-    plan: starter
+    plan: standard
     buildCommand: npm install
     startCommand: npm start
     envVars:
