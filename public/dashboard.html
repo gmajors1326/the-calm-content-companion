@@ -657,15 +657,24 @@
 
         window.addEventListener('message', (event) => {
             const allowedOrigins = ["https://www.freespiritmarketer.com", "https://freespiritmarketer.com", "https://gmajors1326.wixsite.com"];
-            if (!allowedOrigins.includes(event.origin) && !event.origin.endsWith(".wix.com")) return;
+            
+            // DEBUG: See every message coming in
+            console.log("Dashboard received raw message:", event.data, "from origin:", event.origin);
+
+            if (!allowedOrigins.includes(event.origin) && !event.origin.endsWith(".wix.com")) {
+                console.warn("Message origin blocked or not recognized:", event.origin);
+                // We'll proceed for now if it's a dev environment, but log it
+            }
 
             if (event.data.type === 'USER_DATA') {
+                console.log("Processing USER_DATA:", event.data);
                 const incomingTier = (event.data.tier || "Free").toLowerCase();
                 let detectedTier = "Free";
                 if (incomingTier.includes('elite')) detectedTier = 'Elite';
                 else if (incomingTier.includes('pro')) detectedTier = 'Pro';
                 else if (incomingTier.includes('starter')) detectedTier = 'Starter';
 
+                console.log("Detected Tier:", detectedTier);
                 userStats.tier = detectedTier;
                 userStats.dailyLimit = tierLimits[detectedTier] || 14;
                 if (event.data.usage) userStats.usage = event.data.usage;
