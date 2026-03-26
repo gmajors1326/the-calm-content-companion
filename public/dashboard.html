@@ -666,8 +666,8 @@
                 // We'll proceed for now if it's a dev environment, but log it
             }
 
-            if (event.data.type === 'USER_DATA') {
-                console.log("Processing USER_DATA:", event.data);
+            if (event.data.type === 'USER_DATA' || event.data.type === 'SYNC_PLAN') {
+                console.log("Processing Data from Wix:", event.data);
                 const incomingTier = (event.data.tier || "Free").toLowerCase();
                 let detectedTier = "Free";
                 if (incomingTier.includes('elite')) detectedTier = 'Elite';
@@ -677,7 +677,16 @@
                 console.log("Detected Tier:", detectedTier);
                 userStats.tier = detectedTier;
                 userStats.dailyLimit = tierLimits[detectedTier] || 14;
-                if (event.data.usage) userStats.usage = event.data.usage;
+                if (event.data.usage) {
+                    // Handle both usage object and flat usage number for backward compatibility during sync
+                    if (typeof event.data.usage === 'object') {
+                        userStats.usage = event.data.usage;
+                    } else if (typeof event.data.usage === 'number') {
+                        // Distribute the flat usage if it's a number (fallback)
+                        const perTool = Math.floor(event.data.usage / 5);
+                        userStats.usage = { voice: perTool, bio: perTool, hook: perTool, plan: perTool, multiplier: event.data.usage - (perTool * 4) };
+                    }
+                }
                 updateEnergyMeter();
                 updateTierRestrictions();
             }
