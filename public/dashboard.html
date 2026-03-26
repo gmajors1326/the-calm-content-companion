@@ -674,6 +674,13 @@
                 else if (incomingTier.includes('pro')) detectedTier = 'Pro';
                 else if (incomingTier.includes('starter')) detectedTier = 'Starter';
 
+                // If the URL suggests a higher tier than the DB (e.g., just purchased, webhook delay),
+                // trust the URL tier for this session to avoid frustrating the user.
+                if (tierLimits[initialTier] > tierLimits[detectedTier]) {
+                    console.log(`URL tier (${initialTier}) is higher than DB tier (${detectedTier}). Trusting URL tier for this session.`);
+                    detectedTier = initialTier;
+                }
+
                 console.log("Detected Tier:", detectedTier);
                 userStats.tier = detectedTier;
                 userStats.dailyLimit = tierLimits[detectedTier] || 14;
