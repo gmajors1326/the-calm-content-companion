@@ -15,17 +15,26 @@
     const [usage, setUsage] = useState(0);
 
     useEffect(() => {
-      window.addEventListener('message', (e) => {
-        if (e.data.type === 'SYNC_PLAN') {
+      const handleMessage = (e) => {
+        // CHECK 1: Is the message even arriving?
+        console.log("Antigravity received raw data:", e.data);
+
+        if (e.data && e.data.type === 'SYNC_PLAN') {
+          // CHECK 2: Is the tier coming through as "Pro" or "Free"?
+          console.log("Setting Tier to:", e.data.tier);
           setTier(e.data.tier);
           setUsage(e.data.usage);
           // Tell Wix we got the message so it stops pulsing
           window.parent.postMessage({ type: 'SYNC_CONFIRMED' }, "*");
         }
-      });
+      };
+
+      window.addEventListener('message', handleMessage);
       
-      // Initial signal to Wix that the embed is ready
+      // CHECK 3: Tell Wix "I am awake!"
       window.parent.postMessage({ type: 'READY' }, "*");
+
+      return () => window.removeEventListener('message', handleMessage);
     }, []);
 
     const limits = { 'Free': 14, 'Starter': 150, 'Pro': 300, 'Elite': 600, 'Loading...': 0 };
