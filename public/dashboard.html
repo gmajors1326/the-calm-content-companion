@@ -803,7 +803,7 @@
         function goToUpgrade() { window.top.location.href = `https://www.freespiritmarketer.com/pricing-plans?currentTier=${userStats.tier}`; }
         function refreshPlan() {
             const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
-            window.parent.postMessage({ type: 'SYNC_PLAN' }, targetOrigin);
+            window.parent.postMessage({ type: 'REFRESH' }, targetOrigin);
             setTimeout(() => window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin), 500);
         }
 
@@ -827,7 +827,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const targetOrigin = window.location.origin.includes('freespiritmarketer') ? "https://www.freespiritmarketer.com" : "*";
-            window.parent.postMessage({ type: 'GET_USER_DATA' }, targetOrigin);
+            window.parent.postMessage({ type: 'READY' }, targetOrigin);
         });
     </script>
 </body>
