@@ -654,6 +654,10 @@
         else if (rawTier.toLowerCase().includes('starter')) initialTier = 'Starter';
 
         let userStats = { tier: initialTier, dailyLimit: tierLimits[initialTier] || 14, usage: { voice: 0, bio: 0, hook: 0, plan: 0, multiplier: 0 } };
+        
+        // Update UI immediately with initial tier from URL
+        updateTierRestrictions();
+        updateEnergyMeter();
 
         window.addEventListener('message', (event) => {
             const allowedOrigins = ["https://www.freespiritmarketer.com", "https://freespiritmarketer.com", "https://gmajors1326.wixsite.com"];
@@ -668,7 +672,11 @@
 
             if (event.data.type === 'USER_DATA' || event.data.type === 'SYNC_PLAN') {
                 console.log("Processing Data from Wix:", event.data);
-                const incomingTier = (event.data.tier || "Free").toLowerCase();
+                
+                // Robust tier detection: check multiple fields Wix might send
+                const rawIncoming = event.data.tier || event.data.planName || event.data.plan || "Free";
+                const incomingTier = String(rawIncoming).toLowerCase();
+                
                 let detectedTier = "Free";
                 if (incomingTier.includes('elite')) detectedTier = 'Elite';
                 else if (incomingTier.includes('pro')) detectedTier = 'Pro';
