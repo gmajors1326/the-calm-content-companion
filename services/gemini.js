@@ -5,15 +5,16 @@ if (!process.env.GEMINI_API_KEY) {
     console.warn("WARNING: GEMINI_API_KEY is missing from the environment variables.");
 }
 
-// Use gemini-flash-latest to ensure compatibility with the current available models (2026)
+// Use gemini-1.5-flash to ensure compatibility
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'placeholder');
-const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 /**
  * Helper to run a prompt against Gemini and expect JSON or Text
  */
 async function runGemini(systemPrompt, userPrompt, isJson = true) {
     try {
+        console.log(`Running Gemini request (JSON: ${isJson})...`);
         const fullPrompt = `${systemPrompt}\n\nUSER INPUT:\n${userPrompt}`;
         
         const result = await model.generateContent({
@@ -25,9 +26,14 @@ async function runGemini(systemPrompt, userPrompt, isJson = true) {
         });
 
         const response = await result.response;
-        return response.text();
+        const text = response.text();
+        console.log("Gemini response received successfully.");
+        return text;
     } catch (error) {
-        console.error("Gemini API Error Detail:", error);
+        console.error("Gemini API Error Detail:", error.message);
+        if (error.response) {
+            console.error("Error Response Data:", JSON.stringify(error.response, null, 2));
+        }
         throw error;
     }
 }

@@ -1,6 +1,6 @@
 # The Calm Content Companion Tools
 
-A suite of tools for soulful creators, providing authentic, humanized content strategies using OpenAI.
+A suite of tools for soulful creators, providing authentic, humanized content strategies powered by Google's Gemini.
 
 ## Features
 
@@ -18,7 +18,7 @@ A suite of tools for soulful creators, providing authentic, humanized content st
     ```
 3.  **Environment Variables**:
     - Copy `.env.example` to `.env`.
-    - Add your `OPENAI_API_KEY`.
+    - Add your `GEMINI_API_KEY`.
 4.  **Run locally**:
     ```bash
     npm start
@@ -35,10 +35,10 @@ This project is optimized for deployment on [Render.com](https://render.com).
     - Create a new **Web Service**.
     - **Build Command**: `npm install`
     - **Start Command**: `npm start`
-    - **Environment Variables**: Add `OPENAI_API_KEY`.
+    - **Environment Variables**: Add `GEMINI_API_KEY`.
 
 ## Tech Stack
 
 - **Backend**: Node.js with Express.
-- **AI**: OpenAI API (`gpt-4-turbo-preview`, `gpt-4o-mini`).
+- **AI**: Google Gemini (`gemini-flash-latest`).
 - **Frontend**: Plain HTML/CSS/JS (served from `/public`).

@@ -5,6 +5,26 @@ const path = require('path');
 const geminiService = require('./services/gemini.js');
 const PLANS = require('./constants/plans.js');
 
+function parseGeminiJSON(raw, label = 'Gemini response') {
+    if (!raw) {
+        throw new Error(`${label} is empty`);
+    }
+    let cleaned = String(raw).trim();
+    // Remove markdown fences if present
+    cleaned = cleaned.replace(/^```(?:json)?/i, '').replace(/```$/i, '').trim();
+    const start = cleaned.indexOf('{');
+    const end = cleaned.lastIndexOf('}');
+    if (start !== -1 && end !== -1) {
+        cleaned = cleaned.slice(start, end + 1);
+    }
+    try {
+        return JSON.parse(cleaned);
+    } catch (err) {
+        console.error(`JSON Parse Error (${label}):`, cleaned);
+        throw err;
+    }
+}
+
 const app = express();
 console.log("Companion Server starting...");
 console.log("Environment PORT:", process.env.PORT);
@@ -42,9 +62,14 @@ app.post('/api/tools/analyze-voice', async (req, res) => {
             return res.status(400).json({ success: false, error: "Please share a longer sample (at least 20 characters). ✨" });
         }
         const result = await geminiService.analyzeVoice(userInput);
-        const resultJSON = JSON.parse(result);
-        res.json({ success: true, data: resultJSON });
+        try {
+            const resultJSON = parseGeminiJSON(result, 'analyze-voice');
+            res.json({ success: true, data: resultJSON });
+        } catch (parseErr) {
+            res.status(500).json({ success: false, error: "AI response could not be parsed. Please try again." });
+        }
     } catch (err) {
+        console.error("API Route Error (analyze-voice):", err.message);
         res.status(500).json({ success: false, error: err.message });
     }
 });
@@ -58,16 +83,13 @@ app.post('/api/tools/generate-bio', async (req, res) => {
         }
         
         const result = await geminiService.buildBio(userInput, platform, vibe);
-        let resultJSON;
         try {
-            resultJSON = JSON.parse(result);
+            const resultJSON = parseGeminiJSON(result, 'generate-bio');
+            res.json({ success: true, data: resultJSON });
         } catch (parseErr) {
             console.error("JSON Parse Error in Bio Builder:", result);
-            // Fallback: Try to wrap it if it's not JSON
-            resultJSON = { the_hook: result, the_authority: "", the_human: "" };
+            res.json({ success: true, data: { insta_bio: result } });
         }
-        
-        res.json({ success: true, data: resultJSON });
     } catch (err) {
         console.error("Bio Builder Route Error:", err);
         res.status(500).json({ success: false, error: err.message });
@@ -82,9 +104,14 @@ app.post('/api/tools/generate-hook', async (req, res) => {
             return res.status(400).json({ success: false, error: "Please share a bit more detail about your topic. ✨" });
         }
         const result = await geminiService.findYourHook(idea);
-        const resultJSON = JSON.parse(result);
-        res.json({ success: true, data: resultJSON });
+        try {
+            const resultJSON = parseGeminiJSON(result, 'generate-hook');
+            res.json({ success: true, data: resultJSON });
+        } catch (parseErr) {
+            res.status(500).json({ success: false, error: "AI response could not be parsed. Please try again." });
+        }
     } catch (err) {
+        console.error("API Route Error (generate-hook):", err.message);
         res.status(500).json({ success: false, error: err.message });
     }
 });
@@ -97,9 +124,14 @@ app.post('/api/tools/plan-weekly', async (req, res) => {
             return res.status(400).json({ success: false, error: "Please share a theme or goal (at least 5 characters). ✨" });
         }
         const result = await geminiService.planWeeklyStrategy(themeInput);
-        const resultJSON = JSON.parse(result);
-        res.json({ success: true, data: resultJSON });
+        try {
+            const resultJSON = parseGeminiJSON(result, 'plan-weekly');
+            res.json({ success: true, data: resultJSON });
+        } catch (parseErr) {
+            res.status(500).json({ success: false, error: "AI response could not be parsed. Please try again." });
+        }
     } catch (err) {
+        console.error("API Route Error (plan-weekly):", err.message);
         res.status(500).json({ success: false, error: err.message });
     }
 });
@@ -112,9 +144,14 @@ app.post('/api/tools/generate-multiplier', async (req, res) => {
             return res.status(400).json({ success: false, error: "Please share a bit more detail (at least 10 characters). ✨" });
         }
         const result = await geminiService.multiplyContent(userInput);
-        const resultJSON = JSON.parse(result);
-        res.json({ success: true, data: resultJSON });
+        try {
+            const resultJSON = parseGeminiJSON(result, 'generate-multiplier');
+            res.json({ success: true, data: resultJSON });
+        } catch (parseErr) {
+            res.status(500).json({ success: false, error: "AI response could not be parsed. Please try again." });
+        }
     } catch (err) {
+        console.error("API Route Error (generate-multiplier):", err.message);
         res.status(500).json({ success: false, error: err.message });
     }
 });

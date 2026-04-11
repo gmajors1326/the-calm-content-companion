@@ -671,7 +671,13 @@
         updateEnergyMeter();
 
         window.addEventListener('message', (event) => {
-            const allowedOrigins = ["https://www.freespiritmarketer.com", "https://freespiritmarketer.com", "https://gmajors1326.wixsite.com"];
+            const allowedOrigins = [
+                "https://www.freespiritmarketer.com",
+                "https://freespiritmarketer.com",
+                "https://gmajors1326.wixsite.com",
+                window.location.origin,
+                "https://the-calm-content-companion-435c.onrender.com"
+            ];
             
             // DEBUG: See every message coming in
             console.log("Dashboard received raw message:", event.data, "from origin:", event.origin);
@@ -758,17 +764,24 @@
             const btn = section.querySelector('.btn-generate');
             const originalText = btn.innerText;
 
+            let payload = { tier: userStats.tier };
+            let endpoint = `/api/tools/generate-${type}`;
+            let inputValue = '';
+            if (type === 'voice') { inputValue = document.getElementById('voice-sample').value; payload.userInput = inputValue; endpoint = '/api/tools/analyze-voice'; }
+            else if (type === 'bio') { inputValue = document.getElementById('bio-input').value; payload.userInput = inputValue; }
+            else if (type === 'hook') { inputValue = document.getElementById('hook-topic').value; payload.idea = inputValue; }
+            else if (type === 'plan') { inputValue = document.getElementById('plan-theme').value; payload.themeInput = inputValue; endpoint = '/api/tools/plan-weekly'; }
+            else if (type === 'multiplier') { inputValue = document.getElementById('multiplier-input').value; payload.userInput = inputValue; }
+
+            const minChars = { voice: 20, bio: 10, hook: 5, plan: 5, multiplier: 10 };
+            if (!inputValue || inputValue.trim().length < (minChars[type] || 1)) {
+                resultDiv.innerText = `Please share a longer sample (at least ${minChars[type] || 1} characters). ✨`;
+                return;
+            }
+
             resultDiv.innerHTML = "Gathering insights... ✨";
             btn.disabled = true;
             btn.innerHTML = `Thinking... <span class="spinner-icon">↻</span>`;
-
-            let payload = { tier: userStats.tier };
-            let endpoint = `/api/tools/generate-${type}`;
-            if (type === 'voice') { payload.userInput = document.getElementById('voice-sample').value; endpoint = '/api/tools/analyze-voice'; }
-            else if (type === 'bio') payload.userInput = document.getElementById('bio-input').value;
-            else if (type === 'hook') payload.idea = document.getElementById('hook-topic').value;
-            else if (type === 'plan') { payload.themeInput = document.getElementById('plan-theme').value; endpoint = '/api/tools/plan-weekly'; }
-            else if (type === 'multiplier') payload.userInput = document.getElementById('multiplier-input').value;
 
             try {
                 const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -819,7 +832,7 @@
                 }
             } catch (error) { 
                 console.error("Tool Execution Error:", error);
-                resultDiv.innerText = "Error processing request. Please try again. ✨"; 
+                resultDiv.innerText = `Error: ${error.message}. ✨`; 
             } finally { 
                 btn.disabled = false; 
                 btn.innerHTML = originalText; 
