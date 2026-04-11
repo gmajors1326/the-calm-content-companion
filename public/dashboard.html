@@ -658,8 +658,9 @@
         else if (rawTier.toLowerCase().includes('pro')) initialTier = 'Pro';
         else if (rawTier.toLowerCase().includes('starter')) initialTier = 'Starter';
         else if (rawTier.toLowerCase().includes('free')) initialTier = 'Free';
-        // Fallback for Wix internal names if any
-        else if (rawTier.toLowerCase().includes('premium')) initialTier = 'Pro'; 
+        // Fallback for Wix internal names
+        else if (rawTier.toLowerCase().includes('premium') || rawTier.toLowerCase().includes('gold')) initialTier = 'Pro';
+        else if (rawTier.toLowerCase().includes('vip') || rawTier.toLowerCase().includes('diamond')) initialTier = 'Elite'; 
 
         console.log("Initial Tier set to:", initialTier);
 
@@ -688,8 +689,8 @@
                 const incomingTier = String(rawIncoming).toLowerCase();
                 
                 let detectedTier = "Free";
-                if (incomingTier.includes('elite')) detectedTier = 'Elite';
-                else if (incomingTier.includes('pro')) detectedTier = 'Pro';
+                if (incomingTier.includes('elite') || incomingTier.includes('vip') || incomingTier.includes('diamond')) detectedTier = 'Elite';
+                else if (incomingTier.includes('pro') || incomingTier.includes('premium') || incomingTier.includes('gold')) detectedTier = 'Pro';
                 else if (incomingTier.includes('starter')) detectedTier = 'Starter';
 
                 // If the URL suggests a higher tier than the DB (e.g., just purchased, webhook delay),
