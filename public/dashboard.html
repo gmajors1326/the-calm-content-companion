@@ -647,6 +647,11 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const tierLimits = { 'Free': 14, 'Starter': 150, 'Pro': 300, 'Elite': 600 };
+        
+        // DEBUG: Log the full URL and search params
+        console.log("Full Dashboard URL:", window.location.href);
+        console.log("URL Params - tier:", params.get('tier'), "plan:", params.get('plan'));
+
         const rawTier = params.get('tier') || params.get('plan') || 'Free';
         let initialTier = 'Free';
         if (rawTier.toLowerCase().includes('elite')) initialTier = 'Elite';
@@ -655,6 +660,8 @@
         else if (rawTier.toLowerCase().includes('free')) initialTier = 'Free';
         // Fallback for Wix internal names if any
         else if (rawTier.toLowerCase().includes('premium')) initialTier = 'Pro'; 
+
+        console.log("Initial Tier set to:", initialTier);
 
         let userStats = { tier: initialTier, dailyLimit: tierLimits[initialTier] || 14, usage: { voice: 0, bio: 0, hook: 0, plan: 0, multiplier: 0 } };
         
