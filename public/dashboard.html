@@ -647,11 +647,14 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const tierLimits = { 'Free': 14, 'Starter': 150, 'Pro': 300, 'Elite': 600 };
-        const rawTier = params.get('tier') || 'Free';
+        const rawTier = params.get('tier') || params.get('plan') || 'Free';
         let initialTier = 'Free';
         if (rawTier.toLowerCase().includes('elite')) initialTier = 'Elite';
         else if (rawTier.toLowerCase().includes('pro')) initialTier = 'Pro';
         else if (rawTier.toLowerCase().includes('starter')) initialTier = 'Starter';
+        else if (rawTier.toLowerCase().includes('free')) initialTier = 'Free';
+        // Fallback for Wix internal names if any
+        else if (rawTier.toLowerCase().includes('premium')) initialTier = 'Pro'; 
 
         let userStats = { tier: initialTier, dailyLimit: tierLimits[initialTier] || 14, usage: { voice: 0, bio: 0, hook: 0, plan: 0, multiplier: 0 } };
         
