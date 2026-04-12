@@ -5,9 +5,9 @@ if (!process.env.GEMINI_API_KEY) {
     console.warn("WARNING: GEMINI_API_KEY is missing from the environment variables.");
 }
 
-// Using gemini-1.5-flash as the most likely stable fallback
+// Use gemini-3-flash-preview as the most modern stable model in 2026
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'placeholder');
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
 /**
  * Helper to run a prompt against Gemini and expect JSON or Text
