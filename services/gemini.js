@@ -56,6 +56,7 @@ async function findYourHook(topicInput) {
   - Max 15 words per hook.
   - No "Are you tired of...?" or generic questions.
   - Must feel human, punchy, and urgent.
+  - Use intelligent but accessible layman's terms. Avoid industry jargon.
   
   Return ONLY JSON in this format: { 
     "the_negative": "Hook text here", 
@@ -76,6 +77,7 @@ async function analyzeVoice(writingSample) {
 
     const systemPrompt = `You are a World-Class Stylistic Editor. 
   Analyze the provided text for "Style Fingerprinting."
+  Explain your analysis intelligently but in layman's terms.
   
   Identify:
   1. The Rhythm: (e.g., Short-short-long, staccato, or flowing).
@@ -131,7 +133,7 @@ RULES:
 - Avoid the 7-day-a-week grind; focus on 3 high-impact pieces.
 - Return strictly in JSON format with keys: the_hook_post, the_value_post, and the_bridge_post.
 - ALL values must be single strings.
-- Use simple, layman's terms. Avoid complex marketing concepts.`;
+- Use intelligent but accessible layman's terms. Avoid complex marketing concepts or buzzwords.`;
 
     const userPrompt = `WEEKLY THEME: "${themeInput}"
 1. the_hook_post: A "Top of Funnel" post to challenge a common belief or share a "Hot Take" related to the theme.
@@ -181,6 +183,7 @@ async function buildBio(userInput, platform = 'Instagram', vibe = 'Clear & Profe
   - Line 2: The "What" (What you do for others).
   - Line 3: The "Proof/Human" (A unique fact or achievement).
   - Line 4: The "Action" (CTA to the link below).
+  - Speak intelligently but in layman's terms. No marketing fluff or hype.
   
   Return ONLY JSON in this format: { "insta_bio": "Line 1\\nLine 2\\nLine 3\\nLine 4" }`;
 
@@ -228,6 +231,7 @@ async function multiplyContent(userInput) {
   - Do not use hashtags.
   - Keep the tone "Calm but Authoritative."
   - Ensure each asset feels like a standalone post.
+  - Write intelligently but use simple layman's terms. Avoid jargon.
   
   Return ONLY JSON in this format: { 
     "educational_asset": "The breakdown...", 
